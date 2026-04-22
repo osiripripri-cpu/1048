@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>1048 MASTER ADMIN (Formatted Export)</title>
+<title>1048 MASTER ADMIN (Auto-Close Fix)</title>
 <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@800&family=Noto+Sans+JP:wght@300;700&display=swap" rel="stylesheet">
 <style>
-/* 管理画面デザイン */
+/* 前回の完成されたデザインを継承 */
 :root { --bg:#0a0a12; --accent:#a682ff; --blue:#00a2ff; --text:#e0e0ed; --border:#252535; }
 body { background:#000; color:#fff; font-family:sans-serif; margin:0; }
 .admin-bar { background:#1a1a2e; padding:15px; display:flex; justify-content:space-between; position:sticky; top:0; z-index:9999; border-bottom:2px solid var(--accent); }
@@ -42,7 +42,7 @@ body { background:#000; color:#fff; font-family:sans-serif; margin:0; }
 <body>
 
 <div class="admin-bar">
-    <div style="font-weight:bold;">1048 ADMIN <small>v6-formatted</small></div>
+    <div style="font-weight:bold;">1048 ADMIN <small>v7-fixed</small></div>
     <div style="display:flex;gap:10px;">
         <button class="btn-p" onclick="openLiveModal()">＋ ライブ追加</button>
         <button class="btn-s" onclick="generatePublicHTML()">🚀 公開用コードをコピー</button>
@@ -86,7 +86,7 @@ let DATA = {
 };
 const COLORS = { "主催": "#a682ff", "運営": "#00a2ff", "運営補佐": "#22c55e", "運営スタッフ": "#f59e0b" };
 
-const saved = localStorage.getItem('1048_master_v6');
+const saved = localStorage.getItem('1048_master_v7');
 if(saved) DATA = JSON.parse(saved);
 
 async function resizeImage(file, maxWidth = 400) {
@@ -155,39 +155,74 @@ function render() {
     document.getElementById('sTotal').innerText = DATA.lives.length;
     document.getElementById('sOrg').innerText = cO;
     document.getElementById('sMan').innerText = cM;
-    localStorage.setItem('1048_master_v6', JSON.stringify(DATA));
+    localStorage.setItem('1048_master_v7', JSON.stringify(DATA));
 }
 
+// モーダル管理（開閉）
 function triggerFile(id) { document.getElementById(id).click(); }
-function showModal(h) { document.getElementById('mInner').innerHTML=h; document.getElementById('modal').classList.add('open'); }
-function closeModal() { document.getElementById('modal').classList.remove('open'); }
+function showModal(h) { 
+    document.getElementById('mInner').innerHTML=h; 
+    document.getElementById('modal').classList.add('open'); 
+}
+function closeModal() { 
+    document.getElementById('modal').classList.remove('open'); 
+}
 
+// 編集・保存ロジック（closeModal()を全箇所に確実に配置）
 function openProfileModal() {
     showModal(`<h3>基本情報</h3><div class="field"><label>名前</label><input id="eN" value="${DATA.profile.name}"></div><div class="field"><label>説明</label><textarea id="eD" rows="5">${DATA.profile.desc}</textarea></div><button class="btn-p" style="width:100%" onclick="saveProfile()">保存</button>`);
 }
-function saveProfile() { DATA.profile.name=document.getElementById('eN').value; DATA.profile.desc=document.getElementById('eD').value; render(); closeModal(); }
+function saveProfile() { 
+    DATA.profile.name=document.getElementById('eN').value; 
+    DATA.profile.desc=document.getElementById('eD').value; 
+    render(); 
+    closeModal(); 
+}
 
 function openLinkModal(k) {
     showModal(`<h3>リンク編集</h3><div class="field"><label>URL</label><input id="eL" value="${DATA.links[k]}"></div><button class="btn-p" style="width:100%" onclick="saveLink('${k}')">保存</button>`);
 }
-function saveLink(k) { DATA.links[k]=document.getElementById('eL').value; render(); closeModal(); }
+function saveLink(k) { 
+    DATA.links[k]=document.getElementById('eL').value; 
+    render(); 
+    closeModal(); 
+}
 
 function openRoleModal(i) {
     showModal(`<h3>役割編集</h3><div class="field"><label>見出し</label><input id="eRT" value="${DATA.roles[i].t}"></div><div class="field"><label>説明</label><input id="eRD" value="${DATA.roles[i].d}"></div><button class="btn-p" style="width:100%" onclick="saveRole(${i})">保存</button>`);
 }
-function saveRole(i) { DATA.roles[i].t=document.getElementById('eRT').value; DATA.roles[i].d=document.getElementById('eRD').value; render(); closeModal(); }
+function saveRole(i) { 
+    DATA.roles[i].t=document.getElementById('eRT').value; 
+    DATA.roles[i].d=document.getElementById('eRD').value; 
+    render(); 
+    closeModal(); 
+}
 
 function openLiveModal(idx = -1) {
     const l = idx > -1 ? DATA.lives[idx] : {title:'', date:'', role:'主催', img:'', link:''};
     showModal(`<h3>ライブ実績</h3><div class="field"><label>画像</label><img id="tmpImg" src="${l.img}" style="width:60px;height:60px;object-fit:cover;display:block;margin-bottom:5px;"><button class="btn-p" onclick="triggerFile('lIn')">選択</button><input type="file" id="lIn" hidden onchange="handleFile(this, 'live')"></div><div class="field"><label>タイトル</label><input id="lT" value="${l.title}"></div><div class="field"><label>日付</label><input type="date" id="lD" value="${l.date}"></div><div class="field"><label>役割</label><select id="lR"><option value="主催" ${l.role==='主催'?'selected':''}>主催</option><option value="運営" ${l.role==='運営'?'selected':''}>運営</option><option value="運営補佐" ${l.role==='運営補佐'?'selected':''}>運営補佐</option><option value="運営スタッフ" ${l.role==='運営スタッフ'?'selected':''}>運営スタッフ</option></select></div><div class="field"><label>詳細リンク</label><input id="lL" value="${l.link}"></div><button class="btn-p" style="width:100%" onclick="saveLive(${idx})">保存</button>${idx>-1?`<button onclick="delLive(${idx})" style="color:red;background:none;border:none;width:100%;margin-top:10px;">削除</button>`:''}`);
 }
 function saveLive(idx) {
-    const d = { title:document.getElementById('lT').value, date:document.getElementById('lD').value, role:document.getElementById('lR').value, link:document.getElementById('lL').value, img:document.getElementById('tmpImg').src };
-    if(idx>-1) DATA.lives[idx]=d; else DATA.lives.push(d); render(); closeModal();
+    const d = { 
+        title:document.getElementById('lT').value, 
+        date:document.getElementById('lD').value, 
+        role:document.getElementById('lR').value, 
+        link:document.getElementById('lL').value, 
+        img:document.getElementById('tmpImg').src 
+    };
+    if(idx>-1) DATA.lives[idx]=d; else DATA.lives.push(d); 
+    render(); 
+    closeModal(); // ←ここで確実に閉じる
 }
-function delLive(i) { if(confirm('消しますか？')){DATA.lives.splice(i,1); render(); closeModal();} }
+function delLive(i) { 
+    if(confirm('このライブ実績を削除しますか？')){
+        DATA.lives.splice(i,1); 
+        render(); 
+        closeModal();
+    } 
+}
 
-// --- 公開用コード生成（改行とインデントを適用） ---
+// 公開用コード生成（読みやすい整形済み）
 function generatePublicHTML() {
     const sorted = [...DATA.lives].sort((a,b)=>new Date(b.date)-new Date(a.date));
     let lastY = null;

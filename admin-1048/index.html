@@ -3,61 +3,43 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>1048 管理画面 PRO</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600;800&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+<title>1048 管理画面 PRO v3</title>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@800&family=Noto+Sans+JP:wght@300;500;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0a0a0f;--surface:#13131a;--surface2:#1c1c26;--border:#2a2a38;--accent:#7c6aff;--accent2:#ff6a8a;--gold:#c9a84c;--text:#e8e6f0;--muted:#6b6880;}
+:root{--bg:#0a0a0f;--surface:#13131a;--surface2:#1c1c26;--border:#2a2a38;--accent:#7c6aff;--accent2:#ff6a8a;--text:#e8e6f0;--muted:#6b6880;}
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
-body{background:var(--bg);color:var(--text);font-family:'Noto Sans JP',sans-serif;font-weight:300;min-height:100vh;overflow-x:hidden;}
-header{position:sticky;top:0;z-index:10;padding:20px 18px;text-align:center;border-bottom:1px solid var(--border);background:rgba(13,13,26,0.8);backdrop-filter:blur(10px);}
-.header-name{font-family:'Shippori Mincho',serif;font-size:22px;font-weight:800;color:var(--accent);margin-bottom:12px;}
-.admin-toolbar{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;}
-
-/* ボタン共通 */
-.btn{padding:10px 14px;border-radius:6px;border:1px solid var(--border);background:var(--surface);color:var(--text);font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:0.2s;text-decoration:none;touch-action:manipulation;}
-.btn:active{transform:scale(0.96);opacity:0.8;}
+body{background:var(--bg);color:var(--text);font-family:'Noto Sans JP',sans-serif;font-weight:300;min-height:100vh;line-height:1.6;}
+header{position:sticky;top:0;z-index:10;padding:15px;text-align:center;border-bottom:1px solid var(--border);background:rgba(13,13,26,0.8);backdrop-filter:blur(10px);}
+.admin-toolbar{display:flex;justify-content:center;gap:8px;margin-top:10px;}
+.btn{padding:10px 15px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text);font-size:12px;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:6px;touch-action:manipulation;}
 .btn.primary{background:var(--accent);border-color:var(--accent);color:#fff;}
 .btn.success{background:var(--accent2);border-color:var(--accent2);color:#fff;}
-.btn.small{padding:5px 8px;font-size:11px;min-width:auto;}
-
-main{padding:20px 14px 100px;max-width:800px;margin:0 auto;}
-.section-title{font-size:13px;color:var(--muted);margin:30px 0 12px;display:flex;align-items:center;gap:10px;font-weight:500;}
+main{padding:10px 15px 100px;max-width:600px;margin:0 auto;}
+.section-title{font-size:12px;color:var(--muted);margin:25px 0 10px;display:flex;align-items:center;gap:10px;}
 .section-title::after{content:'';flex:1;height:1px;background:var(--border);}
-
-.live-list{display:grid;gap:10px;}
-.live-item{background:var(--surface);border:1px solid var(--border);padding:12px;border-radius:10px;display:grid;grid-template-columns:50px 1fr auto;gap:12px;align-items:center;}
-.live-thumb-preview{width:50px;height:50px;background:var(--surface2);border-radius:4px;object-fit:cover;pointer-events:none;}
-.live-info{pointer-events:none; min-width:0;}
-.live-info-title{font-size:13px;font-weight:600;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.live-info-sub{font-size:10px;color:var(--muted);display:flex;gap:8px;flex-wrap:wrap;}
-.item-actions{display:flex;flex-direction:column;gap:5px;}
-
-/* モーダル */
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:100;display:none;align-items:center;justify-content:center;padding:15px;backdrop-filter:blur(5px);}
+.live-item{background:var(--surface);border:1px solid var(--border);padding:12px;border-radius:12px;display:grid;grid-template-columns:60px 1fr auto;gap:12px;align-items:center;margin-bottom:8px;}
+.live-thumb-preview{width:60px;height:60px;background:#000;border-radius:6px;object-fit:cover;}
+.live-info-title{font-size:14px;font-weight:700;margin-bottom:2px;}
+.live-info-sub{font-size:11px;color:var(--muted);}
+.tag-upcoming{display:inline-block;padding:2px 6px;background:rgba(255,106,138,0.15);color:var(--accent2);border-radius:4px;font-size:10px;font-weight:700;margin-left:5px;}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:100;display:none;align-items:center;justify-content:center;padding:15px;backdrop-filter:blur(8px);}
 .modal.open{display:flex;}
-.modal-content{background:var(--surface);border:1px solid var(--border);width:100%;max-width:500px;padding:24px;border-radius:12px;max-height:90vh;overflow-y:auto;}
-.modal-h2{font-size:16px;margin-bottom:20px;color:var(--accent);display:flex;justify-content:space-between;align-items:center;}
-
+.modal-content{background:var(--surface);border:1px solid var(--border);width:100%;max-width:450px;padding:20px;border-radius:16px;max-height:90vh;overflow-y:auto;}
 .form-group{margin-bottom:15px;}
-.form-group label{display:block;font-size:11px;color:var(--muted);margin-bottom:6px;}
-.form-group input, .form-group textarea, .form-group select{width:100%;background:var(--bg);border:1px solid var(--border);color:var(--text);padding:12px;border-radius:6px;font-family:inherit;font-size:14px;outline:none;}
-.image-upload-area{border:2px dashed var(--border);padding:20px;text-align:center;border-radius:8px;margin-bottom:10px;cursor:pointer;}
-.image-preview-large{width:100%;height:150px;object-fit:contain;background:#000;margin-top:10px;border-radius:6px;display:none;}
-.image-preview-large.active{display:block;}
-
-.tool-edit-card{background:var(--surface2);padding:12px;border-radius:8px;margin-bottom:12px;border:1px solid var(--border);position:relative;}
-.modal-btns{display:flex;gap:10px;margin-top:25px;position:sticky;bottom:0;background:var(--surface);padding-top:10px;}
-#exportText{width:100%;height:300px;background:#000;color:#0f0;font-family:monospace;font-size:10px;padding:12px;border-radius:6px;border:none;margin-bottom:15px;}
+.form-group label{display:block;font-size:11px;color:var(--muted);margin-bottom:5px;}
+.form-group input,.form-group select,.form-group textarea{width:100%;background:var(--bg);border:1px solid var(--border);color:var(--text);padding:12px;border-radius:8px;font-size:15px;outline:none;}
+.img-box{border:2px dashed var(--border);padding:15px;text-align:center;border-radius:10px;cursor:pointer;}
+#imgPreview{width:100%;height:120px;object-fit:contain;margin-top:10px;display:none;}
+#imgPreview.active{display:block;}
 </style>
 </head>
 <body>
 
 <header>
-  <div class="header-name">1048 Web Administration</div>
+  <div style="font-family:'Shippori Mincho';font-size:18px;font-weight:800;color:var(--accent);">1048 LIVE ADMIN</div>
   <div class="admin-toolbar">
     <button class="btn" onclick="openProfileModal()">👤 プロフィール</button>
-    <button class="btn primary" onclick="openLiveModal()">➕ 新規追加</button>
+    <button class="btn primary" onclick="openLiveModal()">➕ ライブ追加</button>
     <button class="btn success" id="btnExport">🚀 コード出力</button>
   </div>
 </header>
@@ -66,164 +48,133 @@ main{padding:20px 14px 100px;max-width:800px;margin:0 auto;}
 
 <div class="modal" id="liveModal">
   <div class="modal-content">
-    <h2 class="modal-h2" id="liveModalTitle">実績の登録</h2>
-    <input type="hidden" id="editYear">
-    <input type="hidden" id="editIndex">
+    <h3 style="margin-bottom:15px;font-size:16px;">ライブ実績の登録</h3>
+    <input type="hidden" id="editYear"><input type="hidden" id="editIndex">
     <div class="form-group">
-      <label>サムネイル (タップしてアップロード)</label>
-      <div class="image-upload-area" onclick="document.getElementById('fileInput').click()">
-        <span style="font-size:12px;">📁 画像を選択</span>
+      <label>サムネイル画像</label>
+      <div class="img-box" onclick="document.getElementById('fileInput').click()">
+        <span style="font-size:12px;color:var(--accent);">📷 画像を選択</span>
         <input type="file" id="fileInput" hidden accept="image/*">
-        <img id="imgPreview" class="image-preview-large">
+        <img id="imgPreview">
       </div>
-      <input type="text" id="lThumb" placeholder="またはURLを入力">
+      <input type="hidden" id="lThumb">
     </div>
-    <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
-      <div class="form-group"><label>開催年</label><input type="number" id="lYear" value="2026"></div>
-      <div class="form-group"><label>日付 (MM/DD)</label><input type="text" id="lDate"></div>
-    </div>
-    <div class="form-group"><label>イベント名</label><input type="text" id="lTitle"></div>
+    <div class="form-group"><label>開催日（カレンダーから選択）</label><input type="date" id="lFullDate"></div>
+    <div class="form-group"><label>イベントタイトル</label><input type="text" id="lTitle"></div>
     <div class="form-group"><label>役割</label><select id="lRole"><option value="主催">主催</option><option value="運営">運営</option><option value="運営補佐">運営補佐</option><option value="運営スタッフ">運営スタッフ</option></select></div>
-    <div class="form-group"><label>形式</label><input type="text" id="lFormat"></div>
-    <div class="form-group"><label>告知リンク</label><input type="text" id="lLink"></div>
-    <div class="form-group" style="display:flex;gap:10px;align-items:center;background:var(--surface2);padding:10px;border-radius:6px;">
-      <input type="checkbox" id="lUpcoming" style="width:20px;height:20px;">
-      <label style="margin:0;">今後開催として表示</label>
+    <div class="form-group"><label>形式</label><input type="text" id="lFormat" placeholder="例：2部制インスト"></div>
+    <div class="form-group"><label>告知リンクURL</label><input type="text" id="lLink"></div>
+    <div class="form-group" style="display:flex;gap:10px;align-items:center;background:var(--surface2);padding:12px;border-radius:10px;">
+      <input type="checkbox" id="lUpcoming" style="width:22px;height:22px;">
+      <label style="margin:0;font-weight:bold;">今後開催（UPCOMING）として表示</label>
     </div>
-    <div class="modal-btns">
+    <div style="display:flex;gap:10px;margin-top:20px;">
       <button class="btn" onclick="closeLiveModal()" style="flex:1;">戻る</button>
-      <button class="btn primary" id="btnSaveLive" style="flex:2;">保存する</button>
-    </div>
-  </div>
-</div>
-
-<div class="modal" id="profileModal">
-  <div class="modal-content">
-    <h2 class="modal-h2">プロフィール設定</h2>
-    <div class="form-group"><label>名前</label><input type="text" id="hName"></div>
-    <div class="form-group"><label>肩書き</label><input type="text" id="hSub"></div>
-    <div class="form-group"><label>自己紹介</label><textarea id="hDesc" style="height:100px;"></textarea></div>
-    <div class="form-group"><label>Twitter URL</label><input type="text" id="hTwitter"></div>
-    
-    <h2 class="modal-h2" style="margin-top:30px; border-top:1px solid var(--border); padding-top:20px;">
-      ツール販売設定
-      <button class="btn small primary" onclick="addToolField()">＋ 追加</button>
-    </h2>
-    <div id="toolInputsContainer"></div>
-
-    <div class="modal-btns">
-      <button class="btn" onclick="document.getElementById('profileModal').classList.remove('open')" style="flex:1;">戻る</button>
-      <button class="btn primary" id="btnSaveProfile" style="flex:2;">保存する</button>
+      <button class="btn primary" id="btnSaveLive" style="flex:2;">保存して更新</button>
     </div>
   </div>
 </div>
 
 <div class="modal" id="exportModal">
-  <div class="modal-content" style="max-width:700px;">
-    <h2 class="modal-h2">出力コード</h2>
-    <textarea id="exportText" readonly></textarea>
-    <button class="btn primary" id="copyBtn" style="width:100%; padding:15px; font-weight:bold;">📋 コピーする</button>
-    <button class="btn" style="width:100%; margin-top:10px;" onclick="document.getElementById('exportModal').classList.remove('open')">閉じる</button>
+  <div class="modal-content">
+    <h3 style="margin-bottom:10px;">出力コード</h3>
+    <textarea id="exportText" style="width:100%;height:200px;font-size:10px;background:#000;color:#0f0;padding:10px;border-radius:8px;border:none;" readonly></textarea>
+    <button class="btn primary" id="copyBtn" style="width:100%;padding:15px;margin-top:10px;">📋 コピーして完了</button>
   </div>
 </div>
 
 <script>
-// --- ライブ実績データ ---
-let SITE_DATA = {"profile":{"avatar":"https://prd.resource-api.lit.link/images/creator/b1410259-7a64-4f70-a926-c804ecc40caa/fa63f601-cce9-49d0-a822-e24829268e85.jpg","name":"1048ライブ運営/ツール販売","sub":"Live Event Producer","desc":"2012年~2020年まで歌い手として活動。\n2015年~現在に至るまで\n約100本のライブ主催と運営を担当しました。\n\n運営/スタッフのご依頼はお気軽にお声掛けください。\n運営依頼につきましてはライブ予算管理も行う為、\n予算に合わせた料金設定が可能です。","role1":"準備〜当日終了まで全て","role2":"ライブハウス予約/予算管理/当日進行","role3":"準備サポート・当日進行全般","role4":"当日スタッフリーダー","contact":"toshiya1227@live.jp","booth":"https://1048bp.booth.pm/","twitter":"https://x.com/toshiyanman1227","tools":[{"icon":"📋","name":"運営ツール","note":"ライブ主催者向けアプリ","url":"https://1048bp.booth.pm/"},{"icon":"🎵","name":"LiveMemory","note":"リスナー向けアプリ","url":"https://1048bp.booth.pm/"}]},"lives":{"2023":[{"date":"11/23","role":"運営","title":"Good Meat Good Meet","organizer":"主催：mira様","format":"2部制インスト","link":"https://twitter.com/gmgm_2023","thumb":"https://prd.resource-api.lit.link/images/creators/76150ddb-9865-485a-9dcf-a7dc3b02b767/c4b261f0-6561-40a0-9a8d-5e0e0e29c9d6.jpeg"}],"2024":[{"date":"1/20","role":"運営","title":"みんなでパジャマパーティ","organizer":"主催：安眠まくら様","format":"1部制インスト/配信有","link":"https://twitter.com/maku_live","thumb":"https://prd.resource-api.lit.link/images/creators/76150ddb-9865-485a-9dcf-a7dc3b02b767/8cb1c7dc-3f79-4df5-af6d-f75f5d7e1566.jpeg"},{"date":"3/2","role":"運営","title":"謳歌〜ファンファーレ〜","organizer":"主催：のっつ様","format":"1部制インスト","link":"","thumb":"https://prd.resource-api.lit.link/images/creators/76150ddb-9865-485a-9dcf-a7dc3b02b767/16604dee-23b1-47b2-9d42-547c5d7e61c4.jpeg"},{"date":"4/29","role":"運営","title":"CLOVER PLAYHOUSE","organizer":"主催：あるま様","format":"1部制インスト","link":"https://twitter.com/clovers_info","thumb":"https://prd.resource-api.lit.link/images/creators/76150ddb-9865-485a-9dcf-a7dc3b02b767/294471e2-4e8c-424b-95f7-c3cfa90a0126.png"},{"date":"6/1","role":"運営","title":"GMGM -calm echoes day-","organizer":"主催：mira様","format":"1部制インスト/アコースティック","link":"https://twitter.com/gmgm_2023","thumb":"https://prd.resource-api.lit.link/images/creators/76150ddb-9865-485a-9dcf-a7dc3b02b767/14210640-10d5-4cec-b110-64dffdd6a52d.jpeg"},{"date":"8/17","role":"主催","title":"Unison","organizer":"","format":"1部制インスト","link":"https://twitter.com/liveunison_info","thumb":"https://prd.resource-api.lit.link/images/creators/76150ddb-9865-485a-9dcf-a7dc3b02b767/ac1d6e3d-c7c5-4a05-92fc-88830c02860e.png"},{"date":"9/28","role":"主催","title":"古-壱-","organizer":"","format":"2部制インスト","link":"https://twitter.com/info_inishie","thumb":"https://prd.resource-api.lit.link/images/creators/76150ddb-9865-485a-9dcf-a7dc3b02b767/9ab3089d-6bcf-4cc7-8ac7-f861f94fc57a.jpeg"},{"date":"10/15","role":"運営補佐","title":"SIGNAL","organizer":"主催：Ampel様","format":"1部制インスト/配信有","link":"https://twitter.com/Ampelfcy_SIGNAL","thumb":"https://prd.resource-api.lit.link/images/creators/76150ddb-9865-485a-9dcf-a7dc3b02b767/948543a9-5781-4347-8e23-896c56e83761.png"},{"date":"11/25","role":"運営","title":"Good Meat Good Meet 2","organizer":"主催：mira様","format":"2部制インスト/配信有","link":"https://twitter.com/gmgm_2023","thumb":"https://prd.resource-api.lit.link/images/creators/76150ddb-9865-485a-9dcf-a7dc3b02b767/b0c7ca9b-290e-4ad0-995f-fb26d87b34e8.jpeg"},{"date":"12/15","role":"運営","title":"Floralia -Camelia-","organizer":"主催：紡様","format":"1部制インスト","link":"https://twitter.com/Floralia_sg","thumb":"https://prd.resource-api.lit.link/images/creators/76150ddb-9865-485a-9dcf-a7dc3b02b767/5f95b4e5-d731-4f18-8eeb-96770ec967fa.jpeg"}],"2025":[{"date":"1/25","role":"運営","title":"みんなでパジャマパーティ 2","organizer":"主催：安眠まくら様","format":"2部制インスト/配信有","link":"https://twitter.com/maku_live","thumb":"https://prd.resource-api.lit.link/images/creators/76150ddb-9865-485a-9dcf-a7dc3b02b767/81341d32-7e8f-4f59-8a88-7a29de241666.jpeg"},{"date":"2/8","role":"主催","title":"古-弐-","organizer":"","format":"2部制インスト/バンド","link":"https://twitter.com/info_inishie","thumb":"https://prd.resource-api.lit.link/images/creators/76150ddb-9865-485a-9dcf-a7dc3b02b767/b0c7ca9b-290e-4ad0-995f-fb26d87b34e8.jpeg"},{"date":"4/26","role":"運営","title":"CLOVER PLAYHOUSE 2","organizer":"主催：LamL_Chop様","format":"2部制インスト","link":"https://twitter.com/clovers_info","thumb":"https://prd.resource-api.lit.link/images/creators/76150ddb-9865-485a-9dcf-a7dc3b02b767/b5d5b201-1224-4172-8522-e5f39a5dc55a.jpeg"},{"date":"5/11","role":"運営スタッフ","title":"＋α (ぷらすあるふぁ)","organizer":"主催：あさぎ様","format":"2部制インスト","link":"https://twitter.com/plus10arufa","thumb":"https://prd.resource-api.lit.link/images/creators/76150ddb-9865-485a-9dcf-a7dc3b02b767/aa9dce0e-1065-4357-a00f-f1806c307007.jpeg"},{"date":"5/17","role":"主催","title":"Unison 2","organizer":"","format":"2部制インスト","link":"https://twitter.com/liveunison_info","thumb":"https://prd.resource-api.lit.link/images/creators/76150ddb-9865-485a-9dcf-a7dc3b02b767/106ad0c0-69de-4a6b-a157-21bd85b4d027.jpeg"},{"date":"8/23","role":"運営スタッフ","title":"FLASH","organizer":"主催：あさぎ様","format":"2部制インスト","link":"https://twitter.com/FLASH823_","thumb":"https://prd.resource-api.lit.link/images/creators/76150ddb-9865-485a-9dcf-a7dc3b02b767/profile_links/buttons/0cec54c4-815b-4cf1-b439-1f0245fc34e7.jpeg"},{"date":"10/12","role":"主催","title":"みにしえ-壱-","organizer":"","format":"1部制インスト","link":"","thumb":"https://prd.resource-api.lit.link/images/creators/76150ddb-9865-485a-9dcf-a7dc3b02b767/profile_links/buttons/37285f86-cd13-452b-bd21-ceeb498fc89c.png"},{"date":"12/20","role":"運営","title":"Bar Ecrin","organizer":"主催：洒落様","format":"1部制インスト","link":"","thumb":"https://prd.resource-api.lit.link/images/creators/76150ddb-9865-485a-9dcf-a7dc3b02b767/profile_links/buttons/6bc7535d-480c-4b2c-8723-2c045552d6aa.jpeg"}],"2026":[{"date":"1/31","role":"主催","title":"古-参-","organizer":"","format":"2部制インスト/バンド","link":"https://twitter.com/info_inishie","thumb":"https://prd.resource-api.lit.link/images/creators/76150ddb-9865-485a-9dcf-a7dc3b02b767/profile_links/buttons/2a9beb5c-3a71-4e1d-94b9-d0c3ed5a9d81.jpeg"},{"date":"2/22","role":"運営スタッフ","title":"DPMN","organizer":"主催：らりー様","format":"2部制インスト/バンド","link":"","thumb":"https://prd.resource-api.lit.link/images/creators/76150ddb-9865-485a-9dcf-a7dc3b02b767/profile_links/buttons/907fcc14-4049-47b9-ba4f-a7240b9cc39a.jpeg"},{"date":"4/11","role":"運営","title":"オトヲアビロ vol.1","organizer":"主催：ウトガワ様","format":"2部制インスト/バンド","link":"https://twitter.com/otoabi_live_","thumb":"https://prd.resource-api.lit.link/images/creators/76150ddb-9865-485a-9dcf-a7dc3b02b767/profile_links/buttons/3d5ddd75-7cc3-40cc-bd91-17db7a7e17af.jpeg"},{"date":"5/16","role":"主催","title":"Unison Final","organizer":"","format":"2部制インスト","link":"https://twitter.com/liveunison_info","thumb":"https://prd.resource-api.lit.link/images/creators/76150ddb-9865-485a-9dcf-a7dc3b02b767/profile_links/buttons/e981f470-f417-4050-8021-f13e9b87946c.jpeg","upcoming":true},{"date":"7/11","role":"運営","title":"（調整中）","organizer":"","format":"","link":"","thumb":"","upcoming":true},{"date":"7/19","role":"主催","title":"Osiri.Chorus.Project -Encore-","organizer":"","format":"1部制インスト","link":"https://twitter.com/OCP0318","thumb":"https://prd.resource-api.lit.link/images/creators/76150ddb-9865-485a-9dcf-a7dc3b02b767/profile_links/buttons/8529647c-ac2c-4659bd36df0b.png","upcoming":true},{"date":"9/20-21","role":"主催","title":"みにしえ-?-","organizer":"","format":"2days インスト","link":"https://twitter.com/info_inishie","thumb":"","upcoming":true},{"date":"10/17","role":"主催","title":"古-終-","organizer":"","format":"2部制バンド","link":"https://twitter.com/info_inishie","thumb":"","upcoming":true}]}};
+// --- 初期データ ---
+let SITE_DATA = {"profile":{"name":"1048ライブ運営/ツール販売","sub":"Live Event Producer","desc":"2015年~現在に至るまで約100本のライブ主催と運営を担当しました。","twitter":"https://x.com/toshiyanman1227","tools":[]},"lives":{"2023":[],"2024":[],"2025":[],"2026":[]}};
 
-// --- 復元 ---
-const stored = localStorage.getItem('1048_admin_v4');
+const stored = localStorage.getItem('1048_admin_v5');
 if(stored) SITE_DATA = JSON.parse(stored);
 
-function saveAll() {
-  localStorage.setItem('1048_admin_v4', JSON.stringify(SITE_DATA));
-}
+function saveAll() { localStorage.setItem('1048_admin_v5', JSON.stringify(SITE_DATA)); }
 
-// --- ライブ管理 ---
+const getDayW = (dStr) => {
+  const days = ["日","月","火","水","木","金","土"];
+  return days[new Date(dStr).getDay()];
+};
+
 function renderLiveList() {
   const container = document.getElementById('liveListContainer');
   container.innerHTML = '';
   const years = Object.keys(SITE_DATA.lives).sort((a,b)=>b-a);
   
   years.forEach(year => {
-    container.innerHTML += `<div class="section-title">${year}年 実績</div><div class="live-list" id="list-${year}"></div>`;
-    const list = document.getElementById(`list-${year}`);
-    
-    SITE_DATA.lives[year].forEach((live, idx) => {
-      const item = document.createElement('div');
-      item.className = 'live-item';
-      item.innerHTML = `
-        <img src="${live.thumb || ''}" class="live-thumb-preview">
-        <div class="live-info">
-          <div class="live-info-title">${live.title || '無題'}</div>
-          <div class="live-info-sub"><span>${live.date}</span><span>${live.role}</span>${live.upcoming?'<span style="color:var(--accent2)">★予約</span>':''}</div>
-        </div>
-        <div class="item-actions">
-           <button class="btn small primary edit-trigger" data-year="${year}" data-idx="${idx}">編集</button>
-           <button class="btn small delete-trigger" data-year="${year}" data-idx="${idx}" style="color:var(--accent2); border:none; background:none;">削除</button>
-        </div>
-      `;
-      list.appendChild(item);
+    // 日付順にソート（新しい順）
+    SITE_DATA.lives[year].sort((a,b) => {
+        const da = a.fullDate || `2000-01-01`;
+        const db = b.fullDate || `2000-01-01`;
+        return new Date(db) - new Date(da);
     });
-  });
 
-  // イベントリスナーの一括登録 (スマホ反応改善)
-  document.querySelectorAll('.edit-trigger').forEach(el => {
-    const editFn = () => editLive(el.dataset.year, el.dataset.idx);
-    el.addEventListener('click', editFn);
-    el.addEventListener('touchend', (e) => { e.preventDefault(); editFn(); });
-  });
-  
-  document.querySelectorAll('.delete-trigger').forEach(el => {
-    const delFn = () => deleteLive(el.dataset.year, el.dataset.idx);
-    el.addEventListener('click', delFn);
-    el.addEventListener('touchend', (e) => { e.preventDefault(); delFn(); });
+    if(SITE_DATA.lives[year].length > 0) {
+      container.innerHTML += `<div class="section-title">${year}年</div><div id="list-${year}"></div>`;
+      const list = document.getElementById(`list-${year}`);
+      SITE_DATA.lives[year].forEach((live, idx) => {
+        const item = document.createElement('div');
+        item.className = 'live-item';
+        item.innerHTML = `
+          <img src="${live.thumb || ''}" class="live-thumb-preview">
+          <div class="live-info">
+            <div class="live-info-title">${live.title}</div>
+            <div class="live-info-sub">${live.date}(${getDayW(live.fullDate)}) | ${live.role}${live.upcoming?'<span class="tag-upcoming">今後開催</span>':''}</div>
+          </div>
+          <button class="btn small" onclick="editLive('${year}', ${idx})">編集</button>
+        `;
+        list.appendChild(item);
+      });
+    }
   });
 }
 
 function openLiveModal() {
-  document.getElementById('liveModalTitle').textContent = '実績の追加';
   document.getElementById('editYear').value = '';
-  document.getElementById('editIndex').value = '';
+  document.getElementById('lThumb').value = '';
   document.getElementById('imgPreview').classList.remove('active');
-  ['lThumb','lTitle','lDate','lFormat','lLink'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('lFullDate').value = new Date().toISOString().split('T')[0];
+  ['lTitle','lFormat','lLink'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('lUpcoming').checked = false;
   document.getElementById('liveModal').classList.add('open');
 }
 
 function editLive(year, idx) {
   const live = SITE_DATA.lives[year][idx];
-  document.getElementById('liveModalTitle').textContent = '実績の編集';
   document.getElementById('editYear').value = year;
   document.getElementById('editIndex').value = idx;
-  document.getElementById('lYear').value = year;
-  document.getElementById('lDate').value = live.date;
+  document.getElementById('lFullDate').value = live.fullDate || "";
   document.getElementById('lTitle').value = live.title;
   document.getElementById('lRole').value = live.role;
   document.getElementById('lFormat').value = live.format;
   document.getElementById('lLink').value = live.link;
-  document.getElementById('lThumb').value = live.thumb;
+  document.getElementById('lThumb').value = live.thumb || "";
   document.getElementById('lUpcoming').checked = !!live.upcoming;
   
-  const img = document.getElementById('imgPreview');
-  if(live.thumb) { img.src = live.thumb; img.classList.add('active'); }
-  else { img.classList.remove('active'); }
+  if(live.thumb) {
+    document.getElementById('imgPreview').src = live.thumb;
+    document.getElementById('imgPreview').classList.add('active');
+  }
   document.getElementById('liveModal').classList.add('open');
 }
 
-document.getElementById('btnSaveLive').addEventListener('click', saveLiveHandler);
-document.getElementById('btnSaveLive').addEventListener('touchend', (e) => { e.preventDefault(); saveLiveHandler(); });
-
-function saveLiveHandler() {
-  const year = document.getElementById('lYear').value;
+document.getElementById('btnSaveLive').addEventListener('click', () => {
+  const fDate = document.getElementById('lFullDate').value;
+  if(!fDate) return alert("日付を選択してください");
+  
+  const dObj = new Date(fDate);
+  const year = dObj.getFullYear().toString();
+  const dateStr = `${dObj.getMonth()+1}/${dObj.getDate()}`;
+  
   const oldYear = document.getElementById('editYear').value;
   const oldIdx = document.getElementById('editIndex').value;
 
   const data = {
-    date: document.getElementById('lDate').value,
+    date: dateStr,
+    fullDate: fDate,
     role: document.getElementById('lRole').value,
     title: document.getElementById('lTitle').value,
-    organizer: "",
     format: document.getElementById('lFormat').value,
     link: document.getElementById('lLink').value,
     thumb: document.getElementById('lThumb').value,
@@ -232,100 +183,38 @@ function saveLiveHandler() {
 
   if(oldIdx !== '') {
     SITE_DATA.lives[oldYear].splice(oldIdx, 1);
-    if(SITE_DATA.lives[oldYear].length === 0) delete SITE_DATA.lives[oldYear];
   }
   if(!SITE_DATA.lives[year]) SITE_DATA.lives[year] = [];
-  SITE_DATA.lives[year].unshift(data);
+  SITE_DATA.lives[year].push(data);
   
   saveAll(); renderLiveList(); closeLiveModal();
-}
+});
 
-function deleteLive(year, idx) {
-  if(confirm('この実績を削除しますか？')) {
-    SITE_DATA.lives[year].splice(idx, 1);
-    if(SITE_DATA.lives[year].length === 0) delete SITE_DATA.lives[year];
-    saveAll(); renderLiveList();
-  }
-}
-
-function closeLiveModal() { document.getElementById('liveModal').classList.remove('open'); }
-
-// --- ツール管理 ---
-function addToolField(tool = {icon:'', name:'', note:'', url:''}) {
-  const container = document.getElementById('toolInputsContainer');
-  const div = document.createElement('div');
-  div.className = 'tool-edit-card';
-  div.innerHTML = `
-    <div style="display:grid; grid-template-columns:50px 1fr 1fr; gap:8px; margin-bottom:8px;">
-      <input type="text" placeholder="🎨" class="t-icon" value="${tool.icon}">
-      <input type="text" placeholder="ツール名" class="t-name" value="${tool.name}">
-      <input type="text" placeholder="説明" class="t-note" value="${tool.note}">
-    </div>
-    <input type="text" placeholder="BOOTH URL" class="t-url" value="${tool.url}">
-    <button class="btn small" onclick="this.parentElement.remove()" style="position:absolute; top:5px; right:5px; color:var(--accent2); border:none; background:none;">✕</button>
-  `;
-  container.appendChild(div);
-}
-
-function openProfileModal() {
-  const p = SITE_DATA.profile;
-  document.getElementById('hName').value = p.name;
-  document.getElementById('hSub').value = p.sub;
-  document.getElementById('hDesc').value = p.desc;
-  document.getElementById('hTwitter').value = p.twitter;
-  const container = document.getElementById('toolInputsContainer');
-  container.innerHTML = '';
-  if(p.tools && p.tools.length > 0) p.tools.forEach(t => addToolField(t));
-  else addToolField();
-  document.getElementById('profileModal').classList.add('open');
-}
-
-document.getElementById('btnSaveProfile').addEventListener('click', saveProfileHandler);
-function saveProfileHandler() {
-  const p = SITE_DATA.profile;
-  p.name = document.getElementById('hName').value;
-  p.sub = document.getElementById('hSub').value;
-  p.desc = document.getElementById('hDesc').value;
-  p.twitter = document.getElementById('hTwitter').value;
-  const toolCards = document.querySelectorAll('.tool-edit-card');
-  p.tools = [];
-  toolCards.forEach(card => {
-    const name = card.querySelector('.t-name').value;
-    if(name) p.tools.push({
-      icon: card.querySelector('.t-icon').value,
-      name: name,
-      note: card.querySelector('.t-note').value,
-      url: card.querySelector('.t-url').value
-    });
-  });
-  saveAll();
-  document.getElementById('profileModal').classList.remove('open');
-}
-
-// --- その他 ---
 document.getElementById('fileInput').addEventListener('change', function(e) {
   const file = e.target.files[0];
   if(!file) return;
   const reader = new FileReader();
   reader.onload = ev => {
-    document.getElementById('lThumb').value = ev.target.result;
-    const img = document.getElementById('imgPreview');
-    img.src = ev.target.result; img.classList.add('active');
+    const b64 = ev.target.result;
+    document.getElementById('lThumb').value = b64;
+    document.getElementById('imgPreview').src = b64;
+    document.getElementById('imgPreview').classList.add('active');
   };
   reader.readAsDataURL(file);
 });
 
-document.getElementById('btnExport').addEventListener('click', () => {
+function closeLiveModal() { document.getElementById('liveModal').classList.remove('open'); }
+
+document.getElementById('btnExport').onclick = () => {
   document.getElementById('exportText').value = `const SITE_DATA = ${JSON.stringify(SITE_DATA)};`;
   document.getElementById('exportModal').classList.add('open');
-});
+};
 
-document.getElementById('copyBtn').addEventListener('click', () => {
-  const ta = document.getElementById('exportText');
-  ta.select();
-  document.execCommand('copy');
-  alert('コピーしました！');
-});
+document.getElementById('copyBtn').onclick = () => {
+  navigator.clipboard.writeText(document.getElementById('exportText').value);
+  alert("コピーしました！GitHubのSITE_DATAを書き換えてください。");
+  document.getElementById('exportModal').classList.remove('open');
+};
 
 renderLiveList();
 </script>

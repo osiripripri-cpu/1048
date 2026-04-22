@@ -3,33 +3,34 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>1048 管理画面 PRO v3</title>
+<title>1048ライブ管理ツール - 完全版</title>
 <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@800&family=Noto+Sans+JP:wght@300;500;700&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#0a0a0f;--surface:#13131a;--surface2:#1c1c26;--border:#2a2a38;--accent:#7c6aff;--accent2:#ff6a8a;--text:#e8e6f0;--muted:#6b6880;}
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
-body{background:var(--bg);color:var(--text);font-family:'Noto Sans JP',sans-serif;font-weight:300;min-height:100vh;line-height:1.6;}
-header{position:sticky;top:0;z-index:10;padding:15px;text-align:center;border-bottom:1px solid var(--border);background:rgba(13,13,26,0.8);backdrop-filter:blur(10px);}
-.admin-toolbar{display:flex;justify-content:center;gap:8px;margin-top:10px;}
-.btn{padding:10px 15px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text);font-size:12px;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:6px;touch-action:manipulation;}
+body{background:var(--bg);color:var(--text);font-family:'Noto Sans JP',sans-serif;font-weight:300;min-height:100vh;padding-bottom:100px;}
+header{position:sticky;top:0;z-index:10;padding:15px;text-align:center;border-bottom:1px solid var(--border);background:rgba(13,13,26,0.9);backdrop-filter:blur(10px);}
+.admin-toolbar{display:flex;justify-content:center;gap:8px;margin-top:10px;flex-wrap:wrap;}
+.btn{padding:10px 14px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text);font-size:12px;font-weight:500;cursor:pointer;display:flex;align-items:center;gap:6px;touch-action:manipulation;}
 .btn.primary{background:var(--accent);border-color:var(--accent);color:#fff;}
 .btn.success{background:var(--accent2);border-color:var(--accent2);color:#fff;}
-main{padding:10px 15px 100px;max-width:600px;margin:0 auto;}
-.section-title{font-size:12px;color:var(--muted);margin:25px 0 10px;display:flex;align-items:center;gap:10px;}
+main{padding:10px 15px;max-width:600px;margin:0 auto;}
+.section-title{font-size:12px;color:var(--muted);margin:25px 0 10px;display:flex;align-items:center;gap:10px;font-weight:700;}
 .section-title::after{content:'';flex:1;height:1px;background:var(--border);}
-.live-item{background:var(--surface);border:1px solid var(--border);padding:12px;border-radius:12px;display:grid;grid-template-columns:60px 1fr auto;gap:12px;align-items:center;margin-bottom:8px;}
+.live-item{background:var(--surface);border:1px solid var(--border);padding:12px;border-radius:12px;display:grid;grid-template-columns:60px 1fr auto;gap:12px;align-items:center;margin-bottom:10px;}
 .live-thumb-preview{width:60px;height:60px;background:#000;border-radius:6px;object-fit:cover;}
-.live-info-title{font-size:14px;font-weight:700;margin-bottom:2px;}
+.live-info-title{font-size:14px;font-weight:700;margin-bottom:2px;line-height:1.2;}
 .live-info-sub{font-size:11px;color:var(--muted);}
-.tag-upcoming{display:inline-block;padding:2px 6px;background:rgba(255,106,138,0.15);color:var(--accent2);border-radius:4px;font-size:10px;font-weight:700;margin-left:5px;}
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:100;display:none;align-items:center;justify-content:center;padding:15px;backdrop-filter:blur(8px);}
+.tag-upcoming{display:inline-block;padding:2px 6px;background:rgba(255,106,138,0.2);color:var(--accent2);border-radius:4px;font-size:10px;font-weight:700;margin-left:5px;}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:100;display:none;align-items:center;justify-content:center;padding:15px;backdrop-filter:blur(10px);}
 .modal.open{display:flex;}
 .modal-content{background:var(--surface);border:1px solid var(--border);width:100%;max-width:450px;padding:20px;border-radius:16px;max-height:90vh;overflow-y:auto;}
 .form-group{margin-bottom:15px;}
-.form-group label{display:block;font-size:11px;color:var(--muted);margin-bottom:5px;}
-.form-group input,.form-group select,.form-group textarea{width:100%;background:var(--bg);border:1px solid var(--border);color:var(--text);padding:12px;border-radius:8px;font-size:15px;outline:none;}
-.img-box{border:2px dashed var(--border);padding:15px;text-align:center;border-radius:10px;cursor:pointer;}
-#imgPreview{width:100%;height:120px;object-fit:contain;margin-top:10px;display:none;}
+.form-group label{display:block;font-size:11px;color:var(--muted);margin-bottom:5px;font-weight:700;}
+.form-group input,.form-group select,.form-group textarea{width:100%;background:var(--bg);border:1px solid var(--border);color:var(--text);padding:12px;border-radius:8px;font-size:15px;outline:none;font-family:inherit;}
+.tool-card{background:var(--surface2);padding:12px;border-radius:10px;margin-bottom:10px;border:1px solid var(--border);position:relative;}
+.img-box{border:2px dashed var(--border);padding:15px;text-align:center;border-radius:10px;cursor:pointer;margin-bottom:10px;}
+#imgPreview{width:100%;max-height:150px;object-fit:contain;margin-top:10px;display:none;}
 #imgPreview.active{display:block;}
 </style>
 </head>
@@ -38,9 +39,9 @@ main{padding:10px 15px 100px;max-width:600px;margin:0 auto;}
 <header>
   <div style="font-family:'Shippori Mincho';font-size:18px;font-weight:800;color:var(--accent);">1048 LIVE ADMIN</div>
   <div class="admin-toolbar">
-    <button class="btn" onclick="openProfileModal()">👤 プロフィール</button>
-    <button class="btn primary" onclick="openLiveModal()">➕ ライブ追加</button>
-    <button class="btn success" id="btnExport">🚀 コード出力</button>
+    <button class="btn" id="btnProfile">👤 プロフィール</button>
+    <button class="btn primary" id="btnNewLive">➕ ライブ追加</button>
+    <button class="btn success" id="btnExport">🚀 全コード出力</button>
   </div>
 </header>
 
@@ -48,175 +49,223 @@ main{padding:10px 15px 100px;max-width:600px;margin:0 auto;}
 
 <div class="modal" id="liveModal">
   <div class="modal-content">
-    <h3 style="margin-bottom:15px;font-size:16px;">ライブ実績の登録</h3>
+    <h3 style="margin-bottom:15px;color:var(--accent);">ライブ情報の編集</h3>
     <input type="hidden" id="editYear"><input type="hidden" id="editIndex">
     <div class="form-group">
-      <label>サムネイル画像</label>
+      <label>画像</label>
       <div class="img-box" onclick="document.getElementById('fileInput').click()">
-        <span style="font-size:12px;color:var(--accent);">📷 画像を選択</span>
+        <span style="font-size:12px;">📷 タップして画像を選択</span>
         <input type="file" id="fileInput" hidden accept="image/*">
         <img id="imgPreview">
       </div>
-      <input type="hidden" id="lThumb">
+      <input type="text" id="lThumb" placeholder="または画像URLを貼り付け" style="font-size:11px;">
     </div>
-    <div class="form-group"><label>開催日（カレンダーから選択）</label><input type="date" id="lFullDate"></div>
-    <div class="form-group"><label>イベントタイトル</label><input type="text" id="lTitle"></div>
+    <div class="form-group"><label>開催日</label><input type="date" id="lFullDate"></div>
+    <div class="form-group"><label>イベント名</label><input type="text" id="lTitle"></div>
     <div class="form-group"><label>役割</label><select id="lRole"><option value="主催">主催</option><option value="運営">運営</option><option value="運営補佐">運営補佐</option><option value="運営スタッフ">運営スタッフ</option></select></div>
-    <div class="form-group"><label>形式</label><input type="text" id="lFormat" placeholder="例：2部制インスト"></div>
-    <div class="form-group"><label>告知リンクURL</label><input type="text" id="lLink"></div>
+    <div class="form-group"><label>形式</label><input type="text" id="lFormat" placeholder="例: 2部制インスト/バンド"></div>
+    <div class="form-group"><label>リンク (Xなど)</label><input type="text" id="lLink"></div>
     <div class="form-group" style="display:flex;gap:10px;align-items:center;background:var(--surface2);padding:12px;border-radius:10px;">
       <input type="checkbox" id="lUpcoming" style="width:22px;height:22px;">
-      <label style="margin:0;font-weight:bold;">今後開催（UPCOMING）として表示</label>
+      <label style="margin:0;">今後開催予定（UPCOMING）</label>
     </div>
     <div style="display:flex;gap:10px;margin-top:20px;">
-      <button class="btn" onclick="closeLiveModal()" style="flex:1;">戻る</button>
-      <button class="btn primary" id="btnSaveLive" style="flex:2;">保存して更新</button>
+      <button class="btn" onclick="closeModal('liveModal')" style="flex:1;">戻る</button>
+      <button class="btn primary" id="btnSaveLive" style="flex:2;">保存する</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="profileModal">
+  <div class="modal-content">
+    <h3 style="margin-bottom:15px;color:var(--accent);">プロフィール・ツール編集</h3>
+    <div class="form-group"><label>名前</label><input type="text" id="pName"></div>
+    <div class="form-group"><label>肩書き</label><input type="text" id="pSub"></div>
+    <div class="form-group"><label>自己紹介</label><textarea id="pDesc" rows="4"></textarea></div>
+    <div class="form-group"><label>Twitter URL</label><input type="text" id="pTwitter"></div>
+    
+    <div style="border-top:1px solid var(--border);padding-top:15px;">
+      <label style="font-size:11px;color:var(--muted);">ツール販売 (BOOTHなど)</label>
+      <div id="toolList"></div>
+      <button class="btn small" onclick="addToolField()" style="margin-top:10px;">＋ ツール追加</button>
+    </div>
+
+    <div style="display:flex;gap:10px;margin-top:20px;">
+      <button class="btn" onclick="closeModal('profileModal')" style="flex:1;">戻る</button>
+      <button class="btn primary" id="btnSaveProfile" style="flex:2;">保存する</button>
     </div>
   </div>
 </div>
 
 <div class="modal" id="exportModal">
-  <div class="modal-content">
-    <h3 style="margin-bottom:10px;">出力コード</h3>
-    <textarea id="exportText" style="width:100%;height:200px;font-size:10px;background:#000;color:#0f0;padding:10px;border-radius:8px;border:none;" readonly></textarea>
-    <button class="btn primary" id="copyBtn" style="width:100%;padding:15px;margin-top:10px;">📋 コピーして完了</button>
+  <div class="modal-content" style="max-width:600px;">
+    <h3 style="margin-bottom:10px;">全コード出力</h3>
+    <p style="font-size:11px;color:var(--muted);margin-bottom:10px;">下のコードをすべてコピーして、GitHubの index.html を丸ごと上書きしてください。</p>
+    <textarea id="exportText" style="width:100%;height:300px;font-size:10px;background:#000;color:#0f0;padding:10px;border-radius:8px;border:none;white-space:pre;" readonly></textarea>
+    <button class="btn primary" id="copyBtn" style="width:100%;padding:15px;margin-top:10px;">📋 まるごとコピーする</button>
+    <button class="btn" onclick="closeModal('exportModal')" style="width:100%;margin-top:5px;">閉じる</button>
   </div>
 </div>
 
 <script>
-// --- 初期データ ---
-let SITE_DATA = {"profile":{"name":"1048ライブ運営/ツール販売","sub":"Live Event Producer","desc":"2015年~現在に至るまで約100本のライブ主催と運営を担当しました。","twitter":"https://x.com/toshiyanman1227","tools":[]},"lives":{"2023":[],"2024":[],"2025":[],"2026":[]}};
+// --- 過去の全ライブデータをセット ---
+let SITE_DATA = {"profile":{"avatar":"https://prd.resource-api.lit.link/images/creator/b1410259-7a64-4f70-a926-c804ecc40caa/fa63f601-cce9-49d0-a822-e24829268e85.jpg","name":"1048ライブ運営/ツール販売","sub":"Live Event Producer","desc":"2012年~2020年まで歌い手として活動。\n2015年~現在に至るまで\n約100本のライブ主催と運営を担当しました。\n\n運営/スタッフのご依頼はお気軽にお声掛けください。","twitter":"https://x.com/toshiyanman1227","tools":[{"icon":"📋","name":"運営ツール","note":"ライブ主催者向けアプリ","url":"https://1048bp.booth.pm/"},{"icon":"🎵","name":"LiveMemory","note":"リスナー向けアプリ","url":"https://1048bp.booth.pm/"}]},"lives":{"2023":[{"date":"11/23","fullDate":"2023-11-23","role":"運営","title":"Good Meat Good Meet","format":"2部制インスト","link":"https://twitter.com/gmgm_2023","thumb":"https://prd.resource-api.lit.link/images/creators/76150ddb-9865-485a-9dcf-a7dc3b02b767/c4b261f0-6561-40a0-9a8d-5e0e0e29c9d6.jpeg"}],"2024":[{"date":"1/20","fullDate":"2024-01-20","role":"運営","title":"みんなでパジャマパーティ","format":"1部制インスト/配信有","link":"https://twitter.com/maku_live","thumb":"https://prd.resource-api.lit.link/images/creators/76150ddb-9865-485a-9dcf-a7dc3b02b767/8cb1c7dc-3f79-4df5-af6d-f75f5d7e1566.jpeg"},{"date":"3/2","fullDate":"2024-03-02","role":"運営","title":"謳歌〜ファンファーレ〜","format":"1部制インスト","link":"","thumb":"https://prd.resource-api.lit.link/images/creators/76150ddb-9865-485a-9dcf-a7dc3b02b767/16604dee-23b1-47b2-9d42-547c5d7e61c4.jpeg"},{"date":"8/17","fullDate":"2024-08-17","role":"主催","title":"Unison","format":"1部制インスト","link":"","thumb":"https://prd.resource-api.lit.link/images/creators/76150ddb-9865-485a-9dcf-a7dc3b02b767/ac1d6e3d-c7c5-4a05-92fc-88830c02860e.png"}],"2025":[{"date":"2/8","fullDate":"2025-02-08","role":"主催","title":"古-弐-","format":"2部制インスト/バンド","link":"","thumb":"https://prd.resource-api.lit.link/images/creators/76150ddb-9865-485a-9dcf-a7dc3b02b767/b0c7ca9b-290e-4ad0-995f-fb26d87b34e8.jpeg"}],"2026":[{"date":"5/16","fullDate":"2026-05-16","role":"主催","title":"Unison Final","format":"2部制インスト","link":"","upcoming":true},{"date":"10/17","fullDate":"2026-10-17","role":"主催","title":"古-終-","format":"2部制バンド","upcoming":true}]}};
 
-const stored = localStorage.getItem('1048_admin_v5');
-if(stored) SITE_DATA = JSON.parse(stored);
+// 保存データの読み込み
+const saved = localStorage.getItem('1048_master_data');
+if(saved) SITE_DATA = JSON.parse(saved);
 
-function saveAll() { localStorage.setItem('1048_admin_v5', JSON.stringify(SITE_DATA)); }
+function saveToStorage() { localStorage.setItem('1048_master_data', JSON.stringify(SITE_DATA)); }
 
-const getDayW = (dStr) => {
-  const days = ["日","月","火","水","木","金","土"];
-  return days[new Date(dStr).getDay()];
-};
+// --- リスト表示 ---
+function getDay(d) { return ["日","月","火","水","木","金","土"][new Date(d).getDay()]; }
 
-function renderLiveList() {
+function render() {
   const container = document.getElementById('liveListContainer');
   container.innerHTML = '';
   const years = Object.keys(SITE_DATA.lives).sort((a,b)=>b-a);
   
   years.forEach(year => {
-    // 日付順にソート（新しい順）
-    SITE_DATA.lives[year].sort((a,b) => {
-        const da = a.fullDate || `2000-01-01`;
-        const db = b.fullDate || `2000-01-01`;
-        return new Date(db) - new Date(da);
+    SITE_DATA.lives[year].sort((a,b)=>new Date(b.fullDate) - new Date(a.fullDate));
+    if(SITE_DATA.lives[year].length === 0) return;
+    
+    container.innerHTML += `<div class="section-title">${year}年</div>`;
+    SITE_DATA.lives[year].forEach((live, idx) => {
+      const div = document.createElement('div');
+      div.className = 'live-item';
+      div.onclick = () => editLive(year, idx);
+      div.innerHTML = `
+        <img src="${live.thumb || ''}" class="live-thumb-preview">
+        <div class="live-info">
+          <div class="live-info-title">${live.title}</div>
+          <div class="live-info-sub">${live.date}(${getDay(live.fullDate)}) | ${live.role}${live.upcoming?'<span class="tag-upcoming">今後開催</span>':''}</div>
+        </div>
+        <button class="btn small" style="border:none;">編集</button>
+      `;
+      container.appendChild(div);
     });
-
-    if(SITE_DATA.lives[year].length > 0) {
-      container.innerHTML += `<div class="section-title">${year}年</div><div id="list-${year}"></div>`;
-      const list = document.getElementById(`list-${year}`);
-      SITE_DATA.lives[year].forEach((live, idx) => {
-        const item = document.createElement('div');
-        item.className = 'live-item';
-        item.innerHTML = `
-          <img src="${live.thumb || ''}" class="live-thumb-preview">
-          <div class="live-info">
-            <div class="live-info-title">${live.title}</div>
-            <div class="live-info-sub">${live.date}(${getDayW(live.fullDate)}) | ${live.role}${live.upcoming?'<span class="tag-upcoming">今後開催</span>':''}</div>
-          </div>
-          <button class="btn small" onclick="editLive('${year}', ${idx})">編集</button>
-        `;
-        list.appendChild(item);
-      });
-    }
   });
 }
 
-function openLiveModal() {
+// --- ライブ編集 ---
+document.getElementById('btnNewLive').onclick = () => {
   document.getElementById('editYear').value = '';
-  document.getElementById('lThumb').value = '';
-  document.getElementById('imgPreview').classList.remove('active');
   document.getElementById('lFullDate').value = new Date().toISOString().split('T')[0];
-  ['lTitle','lFormat','lLink'].forEach(id=>document.getElementById(id).value='');
+  ['lTitle','lFormat','lLink','lThumb'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('imgPreview').classList.remove('active');
   document.getElementById('lUpcoming').checked = false;
   document.getElementById('liveModal').classList.add('open');
-}
+};
 
 function editLive(year, idx) {
-  const live = SITE_DATA.lives[year][idx];
+  const l = SITE_DATA.lives[year][idx];
   document.getElementById('editYear').value = year;
   document.getElementById('editIndex').value = idx;
-  document.getElementById('lFullDate').value = live.fullDate || "";
-  document.getElementById('lTitle').value = live.title;
-  document.getElementById('lRole').value = live.role;
-  document.getElementById('lFormat').value = live.format;
-  document.getElementById('lLink').value = live.link;
-  document.getElementById('lThumb').value = live.thumb || "";
-  document.getElementById('lUpcoming').checked = !!live.upcoming;
-  
-  if(live.thumb) {
-    document.getElementById('imgPreview').src = live.thumb;
-    document.getElementById('imgPreview').classList.add('active');
-  }
+  document.getElementById('lFullDate').value = l.fullDate;
+  document.getElementById('lTitle').value = l.title;
+  document.getElementById('lRole').value = l.role;
+  document.getElementById('lFormat').value = l.format;
+  document.getElementById('lLink').value = l.link;
+  document.getElementById('lThumb').value = l.thumb || "";
+  document.getElementById('lUpcoming').checked = !!l.upcoming;
+  if(l.thumb) { document.getElementById('imgPreview').src = l.thumb; document.getElementById('imgPreview').classList.add('active'); }
   document.getElementById('liveModal').classList.add('open');
 }
 
-document.getElementById('btnSaveLive').addEventListener('click', () => {
+document.getElementById('btnSaveLive').onclick = () => {
   const fDate = document.getElementById('lFullDate').value;
-  if(!fDate) return alert("日付を選択してください");
+  if(!fDate) return;
+  const d = new Date(fDate);
+  const year = d.getFullYear().toString();
+  const dateStr = `${d.getMonth()+1}/${d.getDate()}`;
   
-  const dObj = new Date(fDate);
-  const year = dObj.getFullYear().toString();
-  const dateStr = `${dObj.getMonth()+1}/${dObj.getDate()}`;
-  
-  const oldYear = document.getElementById('editYear').value;
-  const oldIdx = document.getElementById('editIndex').value;
-
-  const data = {
-    date: dateStr,
-    fullDate: fDate,
-    role: document.getElementById('lRole').value,
-    title: document.getElementById('lTitle').value,
-    format: document.getElementById('lFormat').value,
-    link: document.getElementById('lLink').value,
-    thumb: document.getElementById('lThumb').value,
+  const newItem = {
+    date: dateStr, fullDate: fDate, role: document.getElementById('lRole').value,
+    title: document.getElementById('lTitle').value, format: document.getElementById('lFormat').value,
+    link: document.getElementById('lLink').value, thumb: document.getElementById('lThumb').value,
     upcoming: document.getElementById('lUpcoming').checked
   };
 
-  if(oldIdx !== '') {
-    SITE_DATA.lives[oldYear].splice(oldIdx, 1);
-  }
-  if(!SITE_DATA.lives[year]) SITE_DATA.lives[year] = [];
-  SITE_DATA.lives[year].push(data);
+  const oldYear = document.getElementById('editYear').value;
+  const oldIdx = document.getElementById('editIndex').value;
+  if(oldIdx !== '') SITE_DATA.lives[oldYear].splice(oldIdx, 1);
   
-  saveAll(); renderLiveList(); closeLiveModal();
-});
+  if(!SITE_DATA.lives[year]) SITE_DATA.lives[year] = [];
+  SITE_DATA.lives[year].push(newItem);
+  saveToStorage(); render(); closeModal('liveModal');
+};
 
-document.getElementById('fileInput').addEventListener('change', function(e) {
-  const file = e.target.files[0];
-  if(!file) return;
+// --- プロフィール編集 ---
+document.getElementById('btnProfile').onclick = () => {
+  const p = SITE_DATA.profile;
+  document.getElementById('pName').value = p.name;
+  document.getElementById('pSub').value = p.sub;
+  document.getElementById('pDesc').value = p.desc;
+  document.getElementById('pTwitter').value = p.twitter;
+  document.getElementById('toolList').innerHTML = '';
+  p.tools.forEach(t => addToolField(t));
+  document.getElementById('profileModal').classList.add('open');
+};
+
+function addToolField(t = {icon:'', name:'', note:'', url:''}) {
+  const div = document.createElement('div');
+  div.className = 'tool-card';
+  div.innerHTML = `
+    <input type="text" placeholder="アイコン" class="t-icon" value="${t.icon}" style="width:20%;margin-bottom:5px;">
+    <input type="text" placeholder="ツール名" class="t-name" value="${t.name}" style="width:75%;margin-bottom:5px;">
+    <input type="text" placeholder="説明" class="t-note" value="${t.note}" style="margin-bottom:5px;">
+    <input type="text" placeholder="URL" class="t-url" value="${t.url}">
+    <button onclick="this.parentElement.remove()" style="position:absolute;top:5px;right:5px;background:none;border:none;color:red;">✕</button>
+  `;
+  document.getElementById('toolList').appendChild(div);
+}
+
+document.getElementById('btnSaveProfile').onclick = () => {
+  const p = SITE_DATA.profile;
+  p.name = document.getElementById('pName').value;
+  p.sub = document.getElementById('pSub').value;
+  p.desc = document.getElementById('pDesc').value;
+  p.twitter = document.getElementById('pTwitter').value;
+  p.tools = [];
+  document.querySelectorAll('.tool-card').forEach(card => {
+    p.tools.push({
+      icon: card.querySelector('.t-icon').value,
+      name: card.querySelector('.t-name').value,
+      note: card.querySelector('.t-note').value,
+      url: card.querySelector('.t-url').value
+    });
+  });
+  saveToStorage(); closeModal('profileModal');
+};
+
+// --- その他機能 ---
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+
+document.getElementById('fileInput').onchange = (e) => {
   const reader = new FileReader();
   reader.onload = ev => {
-    const b64 = ev.target.result;
-    document.getElementById('lThumb').value = b64;
-    document.getElementById('imgPreview').src = b64;
+    document.getElementById('lThumb').value = ev.target.result;
+    document.getElementById('imgPreview').src = ev.target.result;
     document.getElementById('imgPreview').classList.add('active');
   };
-  reader.readAsDataURL(file);
-});
-
-function closeLiveModal() { document.getElementById('liveModal').classList.remove('open'); }
+  reader.readAsDataURL(e.target.files[0]);
+};
 
 document.getElementById('btnExport').onclick = () => {
-  document.getElementById('exportText').value = `const SITE_DATA = ${JSON.stringify(SITE_DATA)};`;
+  // ここでまるごとHTMLとして出力
+  const currentHtml = document.documentElement.outerHTML;
+  document.getElementById('exportText').value = currentHtml;
   document.getElementById('exportModal').classList.add('open');
 };
 
 document.getElementById('copyBtn').onclick = () => {
-  navigator.clipboard.writeText(document.getElementById('exportText').value);
-  alert("コピーしました！GitHubのSITE_DATAを書き換えてください。");
-  document.getElementById('exportModal').classList.remove('open');
+  const txt = document.getElementById('exportText');
+  txt.select();
+  document.execCommand('copy');
+  alert("全コードをコピーしました！GitHubのファイルを全て消して、これを貼り付けてください。");
 };
 
-renderLiveList();
+render();
 </script>
 </body>
 </html>

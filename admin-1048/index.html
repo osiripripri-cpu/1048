@@ -2,168 +2,92 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>1048 MASTER ADMIN V3</title>
-<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@800&family=Noto+Sans+JP:wght@300;500;700&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1048 MASTER ADMIN (Year Grouping)</title>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@800&family=Noto+Sans+JP:wght@300;700&display=swap" rel="stylesheet">
 <style>
-:root {
-    --bg: #0a0a12;
-    --surface: #13131f;
-    --border: #252535;
-    --accent: #a682ff;
-    --blue: #00a2ff;
-    --text: #e0e0ed;
-    --muted: #7a7a8c;
-    /* 役割別カラー */
-    --color-主催: #a682ff;
-    --color-運営: #00a2ff;
-    --color-運営補佐: #22c55e;
-    --color-運営スタッフ: #f59e0b;
-}
+/* 管理画面専用スタイル */
+:root { --bg:#0a0a12; --accent:#a682ff; --blue:#00a2ff; --text:#e0e0ed; --border:#252535; }
+body { background:#000; color:#fff; font-family:sans-serif; margin:0; }
+.admin-bar { background:#1a1a2e; padding:15px; display:flex; justify-content:space-between; position:sticky; top:0; z-index:9999; border-bottom:2px solid var(--accent); }
+.btn-p { background:var(--accent); color:#fff; border:none; padding:10px 18px; border-radius:5px; font-weight:bold; cursor:pointer; }
+.btn-s { background:#22c55e; color:#fff; border:none; padding:10px 18px; border-radius:5px; font-weight:bold; cursor:pointer; }
 
-*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
-body{background:var(--bg);color:var(--text);font-family:'Noto Sans JP',sans-serif;padding-bottom:120px;}
+/* プレビューエリア */
+.preview-wrap { background:var(--bg); max-width:450px; margin:20px auto; padding:40px 20px; border:1px solid #333; }
+.p-img { width:110px; height:110px; border-radius:50%; border:2px solid var(--accent); display:block; margin:0 auto 20px; object-fit:cover; cursor:pointer; }
+.title { font-family:'Shippori Mincho'; font-size:32px; text-align:center; background:linear-gradient(to bottom, #fff, var(--accent)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.desc { font-size:13px; color:#7a7a8c; text-align:center; line-height:1.8; margin:20px 0 30px; white-space:pre-wrap; }
 
-/* 管理用ヘッダー */
-.admin-header {
-    position: sticky; top: 0; z-index: 1000;
-    background: #1a1a2e; padding: 15px;
-    display: flex; justify-content: space-between; align-items: center;
-    border-bottom: 2px solid var(--accent);
-}
+.role-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:30px; }
+.role-box { background:rgba(255,255,255,0.03); border:1px solid var(--border); padding:15px; border-radius:4px; cursor:pointer; }
+.role-t { font-weight:bold; font-size:13px; margin-bottom:5px; }
 
-.btn {
-    background: var(--accent); color: #fff; border: none;
-    padding: 8px 16px; border-radius: 6px; font-weight: bold; cursor: pointer;
-}
+.links { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin-bottom:40px; }
+.l-btn { background:rgba(255,255,255,0.05); border:1px solid var(--border); padding:12px 5px; font-size:11px; color:#e0e0ed; border-radius:4px; text-align:center; cursor:pointer; }
 
-/* メインプレビュー（/1048/のデザインを再現） */
-.main-content { max-width: 450px; margin: 0 auto; padding: 40px 20px; }
+.stats { display:grid; grid-template-columns:1fr 1fr 1fr; border-top:1px solid var(--border); padding:20px 0; }
+.s-item { text-align:center; border-right:1px solid var(--border); }
+.s-n { font-family:'Shippori Mincho'; font-size:26px; color:var(--accent); }
+.s-l { font-size:10px; color:#7a7a8c; }
 
-.profile-section { text-align: center; margin-bottom: 30px; }
-.profile-img {
-    width: 110px; height: 110px; border-radius: 50%;
-    border: 2px solid var(--accent); margin-bottom: 20px;
-    object-fit: cover; cursor: pointer; box-shadow: 0 0 15px rgba(166,130,255,0.3);
-}
-
-.site-title {
-    font-family: 'Shippori Mincho'; font-size: 32px;
-    background: linear-gradient(to bottom, #fff, var(--accent));
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-}
-
-.site-desc {
-    font-size: 13px; color: var(--muted); line-height: 1.8;
-    margin: 20px 0; white-space: pre-wrap;
-}
-
-/* 役割ボックス */
-.role-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 30px; }
-.role-box {
-    background: rgba(255,255,255,0.03); border: 1px solid var(--border);
-    padding: 15px; border-radius: 4px; cursor: pointer;
-}
-.role-t { font-weight: bold; font-size: 13px; margin-bottom: 5px; }
-.role-d { font-size: 11px; color: var(--muted); }
-
-/* 下部リンクボタン */
-.action-links { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 40px; }
-.l-btn {
-    background: rgba(255,255,255,0.05); border: 1px solid var(--border);
-    padding: 12px 5px; font-size: 11px; color: var(--text);
-    border-radius: 4px; text-align: center; text-decoration: none; cursor: pointer;
-}
-
-/* 統計 */
-.stats-bar {
-    display: grid; grid-template-columns: 1fr 1fr 1fr;
-    border-top: 1px solid var(--border); padding: 20px 0;
-}
-.stat-item { text-align: center; border-right: 1px solid var(--border); }
-.stat-item:last-child { border-right: none; }
-.stat-n { font-family: 'Shippori Mincho'; font-size: 26px; color: var(--accent); }
-.stat-l { font-size: 10px; color: var(--muted); }
-
-/* ライブリスト項目 */
-.live-card {
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: 10px; padding: 12px; margin-bottom: 12px;
-    display: flex; align-items: center; gap: 15px; position: relative;
-}
-.live-link-area { flex: 1; text-decoration: none; color: inherit; display: flex; align-items: center; gap: 15px; }
-.live-thumb { width: 55px; height: 55px; border-radius: 6px; object-fit: cover; }
-.live-name { font-size: 14px; font-weight: bold; margin-bottom: 4px; }
-.live-label {
-    display: inline-block; padding: 2px 8px; border-radius: 4px;
-    font-size: 10px; font-weight: bold; color: #fff;
-}
-.coming-soon {
-    color: var(--blue); font-weight: bold; margin-left: 8px;
-    text-shadow: 0 0 8px var(--blue); font-family: serif;
-}
+/* ライブリスト(年別) */
+.year-divider { font-size:18px; font-family:'Shippori Mincho'; color:var(--accent); margin:30px 0 15px; border-bottom:1px solid var(--border); padding-bottom:5px; }
+.live-card { background:#13131f; border:1px solid var(--border); border-radius:10px; padding:12px; margin-bottom:12px; display:flex; align-items:center; gap:15px; }
+.live-thumb { width:55px; height:55px; border-radius:6px; object-fit:cover; }
+.live-name { font-size:14px; font-weight:bold; }
+.role-lab { display:inline-block; padding:2px 8px; border-radius:4px; font-size:10px; font-weight:bold; color:#fff; }
+.neon { color:var(--blue); text-shadow:0 0 8px var(--blue); font-weight:bold; font-family:serif; margin-left:8px; }
 
 /* モーダル */
-.modal {
-    position: fixed; inset: 0; background: rgba(0,0,0,0.95);
-    z-index: 2000; display: none; align-items: center; justify-content: center; padding: 20px;
-}
-.modal.open { display: flex; }
-.modal-content {
-    background: var(--surface); width: 100%; max-width: 400px;
-    padding: 25px; border-radius: 20px; border: 1px solid var(--accent);
-    max-height: 85vh; overflow-y: auto;
-}
-.field { margin-bottom: 15px; }
-.field label { display: block; font-size: 11px; color: var(--accent); margin-bottom: 5px; }
-.field input, .field textarea, .field select {
-    width: 100%; background: #000; border: 1px solid var(--border);
-    color: #fff; padding: 12px; border-radius: 8px;
-}
+.modal { position:fixed; inset:0; background:rgba(0,0,0,0.9); z-index:10000; display:none; align-items:center; justify-content:center; padding:20px; }
+.modal.open { display:flex; }
+.m-content { background:#13131f; width:100%; max-width:400px; padding:25px; border-radius:20px; border:1px solid var(--accent); max-height:80vh; overflow-y:auto; }
+.field { margin-bottom:15px; }
+.field label { display:block; font-size:11px; color:var(--accent); margin-bottom:5px; }
+.field input, .field textarea, .field select { width:100%; background:#000; border:1px solid var(--border); color:#fff; padding:12px; border-radius:8px; }
 </style>
 </head>
 <body>
 
-<div class="admin-header">
-    <div style="font-size:14px;font-weight:bold;">1048 ADMIN PANEL</div>
-    <div style="display:flex;gap:8px;">
-        <button class="btn" onclick="openLiveModal()">➕ ライブ追加</button>
-        <button class="btn" style="background:#22c55e;" onclick="exportData()">🚀 保存・出力</button>
+<div class="admin-bar">
+    <div style="font-weight:bold;">1048 MASTER ADMIN</div>
+    <div style="display:flex;gap:10px;">
+        <button class="btn-p" onclick="openLiveModal()">＋ ライブ追加</button>
+        <button class="btn-s" onclick="generatePublicHTML()">🚀 公開用コードをコピー</button>
     </div>
 </div>
 
-<div class="main-content">
-    <div class="profile-section">
-        <img id="pIcon" class="profile-img" src="" onclick="triggerFile('pFileInput')">
-        <input type="file" id="pFileInput" hidden accept="image/*" onchange="handleFile(this, 'profile')">
-        
-        <div onclick="openProfileModal()">
-            <div id="pName" class="site-title">1048</div>
-            <div id="pDesc" class="site-desc">説明文...</div>
-        </div>
+<div class="preview-wrap">
+    <img id="pIcon" class="p-img" src="" onclick="triggerFile('pInput')">
+    <input type="file" id="pInput" hidden accept="image/*" onchange="handleFile(this, 'profile')">
+    
+    <div onclick="openProfileModal()">
+        <div id="pName" class="title">1048</div>
+        <div id="pDesc" class="desc">...</div>
     </div>
 
     <div class="role-grid" id="roleGrid"></div>
 
-    <div class="action-links" id="linkGrid">
-        <div class="l-btn" onclick="openLinkModal('mail')">📩 お問い合わせ</div>
+    <div class="links">
+        <div class="l-btn" onclick="openLinkModal('mail')">📩 問い合わせ</div>
         <div class="l-btn" onclick="openLinkModal('booth')">🛒 BOOTH</div>
         <div class="l-btn" onclick="openLinkModal('twitter')">𝕏 Twitter</div>
     </div>
 
-    <div class="stats-bar">
-        <div class="stat-item"><div id="sTotal" class="stat-n">0</div><div class="stat-l">総制作本数</div></div>
-        <div class="stat-item"><div id="sOrg" class="stat-n">0</div><div class="stat-l">主催</div></div>
-        <div class="stat-item"><div id="sMan" class="stat-n">0</div><div class="stat-l">運営</div></div>
+    <div class="stats">
+        <div class="s-item"><div id="sTotal" class="s-n">0</div><div class="s-l">総制作本数</div></div>
+        <div class="s-item"><div id="sOrg" class="s-n">0</div><div class="s-l">主催</div></div>
+        <div class="s-item"><div id="sMan" class="s-n">0</div><div class="s-l">運営</div></div>
     </div>
 
-    <div id="liveArchive" style="margin-top:30px;"></div>
+    <div id="liveList"></div>
 </div>
 
-<div class="modal" id="editModal"><div class="modal-content" id="modalInner"></div></div>
+<div class="modal" id="modal"><div class="m-content" id="mInner"></div></div>
 
 <script>
-let STORE = {
+let DATA = {
     profile: { name: "1048", desc: "主催・運営のご依頼はDMまで...", icon: "" },
     links: { mail: "#", booth: "#", twitter: "#" },
     roles: [
@@ -175,114 +99,114 @@ let STORE = {
     lives: []
 };
 
-// データの読み込み
-const savedData = localStorage.getItem('1048_master_v3');
-if(savedData) STORE = JSON.parse(savedData);
+const COLORS = { "主催": "#a682ff", "運営": "#00a2ff", "運営補佐": "#22c55e", "運営スタッフ": "#f59e0b" };
+
+const saved = localStorage.getItem('1048_master_v4');
+if(saved) DATA = JSON.parse(saved);
 
 function render() {
-    // プロフィール反映
-    document.getElementById('pIcon').src = STORE.profile.icon || 'https://via.placeholder.com/150';
-    document.getElementById('pName').innerText = STORE.profile.name;
-    document.getElementById('pDesc').innerText = STORE.profile.desc;
+    document.getElementById('pIcon').src = DATA.profile.icon || 'https://via.placeholder.com/150';
+    document.getElementById('pName').innerText = DATA.profile.name;
+    document.getElementById('pDesc').innerText = DATA.profile.desc;
 
-    // 役割反映
-    document.getElementById('roleGrid').innerHTML = STORE.roles.map((r, i) => `
+    document.getElementById('roleGrid').innerHTML = DATA.roles.map((r, i) => `
         <div class="role-box" onclick="openRoleModal(${i})">
-            <div class="role-t" style="color:var(--color-${r.t.replace(/【|】/g, '')})">${r.t}</div>
-            <div class="role-d">${r.d}</div>
+            <div class="role-t" style="color:${COLORS[r.t.replace(/【|】/g,'')] || '#fff'}">${r.t}</div>
+            <div style="font-size:11px;color:#7a7a8c;">${r.d}</div>
         </div>
     `).join('');
 
-    // ライブリスト & 集計
-    let cTotal = STORE.lives.length, cOrg = 0, cMan = 0;
+    const list = document.getElementById('liveList');
+    list.innerHTML = '';
+    
+    let cO = 0, cM = 0;
     const now = new Date();
-    const container = document.getElementById('liveArchive');
-    container.innerHTML = '<div style="font-size:11px;color:var(--muted);margin-bottom:15px;letter-spacing:2px;">LIVE ARCHIVE</div>';
+    
+    // 年ごとにグループ化
+    const sorted = [...DATA.lives].sort((a,b)=>new Date(b.date)-new Date(a.date));
+    let lastYear = null;
 
-    STORE.lives.sort((a,b) => new Date(b.date) - new Date(a.date)).forEach((l, idx) => {
-        if(l.role === '主催') cOrg++;
-        if(l.role === '運営' || l.role === '運営補佐') cMan++;
-
-        const isComing = new Date(l.date) > now;
-        const roleClass = l.role.replace(/【|】/g, '');
+    sorted.forEach((l, i) => {
+        if(l.role === '主催') cO++;
+        if(l.role === '運営' || l.role === '運営補佐') cM++;
         
-        container.innerHTML += `
+        const year = new Date(l.date).getFullYear();
+        if(year !== lastYear) {
+            list.innerHTML += `<div class="year-divider">${year}</div>`;
+            lastYear = year;
+        }
+
+        const isF = new Date(l.date) > now;
+        list.innerHTML += `
             <div class="live-card">
-                <a href="${l.link || '#'}" target="_blank" class="live-link-area">
-                    <img src="${l.img || ''}" class="live-thumb" onerror="this.src='https://via.placeholder.com/60'">
-                    <div style="flex:1">
-                        <div class="live-name">${l.title}${isComing ? '<span class="coming-soon">𝙲𝚘𝚖𝚒𝚗𝚐 𝚜𝚘𝚘𝚗...</span>' : ''}</div>
-                        <div style="display:flex;align-items:center;gap:8px;">
-                            <span class="live-label" style="background:var(--color-${roleClass})">${l.role}</span>
-                            <span style="font-size:10px;color:var(--muted)">${l.date.replace(/-/g, '/')}</span>
-                        </div>
+                <img src="${l.img || ''}" class="live-thumb" onerror="this.src='https://via.placeholder.com/60'">
+                <div style="flex:1;">
+                    <div class="live-name">${l.title}${isF?'<span class="neon">𝙲𝚘𝚖𝚒𝚗𝚐 𝚜𝚘𝚘𝚗...</span>':''}</div>
+                    <div style="display:flex;gap:8px;align-items:center;">
+                        <span class="role-lab" style="background:${COLORS[l.role]}">${l.role}</span>
+                        <span style="font-size:10px;color:#7a7a8c;">${l.date.replace(/-/g,'/')}</span>
                     </div>
-                </a>
-                <div onclick="openLiveModal(${idx})" style="color:var(--accent);font-size:18px;cursor:pointer;padding:10px;">✎</div>
+                </div>
+                <div onclick="openLiveModal(${DATA.lives.indexOf(l)})" style="color:var(--accent);cursor:pointer;padding:10px;">✎</div>
             </div>
         `;
     });
 
-    document.getElementById('sTotal').innerText = cTotal;
-    document.getElementById('sOrg').innerText = cOrg;
-    document.getElementById('sMan').innerText = cMan;
-
-    localStorage.setItem('1048_master_v3', JSON.stringify(STORE));
+    document.getElementById('sTotal').innerText = DATA.lives.length;
+    document.getElementById('sOrg').innerText = cO;
+    document.getElementById('sMan').innerText = cM;
+    localStorage.setItem('1048_master_v4', JSON.stringify(DATA));
 }
 
-// ファイル選択
+// 共通処理
 function triggerFile(id) { document.getElementById(id).click(); }
 function handleFile(input, mode) {
     if (input.files && input.files[0]) {
         const reader = new FileReader();
         reader.onload = (e) => {
-            if(mode === 'profile') STORE.profile.icon = e.target.result;
-            if(mode === 'live') document.getElementById('tmpLiveImg').src = e.target.result;
+            if(mode==='profile') DATA.profile.icon = e.target.result;
+            if(mode==='live') document.getElementById('tmpImg').src = e.target.result;
             render();
         };
         reader.readAsDataURL(input.files[0]);
     }
 }
 
-// 編集モーダル各種
+// 編集モーダル類
 function openProfileModal() {
-    showModal(`
-        <h3>基本編集</h3>
-        <div class="field"><label>名前</label><input id="inPName" value="${STORE.profile.name}"></div>
-        <div class="field"><label>自己紹介</label><textarea id="inPDesc" rows="5">${STORE.profile.desc}</textarea></div>
-        <button class="btn" style="width:100%" onclick="saveProfile()">保存</button>
-    `);
+    showModal(`<h3>プロフィール編集</h3>
+        <div class="field"><label>名前</label><input id="eN" value="${DATA.profile.name}"></div>
+        <div class="field"><label>説明文</label><textarea id="eD" rows="5">${DATA.profile.desc}</textarea></div>
+        <button class="btn-p" style="width:100%" onclick="saveProfile()">保存</button>`);
 }
-function saveProfile() {
-    STORE.profile.name = document.getElementById('inPName').value;
-    STORE.profile.desc = document.getElementById('inPDesc').value;
-    render(); closeModal();
-}
+function saveProfile() { DATA.profile.name=document.getElementById('eN').value; DATA.profile.desc=document.getElementById('eD').value; render(); closeModal(); }
 
-function openLinkModal(key) {
-    showModal(`
-        <h3>URLの編集</h3>
-        <div class="field"><label>${key.toUpperCase()} リンク先</label><input id="inLink" value="${STORE.links[key]}"></div>
-        <button class="btn" style="width:100%" onclick="saveLink('${key}')">保存</button>
-    `);
+function openLinkModal(k) {
+    showModal(`<h3>リンク編集</h3>
+        <div class="field"><label>URL</label><input id="eL" value="${DATA.links[k]}"></div>
+        <button class="btn-p" style="width:100%" onclick="saveLink('${k}')">保存</button>`);
 }
-function saveLink(key) {
-    STORE.links[key] = document.getElementById('inLink').value;
-    render(); closeModal();
+function saveLink(k) { DATA.links[k]=document.getElementById('eL').value; render(); closeModal(); }
+
+function openRoleModal(i) {
+    showModal(`<h3>役割の編集</h3>
+        <div class="field"><label>見出し</label><input id="eRT" value="${DATA.roles[i].t}"></div>
+        <div class="field"><label>説明</label><input id="eRD" value="${DATA.roles[i].d}"></div>
+        <button class="btn-p" style="width:100%" onclick="saveRole(${i})">保存</button>`);
 }
+function saveRole(i) { DATA.roles[i].t=document.getElementById('eRT').value; DATA.roles[i].d=document.getElementById('eRD').value; render(); closeModal(); }
 
 function openLiveModal(idx = -1) {
-    const l = idx > -1 ? STORE.lives[idx] : { title:'', date:'', role:'主催', img:'', link:'' };
-    showModal(`
-        <h3>ライブ実績の追加・編集</h3>
+    const l = idx > -1 ? DATA.lives[idx] : {title:'', date:'', role:'主催', img:'', link:''};
+    showModal(`<h3>ライブ実績の${idx>-1?'編集':'追加'}</h3>
         <div class="field"><label>フライヤー</label>
-            <img id="tmpLiveImg" src="${l.img}" style="width:60px;height:60px;object-fit:cover;background:#000;display:block;margin-bottom:8px;">
-            <button class="btn" onclick="triggerFile('lFileInput')">画像を選択</button>
-            <input type="file" id="lFileInput" hidden accept="image/*" onchange="handleFile(this, 'live')">
+            <img id="tmpImg" src="${l.img}" style="width:60px;height:60px;object-fit:cover;display:block;margin-bottom:5px;">
+            <button class="btn-p" onclick="triggerFile('lIn')">画像選択</button>
+            <input type="file" id="lIn" hidden onchange="handleFile(this, 'live')">
         </div>
-        <div class="field"><label>公演名</label><input id="lT" value="${l.title}"></div>
-        <div class="field"><label>開催日</label><input type="date" id="lD" value="${l.date}"></div>
-        <div class="field"><label>役割 (プルダウン選択)</label>
+        <div class="field"><label>タイトル</label><input id="lT" value="${l.title}"></div>
+        <div class="field"><label>日付</label><input type="date" id="lD" value="${l.date}"></div>
+        <div class="field"><label>役割</label>
             <select id="lR">
                 <option value="主催" ${l.role==='主催'?'selected':''}>主催</option>
                 <option value="運営" ${l.role==='運営'?'selected':''}>運営</option>
@@ -290,33 +214,109 @@ function openLiveModal(idx = -1) {
                 <option value="運営スタッフ" ${l.role==='運営スタッフ'?'selected':''}>運営スタッフ</option>
             </select>
         </div>
-        <div class="field"><label>詳細リンク (Xなど)</label><input id="lL" value="${l.link}"></div>
-        <button class="btn" style="width:100%" onclick="saveLive(${idx})">保存</button>
-        ${idx > -1 ? `<button onclick="delLive(${idx})" style="background:none;border:none;color:red;width:100%;margin-top:10px;">削除</button>` : ''}
-    `);
+        <div class="field"><label>Xリンクなど</label><input id="lL" value="${l.link}"></div>
+        <button class="btn-p" style="width:100%" onclick="saveLive(${idx})">保存</button>
+        ${idx>-1?`<button onclick="delLive(${idx})" style="color:red;background:none;border:none;width:100%;margin-top:10px;">削除</button>`:''}`);
 }
 function saveLive(idx) {
-    const data = {
-        title: document.getElementById('lT').value,
-        date: document.getElementById('lD').value,
-        role: document.getElementById('lR').value,
-        link: document.getElementById('lL').value,
-        img: document.getElementById('tmpLiveImg').src
-    };
-    if(idx > -1) STORE.lives[idx] = data; else STORE.lives.push(data);
-    render(); closeModal();
+    const d = { title:document.getElementById('lT').value, date:document.getElementById('lD').value, role:document.getElementById('lR').value, link:document.getElementById('lL').value, img:document.getElementById('tmpImg').src };
+    if(idx>-1) DATA.lives[idx]=d; else DATA.lives.push(d); render(); closeModal();
 }
-function delLive(i) { if(confirm('削除しますか？')) { STORE.lives.splice(i,1); render(); closeModal(); } }
+function delLive(i) { if(confirm('消しますか？')){DATA.lives.splice(i,1); render(); closeModal();} }
 
-function showModal(h) { document.getElementById('modalInner').innerHTML = h; document.getElementById('editModal').classList.add('open'); }
-function closeModal() { document.getElementById('editModal').classList.remove('open'); }
+function showModal(h) { document.getElementById('mInner').innerHTML=h; document.getElementById('modal').classList.add('open'); }
+function closeModal() { document.getElementById('modal').classList.remove('open'); }
 
-function exportData() {
-    const code = document.documentElement.outerHTML;
+// --- 公開用コード生成 ---
+function generatePublicHTML() {
+    const sorted = [...DATA.lives].sort((a,b)=>new Date(b.date)-new Date(a.date));
+    let lastY = null;
+    let liveHTML = '';
+    let cO=0, cM=0;
+    const now = new Date();
+
+    sorted.forEach(l => {
+        if(l.role==='主催')cO++; if(l.role==='運営'||l.role==='運営補佐')cM++;
+        const y = new Date(l.date).getFullYear();
+        if(y !== lastY) {
+            liveHTML += `<div class="year-divider">${y}</div>`;
+            lastY = y;
+        }
+        const isF = new Date(l.date) > now;
+        liveHTML += `
+        <div class="live-card">
+            <a href="${l.link || '#'}" target="_blank" style="display:flex;align-items:center;gap:15px;text-decoration:none;color:inherit;width:100%;">
+                <img src="${l.img}" class="live-thumb" onerror="this.src='https://via.placeholder.com/60'">
+                <div>
+                    <div class="live-name">${l.title}${isF?'<span class="neon">𝙲𝚘𝚖𝚒𝚗𝚐 𝚜𝚘𝚘𝚗...</span>':''}</div>
+                    <div style="display:flex;gap:8px;align-items:center;">
+                        <span class="role-lab" style="background:${COLORS[l.role]}">${l.role}</span>
+                        <span style="font-size:10px;color:#7a7a8c;">${l.date.replace(/-/g,'/')}</span>
+                    </div>
+                </div>
+            </a>
+        </div>`;
+    });
+
+    const publicCode = `<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1048 LIVE ARCHIVE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@800&family=Noto+Sans+JP:wght@300;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --bg:#0a0a12; --accent:#a682ff; --blue:#00a2ff; --border:#252535; }
+        body { background:var(--bg); color:#e0e0ed; font-family:'Noto Sans JP',sans-serif; margin:0; padding-bottom:80px; }
+        .wrap { max-width:450px; margin:0 auto; padding:60px 20px; }
+        .p-img { width:110px; height:110px; border-radius:50%; border:2px solid var(--accent); display:block; margin:0 auto 20px; object-fit:cover; }
+        .title { font-family:'Shippori Mincho'; font-size:32px; text-align:center; background:linear-gradient(to bottom, #fff, var(--accent)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+        .desc { font-size:13px; color:#7a7a8c; text-align:center; line-height:1.8; margin:20px 0 40px; white-space:pre-wrap; }
+        .r-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:40px; }
+        .r-box { background:rgba(255,255,255,0.03); border:1px solid var(--border); padding:15px; border-radius:4px; }
+        .r-t { font-weight:bold; font-size:13px; margin-bottom:5px; }
+        .links { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin-bottom:50px; }
+        .l-btn { background:rgba(255,255,255,0.05); border:1px solid var(--border); padding:12px 5px; font-size:11px; color:#e0e0ed; border-radius:4px; text-align:center; text-decoration:none; }
+        .stats { display:grid; grid-template-columns:1fr 1fr 1fr; border-top:1px solid var(--border); padding:20px 0; margin-bottom:40px; }
+        .s-item { text-align:center; border-right:1px solid var(--border); }
+        .s-item:last-child { border-right:none; }
+        .s-n { font-family:'Shippori Mincho'; font-size:26px; color:var(--accent); }
+        .s-l { font-size:10px; color:#7a7a8c; }
+        .year-divider { font-size:18px; font-family:'Shippori Mincho'; color:var(--accent); margin:40px 0 15px; border-bottom:1px solid var(--border); padding-bottom:5px; }
+        .live-card { background:#13131f; border:1px solid var(--border); border-radius:10px; padding:12px; margin-bottom:12px; }
+        .live-thumb { width:55px; height:55px; border-radius:6px; object-fit:cover; }
+        .live-name { font-size:14px; font-weight:bold; }
+        .role-lab { display:inline-block; padding:2px 8px; border-radius:4px; font-size:10px; font-weight:bold; color:#fff; }
+        .neon { color:var(--blue); text-shadow:0 0 8px var(--blue); font-weight:bold; font-family:serif; margin-left:8px; }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <img src="${DATA.profile.icon}" class="p-img">
+        <div class="title">${DATA.profile.name}</div>
+        <div class="desc">${DATA.profile.desc}</div>
+        <div class="r-grid">
+            ${DATA.roles.map(r=>`<div class="r-box"><div class="r-t" style="color:${COLORS[r.t.replace(/【|】/g,'')]}">${r.t}</div><div style="font-size:11px;color:#7a7a8c;">${r.d}</div></div>`).join('')}
+        </div>
+        <div class="links">
+            <a href="${DATA.links.mail}" class="l-btn">📩 問い合わせ</a>
+            <a href="${DATA.links.booth}" class="l-btn">🛒 BOOTH</a>
+            <a href="${DATA.links.twitter}" class="l-btn">𝕏 Twitter</a>
+        </div>
+        <div class="stats">
+            <div class="s-item"><div class="s-n">${DATA.lives.length}</div><div class="s-l">総制作本数</div></div>
+            <div class="s-item"><div class="s-n">${cO}</div><div class="s-l">主催</div></div>
+            <div class="s-item"><div class="s-n">${cM}</div><div class="s-l">運営</div></div>
+        </div>
+        ${liveHTML}
+    </div>
+</body>
+</html>`;
+
     const area = document.createElement('textarea');
-    area.value = code; document.body.appendChild(area); area.select();
+    area.value = publicCode; document.body.appendChild(area); area.select();
     document.execCommand('copy'); document.body.removeChild(area);
-    alert("全データを反映した最新のコードをコピーしました！GitHubに貼り付けてください。");
+    alert("年別アーカイブ対応の【公開サイトコード】をコピーしました！");
 }
 
 render();

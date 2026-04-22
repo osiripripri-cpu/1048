@@ -3,43 +3,34 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>1048 MASTER ADMIN (Year Grouping)</title>
+<title>1048 MASTER ADMIN (Lightweight)</title>
 <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@800&family=Noto+Sans+JP:wght@300;700&display=swap" rel="stylesheet">
 <style>
-/* 管理画面専用スタイル */
+/* スタイルは前回の完成形を維持 */
 :root { --bg:#0a0a12; --accent:#a682ff; --blue:#00a2ff; --text:#e0e0ed; --border:#252535; }
 body { background:#000; color:#fff; font-family:sans-serif; margin:0; }
 .admin-bar { background:#1a1a2e; padding:15px; display:flex; justify-content:space-between; position:sticky; top:0; z-index:9999; border-bottom:2px solid var(--accent); }
 .btn-p { background:var(--accent); color:#fff; border:none; padding:10px 18px; border-radius:5px; font-weight:bold; cursor:pointer; }
 .btn-s { background:#22c55e; color:#fff; border:none; padding:10px 18px; border-radius:5px; font-weight:bold; cursor:pointer; }
-
-/* プレビューエリア */
 .preview-wrap { background:var(--bg); max-width:450px; margin:20px auto; padding:40px 20px; border:1px solid #333; }
 .p-img { width:110px; height:110px; border-radius:50%; border:2px solid var(--accent); display:block; margin:0 auto 20px; object-fit:cover; cursor:pointer; }
 .title { font-family:'Shippori Mincho'; font-size:32px; text-align:center; background:linear-gradient(to bottom, #fff, var(--accent)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
 .desc { font-size:13px; color:#7a7a8c; text-align:center; line-height:1.8; margin:20px 0 30px; white-space:pre-wrap; }
-
 .role-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:30px; }
 .role-box { background:rgba(255,255,255,0.03); border:1px solid var(--border); padding:15px; border-radius:4px; cursor:pointer; }
 .role-t { font-weight:bold; font-size:13px; margin-bottom:5px; }
-
 .links { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin-bottom:40px; }
 .l-btn { background:rgba(255,255,255,0.05); border:1px solid var(--border); padding:12px 5px; font-size:11px; color:#e0e0ed; border-radius:4px; text-align:center; cursor:pointer; }
-
 .stats { display:grid; grid-template-columns:1fr 1fr 1fr; border-top:1px solid var(--border); padding:20px 0; }
 .s-item { text-align:center; border-right:1px solid var(--border); }
 .s-n { font-family:'Shippori Mincho'; font-size:26px; color:var(--accent); }
 .s-l { font-size:10px; color:#7a7a8c; }
-
-/* ライブリスト(年別) */
 .year-divider { font-size:18px; font-family:'Shippori Mincho'; color:var(--accent); margin:30px 0 15px; border-bottom:1px solid var(--border); padding-bottom:5px; }
 .live-card { background:#13131f; border:1px solid var(--border); border-radius:10px; padding:12px; margin-bottom:12px; display:flex; align-items:center; gap:15px; }
 .live-thumb { width:55px; height:55px; border-radius:6px; object-fit:cover; }
 .live-name { font-size:14px; font-weight:bold; }
 .role-lab { display:inline-block; padding:2px 8px; border-radius:4px; font-size:10px; font-weight:bold; color:#fff; }
 .neon { color:var(--blue); text-shadow:0 0 8px var(--blue); font-weight:bold; font-family:serif; margin-left:8px; }
-
-/* モーダル */
 .modal { position:fixed; inset:0; background:rgba(0,0,0,0.9); z-index:10000; display:none; align-items:center; justify-content:center; padding:20px; }
 .modal.open { display:flex; }
 .m-content { background:#13131f; width:100%; max-width:400px; padding:25px; border-radius:20px; border:1px solid var(--accent); max-height:80vh; overflow-y:auto; }
@@ -51,7 +42,7 @@ body { background:#000; color:#fff; font-family:sans-serif; margin:0; }
 <body>
 
 <div class="admin-bar">
-    <div style="font-weight:bold;">1048 MASTER ADMIN</div>
+    <div style="font-weight:bold;">1048 ADMIN <small>v5-light</small></div>
     <div style="display:flex;gap:10px;">
         <button class="btn-p" onclick="openLiveModal()">＋ ライブ追加</button>
         <button class="btn-s" onclick="generatePublicHTML()">🚀 公開用コードをコピー</button>
@@ -61,26 +52,21 @@ body { background:#000; color:#fff; font-family:sans-serif; margin:0; }
 <div class="preview-wrap">
     <img id="pIcon" class="p-img" src="" onclick="triggerFile('pInput')">
     <input type="file" id="pInput" hidden accept="image/*" onchange="handleFile(this, 'profile')">
-    
     <div onclick="openProfileModal()">
         <div id="pName" class="title">1048</div>
         <div id="pDesc" class="desc">...</div>
     </div>
-
     <div class="role-grid" id="roleGrid"></div>
-
     <div class="links">
         <div class="l-btn" onclick="openLinkModal('mail')">📩 問い合わせ</div>
         <div class="l-btn" onclick="openLinkModal('booth')">🛒 BOOTH</div>
         <div class="l-btn" onclick="openLinkModal('twitter')">𝕏 Twitter</div>
     </div>
-
     <div class="stats">
         <div class="s-item"><div id="sTotal" class="s-n">0</div><div class="s-l">総制作本数</div></div>
         <div class="s-item"><div id="sOrg" class="s-n">0</div><div class="s-l">主催</div></div>
         <div class="s-item"><div id="sMan" class="s-n">0</div><div class="s-l">運営</div></div>
     </div>
-
     <div id="liveList"></div>
 </div>
 
@@ -88,7 +74,7 @@ body { background:#000; color:#fff; font-family:sans-serif; margin:0; }
 
 <script>
 let DATA = {
-    profile: { name: "1048", desc: "主催・運営のご依頼はDMまで...", icon: "" },
+    profile: { name: "1048", desc: "...", icon: "" },
     links: { mail: "#", booth: "#", twitter: "#" },
     roles: [
         {t: "【主催】", d: "準備〜当日終了まで全て"},
@@ -98,48 +84,70 @@ let DATA = {
     ],
     lives: []
 };
-
 const COLORS = { "主催": "#a682ff", "運営": "#00a2ff", "運営補佐": "#22c55e", "運営スタッフ": "#f59e0b" };
 
-const saved = localStorage.getItem('1048_master_v4');
+const saved = localStorage.getItem('1048_master_v5');
 if(saved) DATA = JSON.parse(saved);
+
+// --- 画像圧縮機能 ---
+async function resizeImage(file, maxWidth = 400) {
+    return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = (event) => {
+            const img = new Image();
+            img.src = event.target.result;
+            img.onload = () => {
+                const canvas = document.createElement('canvas');
+                const scale = maxWidth / img.width;
+                if (scale < 1) {
+                    canvas.width = maxWidth;
+                    canvas.height = img.height * scale;
+                } else {
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                }
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                resolve(canvas.toDataURL('image/jpeg', 0.7)); // 圧縮率0.7
+            };
+        };
+    });
+}
+
+async function handleFile(input, mode) {
+    if (input.files && input.files[0]) {
+        const compressedBase64 = await resizeImage(input.files[0]);
+        if(mode==='profile') DATA.profile.icon = compressedBase64;
+        if(mode==='live') document.getElementById('tmpImg').src = compressedBase64;
+        render();
+    }
+}
 
 function render() {
     document.getElementById('pIcon').src = DATA.profile.icon || 'https://via.placeholder.com/150';
     document.getElementById('pName').innerText = DATA.profile.name;
     document.getElementById('pDesc').innerText = DATA.profile.desc;
-
     document.getElementById('roleGrid').innerHTML = DATA.roles.map((r, i) => `
         <div class="role-box" onclick="openRoleModal(${i})">
             <div class="role-t" style="color:${COLORS[r.t.replace(/【|】/g,'')] || '#fff'}">${r.t}</div>
             <div style="font-size:11px;color:#7a7a8c;">${r.d}</div>
-        </div>
-    `).join('');
-
+        </div>`).join('');
     const list = document.getElementById('liveList');
     list.innerHTML = '';
-    
     let cO = 0, cM = 0;
     const now = new Date();
-    
-    // 年ごとにグループ化
     const sorted = [...DATA.lives].sort((a,b)=>new Date(b.date)-new Date(a.date));
-    let lastYear = null;
-
-    sorted.forEach((l, i) => {
+    let lastY = null;
+    sorted.forEach((l) => {
         if(l.role === '主催') cO++;
         if(l.role === '運営' || l.role === '運営補佐') cM++;
-        
-        const year = new Date(l.date).getFullYear();
-        if(year !== lastYear) {
-            list.innerHTML += `<div class="year-divider">${year}</div>`;
-            lastYear = year;
-        }
-
+        const y = new Date(l.date).getFullYear();
+        if(y !== lastY) { list.innerHTML += `<div class="year-divider">${y}</div>`; lastY = y; }
         const isF = new Date(l.date) > now;
         list.innerHTML += `
             <div class="live-card">
-                <img src="${l.img || ''}" class="live-thumb" onerror="this.src='https://via.placeholder.com/60'">
+                <img src="${l.img}" class="live-thumb" onerror="this.src='https://via.placeholder.com/60'">
                 <div style="flex:1;">
                     <div class="live-name">${l.title}${isF?'<span class="neon">𝙲𝚘𝚖𝚒𝚗𝚐 𝚜𝚘𝚘𝚗...</span>':''}</div>
                     <div style="display:flex;gap:8px;align-items:center;">
@@ -148,75 +156,37 @@ function render() {
                     </div>
                 </div>
                 <div onclick="openLiveModal(${DATA.lives.indexOf(l)})" style="color:var(--accent);cursor:pointer;padding:10px;">✎</div>
-            </div>
-        `;
+            </div>`;
     });
-
     document.getElementById('sTotal').innerText = DATA.lives.length;
     document.getElementById('sOrg').innerText = cO;
     document.getElementById('sMan').innerText = cM;
-    localStorage.setItem('1048_master_v4', JSON.stringify(DATA));
+    localStorage.setItem('1048_master_v5', JSON.stringify(DATA));
 }
 
-// 共通処理
+// モーダル・保存系ロジック（前回の完成版をベースに実装）
 function triggerFile(id) { document.getElementById(id).click(); }
-function handleFile(input, mode) {
-    if (input.files && input.files[0]) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            if(mode==='profile') DATA.profile.icon = e.target.result;
-            if(mode==='live') document.getElementById('tmpImg').src = e.target.result;
-            render();
-        };
-        reader.readAsDataURL(input.files[0]);
-    }
-}
+function showModal(h) { document.getElementById('mInner').innerHTML=h; document.getElementById('modal').classList.add('open'); }
+function closeModal() { document.getElementById('modal').classList.remove('open'); }
 
-// 編集モーダル類
 function openProfileModal() {
-    showModal(`<h3>プロフィール編集</h3>
-        <div class="field"><label>名前</label><input id="eN" value="${DATA.profile.name}"></div>
-        <div class="field"><label>説明文</label><textarea id="eD" rows="5">${DATA.profile.desc}</textarea></div>
-        <button class="btn-p" style="width:100%" onclick="saveProfile()">保存</button>`);
+    showModal(`<h3>基本情報</h3><div class="field"><label>名前</label><input id="eN" value="${DATA.profile.name}"></div><div class="field"><label>説明</label><textarea id="eD" rows="5">${DATA.profile.desc}</textarea></div><button class="btn-p" style="width:100%" onclick="saveProfile()">保存</button>`);
 }
 function saveProfile() { DATA.profile.name=document.getElementById('eN').value; DATA.profile.desc=document.getElementById('eD').value; render(); closeModal(); }
 
 function openLinkModal(k) {
-    showModal(`<h3>リンク編集</h3>
-        <div class="field"><label>URL</label><input id="eL" value="${DATA.links[k]}"></div>
-        <button class="btn-p" style="width:100%" onclick="saveLink('${k}')">保存</button>`);
+    showModal(`<h3>リンク編集</h3><div class="field"><label>URL</label><input id="eL" value="${DATA.links[k]}"></div><button class="btn-p" style="width:100%" onclick="saveLink('${k}')">保存</button>`);
 }
 function saveLink(k) { DATA.links[k]=document.getElementById('eL').value; render(); closeModal(); }
 
 function openRoleModal(i) {
-    showModal(`<h3>役割の編集</h3>
-        <div class="field"><label>見出し</label><input id="eRT" value="${DATA.roles[i].t}"></div>
-        <div class="field"><label>説明</label><input id="eRD" value="${DATA.roles[i].d}"></div>
-        <button class="btn-p" style="width:100%" onclick="saveRole(${i})">保存</button>`);
+    showModal(`<h3>役割編集</h3><div class="field"><label>見出し</label><input id="eRT" value="${DATA.roles[i].t}"></div><div class="field"><label>説明</label><input id="eRD" value="${DATA.roles[i].d}"></div><button class="btn-p" style="width:100%" onclick="saveRole(${i})">保存</button>`);
 }
 function saveRole(i) { DATA.roles[i].t=document.getElementById('eRT').value; DATA.roles[i].d=document.getElementById('eRD').value; render(); closeModal(); }
 
 function openLiveModal(idx = -1) {
     const l = idx > -1 ? DATA.lives[idx] : {title:'', date:'', role:'主催', img:'', link:''};
-    showModal(`<h3>ライブ実績の${idx>-1?'編集':'追加'}</h3>
-        <div class="field"><label>フライヤー</label>
-            <img id="tmpImg" src="${l.img}" style="width:60px;height:60px;object-fit:cover;display:block;margin-bottom:5px;">
-            <button class="btn-p" onclick="triggerFile('lIn')">画像選択</button>
-            <input type="file" id="lIn" hidden onchange="handleFile(this, 'live')">
-        </div>
-        <div class="field"><label>タイトル</label><input id="lT" value="${l.title}"></div>
-        <div class="field"><label>日付</label><input type="date" id="lD" value="${l.date}"></div>
-        <div class="field"><label>役割</label>
-            <select id="lR">
-                <option value="主催" ${l.role==='主催'?'selected':''}>主催</option>
-                <option value="運営" ${l.role==='運営'?'selected':''}>運営</option>
-                <option value="運営補佐" ${l.role==='運営補佐'?'selected':''}>運営補佐</option>
-                <option value="運営スタッフ" ${l.role==='運営スタッフ'?'selected':''}>運営スタッフ</option>
-            </select>
-        </div>
-        <div class="field"><label>Xリンクなど</label><input id="lL" value="${l.link}"></div>
-        <button class="btn-p" style="width:100%" onclick="saveLive(${idx})">保存</button>
-        ${idx>-1?`<button onclick="delLive(${idx})" style="color:red;background:none;border:none;width:100%;margin-top:10px;">削除</button>`:''}`);
+    showModal(`<h3>ライブ実績</h3><div class="field"><label>画像</label><img id="tmpImg" src="${l.img}" style="width:60px;height:60px;object-fit:cover;display:block;margin-bottom:5px;"><button class="btn-p" onclick="triggerFile('lIn')">選択</button><input type="file" id="lIn" hidden onchange="handleFile(this, 'live')"></div><div class="field"><label>タイトル</label><input id="lT" value="${l.title}"></div><div class="field"><label>日付</label><input type="date" id="lD" value="${l.date}"></div><div class="field"><label>役割</label><select id="lR"><option value="主催" ${l.role==='主催'?'selected':''}>主催</option><option value="運営" ${l.role==='運営'?'selected':''}>運営</option><option value="運営補佐" ${l.role==='運営補佐'?'selected':''}>運営補佐</option><option value="運営スタッフ" ${l.role==='運営スタッフ'?'selected':''}>運営スタッフ</option></select></div><div class="field"><label>リンク</label><input id="lL" value="${l.link}"></div><button class="btn-p" style="width:100%" onclick="saveLive(${idx})">保存</button>${idx>-1?`<button onclick="delLive(${idx})" style="color:red;background:none;border:none;width:100%;margin-top:10px;">削除</button>`:''}`);
 }
 function saveLive(idx) {
     const d = { title:document.getElementById('lT').value, date:document.getElementById('lD').value, role:document.getElementById('lR').value, link:document.getElementById('lL').value, img:document.getElementById('tmpImg').src };
@@ -224,101 +194,25 @@ function saveLive(idx) {
 }
 function delLive(i) { if(confirm('消しますか？')){DATA.lives.splice(i,1); render(); closeModal();} }
 
-function showModal(h) { document.getElementById('mInner').innerHTML=h; document.getElementById('modal').classList.add('open'); }
-function closeModal() { document.getElementById('modal').classList.remove('open'); }
-
-// --- 公開用コード生成 ---
 function generatePublicHTML() {
     const sorted = [...DATA.lives].sort((a,b)=>new Date(b.date)-new Date(a.date));
     let lastY = null;
     let liveHTML = '';
     let cO=0, cM=0;
     const now = new Date();
-
     sorted.forEach(l => {
         if(l.role==='主催')cO++; if(l.role==='運営'||l.role==='運営補佐')cM++;
         const y = new Date(l.date).getFullYear();
-        if(y !== lastY) {
-            liveHTML += `<div class="year-divider">${y}</div>`;
-            lastY = y;
-        }
+        if(y !== lastY) { liveHTML += `<div class="year-divider">${y}</div>`; lastY = y; }
         const isF = new Date(l.date) > now;
-        liveHTML += `
-        <div class="live-card">
-            <a href="${l.link || '#'}" target="_blank" style="display:flex;align-items:center;gap:15px;text-decoration:none;color:inherit;width:100%;">
-                <img src="${l.img}" class="live-thumb" onerror="this.src='https://via.placeholder.com/60'">
-                <div>
-                    <div class="live-name">${l.title}${isF?'<span class="neon">𝙲𝚘𝚖𝚒𝚗𝚐 𝚜𝚘𝚘𝚗...</span>':''}</div>
-                    <div style="display:flex;gap:8px;align-items:center;">
-                        <span class="role-lab" style="background:${COLORS[l.role]}">${l.role}</span>
-                        <span style="font-size:10px;color:#7a7a8c;">${l.date.replace(/-/g,'/')}</span>
-                    </div>
-                </div>
-            </a>
-        </div>`;
+        liveHTML += `<div class="live-card"><a href="${l.link || '#'}" target="_blank" style="display:flex;align-items:center;gap:15px;text-decoration:none;color:inherit;width:100%;"><img src="${l.img}" class="live-thumb" onerror="this.src='https://via.placeholder.com/60'"><div><div class="live-name">${l.title}${isF?'<span class="neon">𝙲𝚘𝚖𝚒𝚗𝚐 𝚜𝚘𝚘𝚗...</span>':''}</div><div style="display:flex;gap:8px;align-items:center;"><span class="role-lab" style="background:${COLORS[l.role]}">${l.role}</span><span style="font-size:10px;color:#7a7a8c;">${l.date.replace(/-/g,'/')}</span></div></div></a></div>`;
     });
-
-    const publicCode = `<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>1048 LIVE ARCHIVE</title>
-    <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@800&family=Noto+Sans+JP:wght@300;700&display=swap" rel="stylesheet">
-    <style>
-        :root { --bg:#0a0a12; --accent:#a682ff; --blue:#00a2ff; --border:#252535; }
-        body { background:var(--bg); color:#e0e0ed; font-family:'Noto Sans JP',sans-serif; margin:0; padding-bottom:80px; }
-        .wrap { max-width:450px; margin:0 auto; padding:60px 20px; }
-        .p-img { width:110px; height:110px; border-radius:50%; border:2px solid var(--accent); display:block; margin:0 auto 20px; object-fit:cover; }
-        .title { font-family:'Shippori Mincho'; font-size:32px; text-align:center; background:linear-gradient(to bottom, #fff, var(--accent)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-        .desc { font-size:13px; color:#7a7a8c; text-align:center; line-height:1.8; margin:20px 0 40px; white-space:pre-wrap; }
-        .r-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:40px; }
-        .r-box { background:rgba(255,255,255,0.03); border:1px solid var(--border); padding:15px; border-radius:4px; }
-        .r-t { font-weight:bold; font-size:13px; margin-bottom:5px; }
-        .links { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin-bottom:50px; }
-        .l-btn { background:rgba(255,255,255,0.05); border:1px solid var(--border); padding:12px 5px; font-size:11px; color:#e0e0ed; border-radius:4px; text-align:center; text-decoration:none; }
-        .stats { display:grid; grid-template-columns:1fr 1fr 1fr; border-top:1px solid var(--border); padding:20px 0; margin-bottom:40px; }
-        .s-item { text-align:center; border-right:1px solid var(--border); }
-        .s-item:last-child { border-right:none; }
-        .s-n { font-family:'Shippori Mincho'; font-size:26px; color:var(--accent); }
-        .s-l { font-size:10px; color:#7a7a8c; }
-        .year-divider { font-size:18px; font-family:'Shippori Mincho'; color:var(--accent); margin:40px 0 15px; border-bottom:1px solid var(--border); padding-bottom:5px; }
-        .live-card { background:#13131f; border:1px solid var(--border); border-radius:10px; padding:12px; margin-bottom:12px; }
-        .live-thumb { width:55px; height:55px; border-radius:6px; object-fit:cover; }
-        .live-name { font-size:14px; font-weight:bold; }
-        .role-lab { display:inline-block; padding:2px 8px; border-radius:4px; font-size:10px; font-weight:bold; color:#fff; }
-        .neon { color:var(--blue); text-shadow:0 0 8px var(--blue); font-weight:bold; font-family:serif; margin-left:8px; }
-    </style>
-</head>
-<body>
-    <div class="wrap">
-        <img src="${DATA.profile.icon}" class="p-img">
-        <div class="title">${DATA.profile.name}</div>
-        <div class="desc">${DATA.profile.desc}</div>
-        <div class="r-grid">
-            ${DATA.roles.map(r=>`<div class="r-box"><div class="r-t" style="color:${COLORS[r.t.replace(/【|】/g,'')]}">${r.t}</div><div style="font-size:11px;color:#7a7a8c;">${r.d}</div></div>`).join('')}
-        </div>
-        <div class="links">
-            <a href="${DATA.links.mail}" class="l-btn">📩 問い合わせ</a>
-            <a href="${DATA.links.booth}" class="l-btn">🛒 BOOTH</a>
-            <a href="${DATA.links.twitter}" class="l-btn">𝕏 Twitter</a>
-        </div>
-        <div class="stats">
-            <div class="s-item"><div class="s-n">${DATA.lives.length}</div><div class="s-l">総制作本数</div></div>
-            <div class="s-item"><div class="s-n">${cO}</div><div class="s-l">主催</div></div>
-            <div class="s-item"><div class="s-n">${cM}</div><div class="s-l">運営</div></div>
-        </div>
-        ${liveHTML}
-    </div>
-</body>
-</html>`;
-
+    const publicCode = `<!DOCTYPE html><html lang="ja"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>1048 LIVE ARCHIVE</title><link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@800&family=Noto+Sans+JP:wght@300;700&display=swap" rel="stylesheet"><style>:root { --bg:#0a0a12; --accent:#a682ff; --blue:#00a2ff; --border:#252535; }body { background:var(--bg); color:#e0e0ed; font-family:'Noto Sans JP',sans-serif; margin:0; padding-bottom:80px; }.wrap { max-width:450px; margin:0 auto; padding:60px 20px; }.p-img { width:110px; height:110px; border-radius:50%; border:2px solid var(--accent); display:block; margin:0 auto 20px; object-fit:cover; }.title { font-family:'Shippori Mincho'; font-size:32px; text-align:center; background:linear-gradient(to bottom, #fff, var(--accent)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }.desc { font-size:13px; color:#7a7a8c; text-align:center; line-height:1.8; margin:20px 0 40px; white-space:pre-wrap; }.r-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:40px; }.r-box { background:rgba(255,255,255,0.03); border:1px solid var(--border); padding:15px; border-radius:4px; }.r-t { font-weight:bold; font-size:13px; margin-bottom:5px; }.links { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin-bottom:50px; }.l-btn { background:rgba(255,255,255,0.05); border:1px solid var(--border); padding:12px 5px; font-size:11px; color:#e0e0ed; border-radius:4px; text-align:center; text-decoration:none; }.stats { display:grid; grid-template-columns:1fr 1fr 1fr; border-top:1px solid var(--border); padding:20px 0; margin-bottom:40px; }.s-item { text-align:center; border-right:1px solid var(--border); }.s-item:last-child { border-right:none; }.s-n { font-family:'Shippori Mincho'; font-size:26px; color:var(--accent); }.s-l { font-size:10px; color:#7a7a8c; }.year-divider { font-size:18px; font-family:'Shippori Mincho'; color:var(--accent); margin:40px 0 15px; border-bottom:1px solid var(--border); padding-bottom:5px; }.live-card { background:#13131f; border:1px solid var(--border); border-radius:10px; padding:12px; margin-bottom:12px; }.live-thumb { width:55px; height:55px; border-radius:6px; object-fit:cover; }.live-name { font-size:14px; font-weight:bold; }.role-lab { display:inline-block; padding:2px 8px; border-radius:4px; font-size:10px; font-weight:bold; color:#fff; }.neon { color:var(--blue); text-shadow:0 0 8px var(--blue); font-weight:bold; font-family:serif; margin-left:8px; }</style></head><body><div class="wrap"><img src="${DATA.profile.icon}" class="p-img"><div class="title">${DATA.profile.name}</div><div class="desc">${DATA.profile.desc}</div><div class="r-grid">${DATA.roles.map(r=>`<div class="r-box"><div class="r-t" style="color:${COLORS[r.t.replace(/【|】/g,'')]}">${r.t}</div><div style="font-size:11px;color:#7a7a8c;">${r.d}</div></div>`).join('')}</div><div class="links"><a href="${DATA.links.mail}" class="l-btn">📩 問い合わせ</a><a href="${DATA.links.booth}" class="l-btn">🛒 BOOTH</a><a href="${DATA.links.twitter}" class="l-btn">𝕏 Twitter</a></div><div class="stats"><div class="s-item"><div class="s-n">${DATA.lives.length}</div><div class="s-l">総制作本数</div></div><div class="s-item"><div class="s-n">${cO}</div><div class="s-l">主催</div></div><div class="s-item"><div class="s-n">${cM}</div><div class="s-l">運営</div></div></div>${liveHTML}</div></body></html>`;
     const area = document.createElement('textarea');
     area.value = publicCode; document.body.appendChild(area); area.select();
     document.execCommand('copy'); document.body.removeChild(area);
-    alert("年別アーカイブ対応の【公開サイトコード】をコピーしました！");
+    alert("コピー完了！GitHubに貼り付けてください。");
 }
-
 render();
 </script>
 </body>

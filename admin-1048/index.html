@@ -3,207 +3,226 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>1048 ADMIN - FULL EDITABLE</title>
+<title>1048 MASTER ADMIN</title>
 <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@800&family=Noto+Sans+JP:wght@300;500;700&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#0a0a12;--surface:#13131f;--border:#252535;--accent:#a682ff;--text:#e0e0ed;--muted:#7a7a8c;}
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 body{background:var(--bg);color:var(--text);font-family:'Noto Sans JP',sans-serif;padding-bottom:120px;}
 
-/* 管理用ヘッダー */
-.admin-bar{position:sticky;top:0;z-index:1000;background:#1a1a2e;padding:15px;display:flex;justify-content:space-between;border-bottom:2px solid var(--accent);}
-.save-btn{background:var(--accent);color:#fff;border:none;padding:10px 20px;border-radius:8px;font-weight:bold;cursor:pointer;}
+.admin-header{position:sticky;top:0;z-index:1000;background:#1a1a2e;padding:15px;display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid var(--accent);}
+.btn{background:var(--accent);color:#fff;border:none;padding:8px 16px;border-radius:6px;font-weight:bold;font-size:12px;cursor:pointer;}
 
-/* プレビュー画面（画像のデザインを再現） */
-.preview-area{max-width:450px;margin:0 auto;padding:40px 20px;text-align:center;}
-.profile-icon{width:110px;height:110px;border-radius:50%;border:2px solid var(--accent);margin:0 auto 20px;object-fit:cover;box-shadow:0 0 15px rgba(166,130,255,0.4);cursor:pointer;}
-.site-name{font-family:'Shippori Mincho';font-size:32px;background:linear-gradient(to bottom, #fff, var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:5px;}
-.site-sub{font-size:11px;letter-spacing:3px;color:var(--muted);margin-bottom:25px;}
-.site-desc{font-size:13px;color:var(--muted);line-height:1.8;margin-bottom:30px;white-space:pre-wrap;}
+.preview-container{max-width:450px;margin:0 auto;padding:30px 20px;}
+.profile-img{width:110px;height:110px;border-radius:50%;border:2px solid var(--accent);margin:0 auto 20px;display:block;object-fit:cover;cursor:pointer;}
+.site-title{font-family:'Shippori Mincho';font-size:32px;text-align:center;background:linear-gradient(to bottom, #fff, var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:5px;}
+.site-desc{font-size:13px;color:var(--muted);text-align:center;line-height:1.7;margin-bottom:30px;white-space:pre-wrap;}
 
-/* 役割ボックス (4個) */
+/* 役割ボックス */
 .role-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:30px;}
-.role-box{background:rgba(255,255,255,0.03);border:1px solid var(--border);padding:15px;border-radius:4px;text-align:left;cursor:pointer;}
-.role-box-title{color:var(--accent);font-weight:bold;font-size:13px;margin-bottom:5px;}
-.role-box-desc{font-size:11px;color:var(--muted);}
+.role-box{background:rgba(255,255,255,0.03);border:1px solid var(--border);padding:15px;border-radius:4px;cursor:pointer;}
+.role-t{color:var(--accent);font-weight:bold;font-size:13px;margin-bottom:5px;}
+.role-d{font-size:11px;color:var(--muted);}
 
-/* リンクボタン */
-.link-btns{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:40px;}
-.l-btn{background:rgba(255,255,255,0.05);border:1px solid var(--border);padding:12px 5px;font-size:11px;color:var(--text);border-radius:4px;cursor:pointer;}
-
-/* 統計エリア */
-.stats-row{display:grid;grid-template-columns:1fr 1fr 1fr;border-top:1px solid var(--border);padding-top:20px;}
-.stat-item{text-align:center;border-right:1px solid var(--border);cursor:pointer;}
+/* 自動集計エリア */
+.stats-row{display:grid;grid-template-columns:1fr 1fr 1fr;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:20px 0;margin-bottom:30px;}
+.stat-item{text-align:center;border-right:1px solid var(--border);}
 .stat-item:last-child{border-right:none;}
 .stat-num{font-family:'Shippori Mincho';font-size:26px;color:var(--accent);}
 .stat-label{font-size:10px;color:var(--muted);}
 
+/* ライブリスト */
+.live-item{background:var(--surface);border:1px solid var(--border);padding:10px;border-radius:8px;margin-bottom:8px;display:flex;align-items:center;gap:12px;}
+.live-thumb{width:50px;height:50px;border-radius:4px;object-fit:cover;background:#000;}
+.live-info{flex:1;min-width:0;}
+.live-name{font-size:13px;font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.live-meta{font-size:10px;color:var(--muted);}
+
 /* モーダル */
 .modal{position:fixed;inset:0;background:rgba(0,0,0,0.95);z-index:2000;display:none;align-items:center;justify-content:center;padding:20px;}
 .modal.open{display:flex;}
-.modal-content{background:var(--surface);width:100%;max-width:400px;padding:25px;border-radius:20px;border:1px solid var(--accent);max-height:80vh;overflow-y:auto;}
-.input-group{margin-bottom:15px;}
-.input-group label{display:block;font-size:11px;color:var(--accent);margin-bottom:5px;}
-.input-group input, .input-group textarea{width:100%;background:#000;border:1px solid var(--border);color:#fff;padding:12px;border-radius:8px;}
+.modal-content{background:var(--surface);width:100%;max-width:400px;padding:25px;border-radius:20px;border:1px solid var(--accent);max-height:85vh;overflow-y:auto;}
+.field{margin-bottom:15px;}
+.field label{display:block;font-size:11px;color:var(--accent);margin-bottom:5px;}
+.field input, .field textarea, .field select{width:100%;background:#000;border:1px solid var(--border);color:#fff;padding:12px;border-radius:8px;}
 </style>
 </head>
 <body>
 
-<div class="admin-bar">
-  <span style="font-weight:bold;font-size:14px;">1048 編集モード</span>
-  <button class="save-btn" onclick="exportData()">🚀 GitHub用コードを生成</button>
+<div class="admin-header">
+  <div style="font-size:14px;font-weight:bold;">1048 ADMIN</div>
+  <div style="display:flex;gap:10px;">
+    <button class="btn" onclick="openLiveModal()">➕ ライブ追加</button>
+    <button class="btn" style="background:#22c55e;" onclick="exportData()">🚀 保存/出力</button>
+  </div>
 </div>
 
-<div class="preview-area">
-  <img id="dispIcon" class="profile-icon" src="" onclick="triggerImg()" title="画像を変更">
-  <input type="file" id="fileInput" hidden accept="image/*" onchange="handleImg(this)">
+<div class="preview-container">
+  <img id="pIcon" class="profile-img" src="" onclick="triggerFile('pFileInput')">
+  <input type="file" id="pFileInput" hidden accept="image/*" onchange="handleFile(this, 'profile')">
   
-  <div onclick="openEdit('basic')">
-    <div id="dispName" class="site-name">1048</div>
-    <div id="dispSub" class="site-sub">LIVE EVENT PRODUCER</div>
-    <div id="dispDesc" class="site-desc">ここに説明文が入ります。</div>
+  <div onclick="openProfileModal()">
+    <div id="pName" class="site-title">1048</div>
+    <div id="pDesc" class="site-desc">説明文をタップして編集</div>
   </div>
 
-  <div class="role-grid" id="roleGrid">
-    <div class="role-box" onclick="openEdit('role', 0)">
-      <div id="rTitle0" class="role-box-title">【主催】</div>
-      <div id="rDesc0" class="role-box-desc">準備〜当日終了まで全て</div>
-    </div>
-    <div class="role-box" onclick="openEdit('role', 1)">
-      <div id="rTitle1" class="role-box-title">【運営】</div>
-      <div id="rDesc1" class="role-box-desc">ライブハウス予約/予算管理/当日進行</div>
-    </div>
-    <div class="role-box" onclick="openEdit('role', 2)">
-      <div id="rTitle2" class="role-box-title">【運営補佐】</div>
-      <div id="rDesc2" class="role-box-desc">準備サポート・当日進行全般</div>
-    </div>
-    <div class="role-box" onclick="openEdit('role', 3)">
-      <div id="rTitle3" class="role-box-title">【運営スタッフ】</div>
-      <div id="rDesc3" class="role-box-desc">当日スタッフリーダー</div>
-    </div>
+  <div class="role-grid" id="roleGrid"></div>
+
+  <div class="stats-row">
+    <div class="stat-item"><div id="statTotal" class="stat-num">0</div><div class="stat-label">総制作本数</div></div>
+    <div class="stat-item"><div id="statOrganize" class="stat-num">0</div><div class="stat-label">主催</div></div>
+    <div class="stat-item"><div id="statManage" class="stat-num">0</div><div class="stat-label">運営</div></div>
   </div>
 
-  <div class="link-btns" onclick="openEdit('links')">
-    <div class="l-btn">📩 お問い合わせ</div>
-    <div class="l-btn">🛒 BOOTH</div>
-    <div class="l-btn">𝕏 Twitter</div>
-  </div>
-
-  <div class="stats-row" onclick="openEdit('stats')">
-    <div class="stat-item">
-      <div id="sNum0" class="stat-num">26</div>
-      <div class="stat-label">総制作本数</div>
-    </div>
-    <div class="stat-item">
-      <div id="sNum1" class="stat-num">10</div>
-      <div class="stat-label">主催</div>
-    </div>
-    <div class="stat-item">
-      <div id="sNum2" class="stat-num">16</div>
-      <div class="stat-label">運営</div>
-    </div>
-  </div>
+  <div id="liveList"></div>
 </div>
 
-<div class="modal" id="editModal">
-  <div class="modal-content" id="modalInner"></div>
-</div>
+<div class="modal" id="editModal"><div class="modal-content" id="modalInner"></div></div>
 
 <script>
-let DATA = {
-  profile: { name: "1048", sub: "LIVE EVENT PRODUCER", desc: "2012年~2020年まで歌い手として活動。\n2015年~現在に至るまで約100本のライブ主催と運営を担当しております。\n\n運営/運営補佐/スタッフのご依頼はDMにてお気軽にご相談ください。", icon: "" },
+let DB = {
+  profile: { name: "1048", desc: "説明文...", icon: "" },
   roles: [
     {t: "【主催】", d: "準備〜当日終了まで全て"},
     {t: "【運営】", d: "ライブハウス予約/予算管理/当日進行"},
     {t: "【運営補佐】", d: "準備サポート・当日進行全般"},
     {t: "【運営スタッフ】", d: "当日スタッフリーダー"}
   ],
-  stats: ["26", "10", "16"],
-  links: { mail: "#", booth: "#", twitter: "#" }
+  lives: []
 };
 
-// 初期描画
+// 初期ロード
+const saved = localStorage.getItem('1048_db');
+if(saved) DB = JSON.parse(saved);
+
 function render() {
-  document.getElementById('dispIcon').src = DATA.profile.icon || 'https://via.placeholder.com/150';
-  document.getElementById('dispName').innerText = DATA.profile.name;
-  document.getElementById('dispSub').innerText = DATA.profile.sub;
-  document.getElementById('dispDesc').innerText = DATA.profile.desc;
-  DATA.roles.forEach((r, i) => {
-    document.getElementById(`rTitle${i}`).innerText = r.t;
-    document.getElementById(`rDesc${i}`).innerText = r.d;
+  // プロフィール
+  document.getElementById('pIcon').src = DB.profile.icon || 'https://via.placeholder.com/150';
+  document.getElementById('pName').innerText = DB.profile.name;
+  document.getElementById('pDesc').innerText = DB.profile.desc;
+
+  // 役割
+  const rg = document.getElementById('roleGrid');
+  rg.innerHTML = DB.roles.map((r, i) => `
+    <div class="role-box" onclick="openRoleModal(${i})">
+      <div class="role-t">${r.t}</div>
+      <div class="role-d">${r.d}</div>
+    </div>
+  `).join('');
+
+  // ライブリスト & 自動集計
+  let countO = 0, countM = 0;
+  const list = document.getElementById('liveList');
+  list.innerHTML = '<div style="font-size:12px;color:var(--muted);margin-bottom:10px;">LIVE ARCHIVE</div>';
+  
+  DB.lives.sort((a,b) => new Date(b.date) - new Date(a.date)).forEach((l, i) => {
+    if(l.role === '主催') countO++;
+    if(l.role === '運営' || l.role === '運営補佐') countM++;
+    
+    list.innerHTML += `
+      <div class="live-item" onclick="openLiveModal(${i})">
+        <img src="${l.img || ''}" class="live-thumb" onerror="this.src='https://via.placeholder.com/50'">
+        <div class="live-info">
+          <div class="live-name">${l.title}</div>
+          <div class="live-meta">${l.date} | ${l.role}</div>
+        </div>
+        <div style="font-size:12px;color:var(--accent);">✎</div>
+      </div>
+    `;
   });
-  DATA.stats.forEach((s, i) => {
-    document.getElementById(`sNum${i}`).innerText = s;
-  });
+
+  document.getElementById('statTotal').innerText = DB.lives.length;
+  document.getElementById('statOrganize').innerText = countO;
+  document.getElementById('statManage').innerText = countM;
+  
+  localStorage.setItem('1048_db', JSON.stringify(DB));
 }
 
-// 画像処理
-function triggerImg() { document.getElementById('fileInput').click(); }
-function handleImg(input) {
+// ファイル選択共通
+function triggerFile(id) { document.getElementById(id).click(); }
+function handleFile(input, target, index) {
   if (input.files && input.files[0]) {
     const reader = new FileReader();
-    reader.onload = function(e) {
-      DATA.profile.icon = e.target.result;
+    reader.onload = (e) => {
+      if(target === 'profile') DB.profile.icon = e.target.result;
+      if(target === 'live') document.getElementById('tmpLiveImg').src = e.target.result;
       render();
     };
     reader.readAsDataURL(input.files[0]);
   }
 }
 
-// 編集画面
-function openEdit(type, index) {
-  const inner = document.getElementById('modalInner');
-  let html = '';
-  if(type === 'basic') {
-    html = `<h3>基本情報</h3>
-    <div class="input-group"><label>名前</label><input id="inName" value="${DATA.profile.name}"></div>
-    <div class="input-group"><label>肩書き</label><input id="inSub" value="${DATA.profile.sub}"></div>
-    <div class="input-group"><label>説明文</label><textarea id="inDesc" rows="5">${DATA.profile.desc}</textarea></div>`;
-  } else if(type === 'role') {
-    html = `<h3>役割の編集</h3>
-    <div class="input-group"><label>タイトル</label><input id="inRT" value="${DATA.roles[index].t}"></div>
-    <div class="input-group"><label>内容</label><input id="inRD" value="${DATA.roles[index].d}"></div>`;
-  } else if(type === 'stats') {
-    html = `<h3>実績数</h3>
-    <div class="input-group"><label>総制作本数</label><input id="inS0" value="${DATA.stats[0]}"></div>
-    <div class="input-group"><label>主催数</label><input id="inS1" value="${DATA.stats[1]}"></div>
-    <div class="input-group"><label>運営数</label><input id="inS2" value="${DATA.stats[2]}"></div>`;
-  }
-  
-  html += `<button class="save-btn" style="width:100%" onclick="save('${type}', ${index})">適用する</button>
-           <button class="l-btn" style="width:100%;margin-top:10px;border:none;" onclick="closeModal()">キャンセル</button>`;
-  inner.innerHTML = html;
-  document.getElementById('editModal').classList.add('open');
+// モーダル制御
+function openProfileModal() {
+  const html = `<h3>プロフィール編集</h3>
+    <div class="field"><label>名前</label><input id="editPName" value="${DB.profile.name}"></div>
+    <div class="field"><label>自己紹介</label><textarea id="editPDesc" rows="5">${DB.profile.desc}</textarea></div>
+    <button class="btn" style="width:100%" onclick="saveProfile()">保存</button>`;
+  showModal(html);
 }
-
-function save(type, index) {
-  if(type === 'basic') {
-    DATA.profile.name = document.getElementById('inName').value;
-    DATA.profile.sub = document.getElementById('inSub').value;
-    DATA.profile.desc = document.getElementById('inDesc').value;
-  } else if(type === 'role') {
-    DATA.roles[index].t = document.getElementById('inRT').value;
-    DATA.roles[index].d = document.getElementById('inRD').value;
-  } else if(type === 'stats') {
-    DATA.stats[0] = document.getElementById('inS0').value;
-    DATA.stats[1] = document.getElementById('inS1').value;
-    DATA.stats[2] = document.getElementById('inS2').value;
-  }
+function saveProfile() {
+  DB.profile.name = document.getElementById('editPName').value;
+  DB.profile.desc = document.getElementById('editPDesc').value;
   render(); closeModal();
 }
 
+function openRoleModal(i) {
+  const html = `<h3>役割の編集</h3>
+    <div class="field"><label>見出し</label><input id="editRT" value="${DB.roles[i].t}"></div>
+    <div class="field"><label>説明</label><input id="editRD" value="${DB.roles[i].d}"></div>
+    <button class="btn" style="width:100%" onclick="saveRole(${i})">保存</button>`;
+  showModal(html);
+}
+function saveRole(i) {
+  DB.roles[i].t = document.getElementById('editRT').value;
+  DB.roles[i].d = document.getElementById('editRD').value;
+  render(); closeModal();
+}
+
+function openLiveModal(index = -1) {
+  const l = index > -1 ? DB.lives[index] : { title: '', date: '', role: '主催', img: '' };
+  const html = `<h3>ライブ実績の${index > -1 ? '編集' : '追加'}</h3>
+    <div class="field"><label>フライヤー画像</label>
+      <img id="tmpLiveImg" src="${l.img}" style="width:60px;height:60px;display:block;margin-bottom:10px;object-fit:cover;background:#000;">
+      <button class="btn" onclick="triggerFile('lFileInput')">画像を選択</button>
+      <input type="file" id="lFileInput" hidden accept="image/*" onchange="handleFile(this, 'live')">
+    </div>
+    <div class="field"><label>イベント名</label><input id="lTitle" value="${l.title}"></div>
+    <div class="field"><label>開催日</label><input type="date" id="lDate" value="${l.date}"></div>
+    <div class="field"><label>役割</label>
+      <select id="lRole">
+        <option value="主催" ${l.role==='主催'?'selected':''}>主催</option>
+        <option value="運営" ${l.role==='運営'?'selected':''}>運営</option>
+        <option value="運営補佐" ${l.role==='運営補佐'?'selected':''}>運営補佐</option>
+        <option value="運営スタッフ" ${l.role==='運営スタッフ'?'selected':''}>運営スタッフ</option>
+      </select>
+    </div>
+    <button class="btn" style="width:100%" onclick="saveLive(${index})">保存</button>
+    ${index > -1 ? `<button onclick="deleteLive(${index})" style="background:none;border:none;color:red;width:100%;margin-top:15px;font-size:11px;">このライブを削除</button>` : ''}`;
+  showModal(html);
+}
+function saveLive(index) {
+  const newItem = {
+    title: document.getElementById('lTitle').value,
+    date: document.getElementById('lDate').value,
+    role: document.getElementById('lRole').value,
+    img: document.getElementById('tmpLiveImg').src
+  };
+  if(index > -1) DB.lives[index] = newItem;
+  else DB.lives.push(newItem);
+  render(); closeModal();
+}
+function deleteLive(i) { if(confirm('削除しますか？')) { DB.lives.splice(i,1); render(); closeModal(); } }
+
+function showModal(html) { document.getElementById('modalInner').innerHTML = html; document.getElementById('editModal').classList.add('open'); }
 function closeModal() { document.getElementById('editModal').classList.remove('open'); }
 
 function exportData() {
   const code = document.documentElement.outerHTML;
-  const blob = new Blob([code], {type: "text/html"});
   const area = document.createElement('textarea');
-  area.value = code;
-  document.body.appendChild(area);
-  area.select();
-  document.execCommand('copy');
-  document.body.removeChild(area);
-  alert("GitHub用の全コードをコピーしました！index.htmlに貼り付けてください。");
+  area.value = code; document.body.appendChild(area); area.select();
+  document.execCommand('copy'); document.body.removeChild(area);
+  alert("全データを統合したコードをコピーしました！GitHubに貼り付けてください。");
 }
 
 render();

@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>1048 管理画面</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600;800&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0a0f;--surface:#13131a;--surface2:#1c1c26;--border:#2a2a38;--accent:#7c6aff;--accent2:#ff6a8a;--gold:#c9a84c;--text:#e8e6f0;--muted:#6b6880;}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+body{background:var(--bg);color:var(--text);font-family:'Noto Sans JP',sans-serif;font-weight:300;min-height:100vh;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 70% 40% at 10% 0%,rgba(124,106,255,.08) 0%,transparent 60%),radial-gradient(ellipse 60% 50% at 90% 100%,rgba(255,106,138,.06) 0%,transparent 60%);pointer-events:none;z-index:0;}
+header{position:relative;z-index:1;padding:30px 18px 20px;text-align:center;border-bottom:1px solid var(--border);background:rgba(10,10,15,.8);backdrop-filter:blur(10px);position:sticky;top:0;}
+.header-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;}
+.header-title{font-family:'Shippori Mincho',serif;font-size:20px;font-weight:800;letter-spacing:.1em;color:var(--accent);}
+.btn{padding:8px 16px;font-size:12px;border-radius:4px;border:1px solid var(--border);background:var(--surface);color:var(--text);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px;}
+.btn-primary{background:var(--accent);border-color:var(--accent);color:#fff;}
+.btn-accent{background:var(--accent2);border-color:var(--accent2);color:#fff;}
+.btn:active{opacity:.7;}
+
+main{position:relative;z-index:1;padding:20px 14px 100px;}
+.section-title{font-size:14px;color:var(--muted);margin-bottom:15px;display:flex;align-items:center;gap:10px;}
+.section-title::after{content:'';flex:1;height:1px;background:var(--border);}
+
+/* ライブカード編集 */
+.live-list{display:flex;flex-direction:column;gap:10px;}
+.edit-card{background:var(--surface);border:1px solid var(--border);padding:15px;border-radius:6px;position:relative;}
+.edit-card.upcoming{border-left:4px solid var(--accent);}
+.card-header{display:flex;justify-content:space-between;margin-bottom:10px;font-size:12px;}
+.card-date{color:var(--gold);font-weight:700;}
+.card-controls{display:flex;gap:10px;}
+.control-btn{color:var(--muted);cursor:pointer;}
+.control-btn.del{color:var(--accent2);}
+
+/* 入力フォーム */
+.form-group{margin-bottom:12px;}
+.form-label{display:block;font-size:11px;color:var(--muted);margin-bottom:4px;}
+.form-input{width:100%;background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:10px;border-radius:4px;font-size:14px;font-family:inherit;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+
+/* モーダル */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:100;display:none;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(5px);}
+.modal.open{display:flex;}
+.modal-content{background:var(--surface);border:1px solid var(--border);width:100%;max-width:500px;border-radius:8px;max-height:90vh;overflow-y:auto;padding:20px;}
+.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;}
+.modal-title{font-family:'Shippori Mincho',serif;font-size:18px;color:var(--accent);}
+
+/* エクスポートエリア */
+#exportText{width:100%;height:200px;background:#000;color:#0f0;font-family:monospace;font-size:10px;padding:10px;border:1px solid var(--border);margin-bottom:15px;white-space:pre-wrap;word-break:break-all;}
+
+.footer-nav{position:fixed;bottom:0;left:0;right:0;background:rgba(19,19,26,.95);backdrop-filter:blur(10px);border-top:1px solid var(--border);display:grid;grid-template-columns:1fr 1fr;padding:15px;gap:10px;z-index:10;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-top">
+    <h1 class="header-title">1048 管理ツール</h1>
+    <button class="btn" id="btnProfile">👤 プロフィール編集</button>
+  </div>
+</header>
+
+<main>
+  <div class="section-title">ライブ実績の追加・編集</div>
+  <div id="liveList" class="live-list"></div>
+</main>
+
+<div class="footer-nav">
+  <button class="btn btn-primary" id="btnAddLive">➕ 新規追加</button>
+  <button class="btn btn-accent" id="btnExport">🚀 サイト更新用コード発行</button>
+</div>
+
+<div id="liveModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-head">
+      <div class="modal-title" id="modalTitle">ライブ情報の編集</div>
+      <div class="control-btn" id="liveModalClose">✕</div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">年 (西暦)</label><input type="number" id="fYear" class="form-input" placeholder="2026"></div>
+      <div class="form-group"><label class="form-label">日付 (月/日)</label><input type="text" id="fDate" class="form-input" placeholder="1/31"></div>
+    </div>
+    <div class="form-group"><label class="form-label">公演タイトル</label><input type="text" id="fTitle" class="form-input"></div>
+    <div class="form-group"><label class="form-label">役割 (主催/運営/運営補佐/運営スタッフ)</label><input type="text" id="fRole" class="form-input" list="roleOptions"></div>
+    <datalist id="roleOptions"><option value="主催"><option value="運営"><option value="運営補佐"><option value="運営スタッフ"></datalist>
+    <div class="form-group"><label class="form-label">主催名 (他者主催の場合)</label><input type="text" id="fOrg" class="form-input" placeholder="主催：〇〇様"></div>
+    <div class="form-group"><label class="form-label">形式</label><input type="text" id="fFormat" class="form-input" placeholder="2部制インスト"></div>
+    <div class="form-group"><label class="form-label">リンク (Twitter/告知ページURL)</label><input type="text" id="fLink" class="form-input"></div>
+    <div class="form-group"><label class="form-label">画像URL (lit.link等の画像アドレス)</label><input type="text" id="fThumb" class="form-input"></div>
+    <div class="form-group" style="display:flex;align-items:center;gap:10px;"><input type="checkbox" id="fUp"> <label class="form-label" style="margin:0;">今後開催（UPCOMINGを表示）</label></div>
+    <button class="btn btn-primary" style="width:100%;margin-top:10px;padding:14px;" id="btnSaveLive">保存する</button>
+  </div>
+</div>
+
+<div id="profileModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-head"><div class="modal-title">プロフィール設定</div><div class="control-btn" id="profileModalClose">✕</div></div>
+    <div class="form-group"><label class="form-label">名前</label><input type="text" id="hName" class="form-input"></div>
+    <div class="form-group"><label class="form-label">サブ肩書き</label><input type="text" id="hSub" class="form-input"></div>
+    <div class="form-group"><label class="form-label">アイコン画像URL</label><input type="text" id="hAvatar" class="form-input"></div>
+    <div class="form-group"><label class="form-label">紹介文</label><textarea id="hDesc" class="form-input" style="height:80px;"></textarea></div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">役割1(主催)</label><input type="text" id="hR1" class="form-input"></div>
+      <div class="form-group"><label class="form-label">役割2(運営)</label><input type="text" id="hR2" class="form-input"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">役割3(補佐)</label><input type="text" id="hR3" class="form-input"></div>
+      <div class="form-group"><label class="form-label">役割4(スタッフ)</label><input type="text" id="hR4" class="form-input"></div>
+    </div>
+    <div class="form-group"><label class="form-label">お問い合わせ先(メール)</label><input type="text" id="hContact" class="form-input"></div>
+    <div class="form-group"><label class="form-label">BOOTH URL</label><input type="text" id="hBooth" class="form-input"></div>
+    <div class="form-group"><label class="form-label">Twitter URL</label><input type="text" id="hTwitter" class="form-input"></div>
+    <button class="btn btn-primary" style="width:100%;margin-top:10px;padding:14px;" id="btnSaveProfile">変更を保存</button>
+  </div>
+</div>
+
+<div id="exportModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-head"><div class="modal-title">更新用コード</div><div class="control-btn" id="exportModalClose">✕</div></div>
+    <p style="font-size:11px;color:var(--muted);margin-bottom:10px;">以下のコードをすべてコピーし、GitHubの index.html 内にある「const SITE_DATA = ...」の部分を丸ごと貼り替えてください。</p>
+    <textarea id="exportText" readonly></textarea>
+    <button class="btn btn-primary" style="width:100%;padding:14px;" id="copyBtn">📋 コピーする</button>
+  </div>
+</div>
+
+<script>
+/* GitHubに公開用としてアップした index.html の中にある
+  「const SITE_DATA = {...}」の部分をここに貼り付けると、
+  現在のデータを読み込んで編集できます。
+*/
+let SITE_DATA = {"profile":{"avatar":"https://prd.resource-api.lit.link/images/creator/b1410259-7a64-4f70-a926-c804ecc40caa/fa63f601-cce9-49d0-a822-e24829268e85.jpg","name":"1048","sub":"Live Event Producer","desc":"ライブ主催・運営のお手伝いをしています。\n2015年から主催業務を開始。赤字にならないような予算管理もお気軽にご相談ください。","role1":"準備〜当日終了まで全て","role2":"ライブハウス予約/予算管理/当日進行","role3":"準備サポート・当日進行全般","role4":"当日スタッフリーダー","contact":"toshiya1227@live.jp","booth":"https://1048bp.booth.pm/","twitter":"https://x.com/info_inishie"},"lives":{"2026":[{"date":"1/31","role":"主催","title":"古-参-","organizer":"","format":"2部制インスト/バンド","link":"https://twitter.com/info_inishie","thumb":"https://prd.resource-api.lit.link/images/creators/76150ddb-9865-485a-9dcf-a7dc3b02b767/profile_links/buttons/2a9beb5c-3a71-4e1d-94b9-d0c3ed5a9d81.jpeg"},{"date":"2/22","role":"運営スタッフ","title":"DPMN","organizer":"主催：らりー様","format":"2部制インスト/バンド","link":"","thumb":"https://prd.resource-api.lit.link/images/creators/76150ddb-9865-485a-9dcf-a7dc3b02b767/profile_links/buttons/907fcc14-4049-47b9-ba4f-a7240b9cc39a.jpeg"},{"date":"4/11","role":"運営","title":"オトヲアビロ vol.1","organizer":"主催：ウトガワ様","format":"2部制インスト/バンド","link":"https://twitter.com/otoabi_live_","thumb":"https://prd.resource-api.lit.link/images/creators/76150ddb-9865-485a-9dcf-a7dc3b02b767/profile_links/buttons/3d5ddd75-7cc3-40cc-bd91-17db7a7e17af.jpeg"},{"date":"5/16","role":"主催","title":"Unison Final","organizer":"","format":"2部制インスト","link":"https://twitter.com/liveunison_info","thumb":"https://prd.resource-api.lit.link/images/creators/76150ddb-9865-485a-9dcf-a7dc3b02b767/profile_links/buttons/e981f470-f417-4050-8021-f13e9b87946c.jpeg"},{"date":"7/??","role":"運営","title":"（調整中）","organizer":"","format":"","link":"","thumb":"","upcoming":true},{"date":"7/19","role":"主催","title":"Osiri.Chorus.Project -Encore-","organizer":"","format":"1部制インスト","link":"https://twitter.com/OCP0318","thumb":"https://prd.resource-api.lit.link/images/creators/76150ddb-9865-485a-9dcf-a7dc3b02b767/profile_links/buttons/8529647c-aeb1-477c-ac2c-4659bd36df0b.png","upcoming":true},{"date":"9/20-21","role":"主催","title":"みにしえ-?-","organizer":"","format":"2days インスト","link":"https://twitter.com/info_inishie","thumb":"","upcoming":true},{"date":"10/17","role":"主催","title":"古-終-","organizer":"","format":"2部制バンド","link":"https://twitter.com/info_inishie","thumb":"","upcoming":true}],"2025":[{"date":"1/25","role":"運営","title":"みんなでパジャマパーティ 2","organizer":"主催：安眠まくら様","format":"2部制インスト/配信有","link":"https://twitter.com/maku_live","thumb":"https://prd.resource-api.lit.link/images/creators/76150ddb-9865-485a-9dcf-a7dc3b02b767/81341d32-7e8f-4f59-8a88-7a29de241666.jpeg"},{"date":"2/8","role":"主催","title":"古-弐-","organizer":"","format":"2部制インスト/バンド","link":"https://twitter.com/info_inishie","thumb":"https://prd.resource-api.lit.link/images/creators/76150ddb-9865-485a-9dcf-a7dc3b02b767/b0c7ca9b-290e-4ad0-995f-fb26d87b34e8.jpeg"},{"date":"4/26","role":"運営","title":"CLOVER PLAYHOUSE 2","organizer":"主催：LamL_Chop様","format":"2部制インスト","link":"https://twitter.com/clovers_info","thumb":"https://prd.resource-api.lit.link/images/creators/76150ddb-9865-485a-9dcf-a7dc3b02b767/b5d5b201-1224-4172-8522-e5f39a5dc55a.jpeg"},{"date":"5/11","role":"運営スタッフ","title":"＋α (ぷらすあるふぁ)","organizer":"主催：あさぎ様","format":"2部制インスト","link":"https://twitter.com/plus10arufa","thumb":"https://prd.resource-api.lit.link/images/creators/76150ddb-9865-485a-9dcf-a7dc3b02b767/aa9dce0e-1065-4357-a00f-f1806c307007.jpeg"},{"date":"5/17","role":"主催","title":"Unison 2","organizer":"","format":"2部制インスト","link":"https://twitter.com/liveunison_info","thumb":"https://prd.resource-api.lit.link/images/creators/76150ddb-9865-485a-9dcf-a7dc3b02b767/106ad0c0-69de-4a6b-a157-21bd85b4d027.jpeg"},{"date":"8/23","role":"運営スタッフ","title":"FLASH","organizer":"主催：あさぎ様","format":"2部制インスト","link":"https://twitter.com/FLASH823_","thumb":"https://prd.resource-api.lit.link/images/creators/76150ddb-9865-485a-9dcf-a7dc3b02b767/profile_links/buttons/0cec54c4-815b-4cf1-b439-1f0245fc34e7.jpeg"},{"date":"10/12","role":"主催","title":"みにしえ-壱-","organizer":"","format":"1部制インスト","link":"","thumb":"https://prd.resource-api.lit.link/images/creators/76150ddb-9865-485a-9dcf-a7dc3b02b767/profile_links/buttons/37285f86-cd13-452b-bd21-ceeb498fc89c.png"},{"date":"12/20","role":"運営","title":"Bar Ecrin","organizer":"主催：洒落様","format":"1部制インスト","link":"","thumb":"https://prd.resource-api.lit.link/images/creators/76150ddb-9865-485a-9dcf-a7dc3b02b767/profile_links/buttons/6bc7535d-480c-4b2c-8723-2c045552d6aa.jpeg"}],"2024":[{"date":"1/20","role":"運営","title":"みんなでパジャマパーティ","organizer":"主催：安眠まくら様","format":"1部制インスト/配信有","link":"https://twitter.com/maku_live","thumb":"https://prd.resource-api.lit.link/images/creators/76150ddb-9865-485a-9dcf-a7dc3b02b767/8cb1c7dc-3f79-4df5-af6d-f75f5d7e1566.jpeg"},{"date":"3/2","role":"運営","title":"謳歌〜ファンファーレ〜","organizer":"主催：のっつ様","format":"1部制インスト","link":"","thumb":"https://prd.resource-api.lit.link/images/creators/76150ddb-9865-485a-9dcf-a7dc3b02b767/16604dee-23b1-47b2-9d42-547c5d7e61c4.jpeg"},{"date":"4/29","role":"運営","title":"CLOVER PLAYHOUSE","organizer":"主催：あるま様","format":"1部制インスト","link":"https://twitter.com/clovers_info","thumb":"https://prd.resource-api.lit.link/images/creators/76150ddb-9865-485a-9dcf-a7dc3b02b767/294471e2-4e8c-424b-95f7-c3cfa90a0126.png"},{"date":"6/1","role":"運営","title":"GMGM -calm echoes day-","organizer":"主催：mira様","format":"1部制インスト/アコースティック","link":"https://twitter.com/gmgm_2023","thumb":"https://prd.resource-api.lit.link/images/creators/76150ddb-9865-485a-9dcf-a7dc3b02b767/14210640-10d5-4cec-b110-64dffdd6a52d.jpeg"},{"date":"8/17","role":"主催","title":"Unison","organizer":"","format":"1部制インスト","link":"https://twitter.com/liveunison_info","thumb":"https://prd.resource-api.lit.link/images/creators/76150ddb-9865-485a-9dcf-a7dc3b02b767/ac1d6e3d-c7c5-4a05-92fc-88830c02860e.png"},{"date":"9/28","role":"主催","title":"古-壱-","organizer":"","format":"2部制インスト","link":"https://twitter.com/info_inishie","thumb":"https://prd.resource-api.lit.link/images/creators/76150ddb-9865-485a-9dcf-a7dc3b02b767/9ab3089d-6bcf-4cc7-8ac7-f861f94fc57a.jpeg"},{"date":"10/15","role":"運営補佐","title":"SIGNAL","organizer":"主催：Ampel様","format":"1部制インスト/配信有","link":"https://twitter.com/Ampelfcy_SIGNAL","thumb":"https://prd.resource-api.lit.link/images/creators/76150ddb-9865-485a-9dcf-a7dc3b02b767/948543a9-5781-4347-8e23-896c56e83761.png"},{"date":"11/25","role":"運営","title":"Good Meat Good Meet 2","organizer":"主催：mira様","format":"2部制インスト/配信有","link":"https://twitter.com/gmgm_2023","thumb":"https://prd.resource-api.lit.link/images/creators/76150ddb-9865-485a-9dcf-a7dc3b02b767/b0c7ca9b-290e-4ad0-995f-fb26d87b34e8.jpeg"},{"date":"12/15","role":"運営","title":"Floralia -Camelia-","organizer":"主催：紡様","format":"1部制インスト","link":"https://twitter.com/Floralia_sg","thumb":"https://prd.resource-api.lit.link/images/creators/76150ddb-9865-485a-9dcf-a7dc3b02b767/5f95b4e5-d731-4f18-8eeb-96770ec967fa.jpeg"},{"date":"11/23","role":"運営","title":"Good Meat Good Meet","organizer":"主催：mira様","format":"2部制インスト","link":"https://twitter.com/gmgm_2023","thumb":"https://prd.resource-api.lit.link/images/creators/76150ddb-9865-485a-9dcf-a7dc3b02b767/c4b261f0-6561-40a0-9a8d-5e0e0e29c9d6.jpeg"}],"2023":[{"date":"11/23","role":"運営","title":"Good Meat Good Meet","organizer":"主催：mira様","format":"2部制インスト","link":"https://twitter.com/gmgm_2023","thumb":"https://prd.resource-api.lit.link/images/creators/76150ddb-9865-485a-9dcf-a7dc3b02b767/c4b261f0-6561-40a0-9a8d-5e0e0e29c9d6.jpeg"}]}};
+
+let profile = SITE_DATA.profile;
+let liveData = SITE_DATA.lives;
+let editingYear = null;
+let editingIndex = null;
+
+function renderProfile(){
+  document.getElementById('hName').value = profile.name;
+  document.getElementById('hSub').value = profile.sub;
+  document.getElementById('hAvatar').value = profile.avatar;
+  document.getElementById('hDesc').value = profile.desc;
+  document.getElementById('hR1').value = profile.role1;
+  document.getElementById('hR2').value = profile.role2;
+  document.getElementById('hR3').value = profile.role3;
+  document.getElementById('hR4').value = profile.role4;
+  document.getElementById('hContact').value = profile.contact;
+  document.getElementById('hBooth').value = profile.booth;
+  document.getElementById('hTwitter').value = profile.twitter;
+}
+
+function renderAll(){
+  const list = document.getElementById('liveList');
+  list.innerHTML = '';
+  const years = Object.keys(liveData).sort((a,b)=>b-a);
+  
+  years.forEach(year => {
+    const section = document.createElement('div');
+    section.innerHTML = `<div style="margin:20px 0 10px;font-weight:700;color:var(--accent);">${year}年</div>`;
+    list.appendChild(section);
+    
+    liveData[year].forEach((live, idx) => {
+      const card = document.createElement('div');
+      card.className = 'edit-card' + (live.upcoming ? ' upcoming' : '');
+      card.innerHTML = `
+        <div class="card-header">
+          <span class="card-date">${live.date}</span>
+          <div class="card-controls">
+            <span class="control-btn" onclick="editLive('${year}', ${idx})">✎ 編集</span>
+            <span class="control-btn del" onclick="deleteLive('${year}', ${idx})">✕ 削除</span>
+          </div>
+        </div>
+        <div style="font-size:14px;font-weight:500;">${live.title}</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:4px;">${live.role} / ${live.format || '形式未設定'}</div>
+      `;
+      list.appendChild(card);
+    });
+  });
+}
+
+/* ライブ追加・編集 */
+document.getElementById('btnAddLive').addEventListener('click', ()=>{
+  editingYear = null; editingIndex = null;
+  document.getElementById('modalTitle').textContent = '新規ライブの追加';
+  document.getElementById('fYear').value = new Date().getFullYear();
+  document.getElementById('fDate').value = '';
+  document.getElementById('fTitle').value = '';
+  document.getElementById('fRole').value = '主催';
+  document.getElementById('fOrg').value = '';
+  document.getElementById('fFormat').value = '';
+  document.getElementById('fLink').value = '';
+  document.getElementById('fThumb').value = '';
+  document.getElementById('fUp').checked = false;
+  document.getElementById('liveModal').classList.add('open');
+});
+
+window.editLive = (year, idx) => {
+  editingYear = year; editingIndex = idx;
+  const data = liveData[year][idx];
+  document.getElementById('modalTitle').textContent = 'ライブ情報の編集';
+  document.getElementById('fYear').value = year;
+  document.getElementById('fDate').value = data.date;
+  document.getElementById('fTitle').value = data.title;
+  document.getElementById('fRole').value = data.role;
+  document.getElementById('fOrg').value = data.organizer || '';
+  document.getElementById('fFormat').value = data.format || '';
+  document.getElementById('fLink').value = data.link || '';
+  document.getElementById('fThumb').value = data.thumb || '';
+  document.getElementById('fUp').checked = !!data.upcoming;
+  document.getElementById('liveModal').classList.add('open');
+};
+
+document.getElementById('btnSaveLive').addEventListener('click', ()=>{
+  const year = document.getElementById('fYear').value;
+  const newData = {
+    date: document.getElementById('fDate').value,
+    role: document.getElementById('fRole').value,
+    title: document.getElementById('fTitle').value,
+    organizer: document.getElementById('fOrg').value,
+    format: document.getElementById('fFormat').value,
+    link: document.getElementById('fLink').value,
+    thumb: document.getElementById('fThumb').value,
+    upcoming: document.getElementById('fUp').checked
+  };
+
+  if(!liveData[year]) liveData[year] = [];
+  
+  if(editingYear !== null && editingIndex !== null){
+    // 編集時：年が変わった場合は元のを消して新しい年に移動
+    if(editingYear !== year){
+      liveData[editingYear].splice(editingIndex, 1);
+      if(liveData[editingYear].length === 0) delete liveData[editingYear];
+      liveData[year].push(newData);
+    } else {
+      liveData[year][editingIndex] = newData;
+    }
+  } else {
+    // 新規追加
+    liveData[year].push(newData);
+  }
+  
+  renderAll();
+  document.getElementById('liveModal').classList.remove('open');
+});
+
+window.deleteLive = (year, idx) => {
+  if(confirm('この実績を削除しますか？')){
+    liveData[year].splice(idx, 1);
+    if(liveData[year].length === 0) delete liveData[year];
+    renderAll();
+  }
+};
+
+document.getElementById('liveModalClose').addEventListener('click', ()=>document.getElementById('liveModal').classList.remove('open'));
+
+/* プロフィール */
+document.getElementById('btnProfile').addEventListener('click', ()=>document.getElementById('profileModal').classList.add('open'));
+document.getElementById('profileModalClose').addEventListener('click', ()=>document.getElementById('profileModal').classList.remove('open'));
+document.getElementById('btnSaveProfile').addEventListener('click', ()=>{
+  profile.name = document.getElementById('hName').value.trim();
+  profile.sub = document.getElementById('hSub').value.trim();
+  profile.avatar = document.getElementById('hAvatar').value.trim();
+  profile.desc = document.getElementById('hDesc').value.trim();
+  profile.role1 = document.getElementById('hR1').value.trim();
+  profile.role2 = document.getElementById('hR2').value.trim();
+  profile.role3 = document.getElementById('hR3').value.trim();
+  profile.role4 = document.getElementById('hR4').value.trim();
+  profile.contact = document.getElementById('hContact').value.trim();
+  profile.booth = document.getElementById('hBooth').value.trim();
+  profile.twitter = document.getElementById('hTwitter').value.trim();
+  renderAll();
+  document.getElementById('profileModal').classList.remove('open');
+  alert('プロフィールを一時保存しました（最後にエクスポートが必要です）');
+});
+
+/* エクスポート */
+document.getElementById('btnExport').addEventListener('click', ()=>{
+  const data = { profile, lives: liveData };
+  document.getElementById('exportText').value = `const SITE_DATA = ${JSON.stringify(data)};`;
+  document.getElementById('exportModal').classList.add('open');
+});
+
+document.getElementById('copyBtn').addEventListener('click', ()=>{
+  const ta = document.getElementById('exportText');
+  ta.select();
+  document.execCommand('copy');
+  alert('コピーしました！本番用index.htmlのSITE_DATA部分に貼り付けてください。');
+});
+
+document.getElementById('exportModalClose').addEventListener('click', ()=>document.getElementById('exportModal').classList.remove('open'));
+
+renderProfile();
+renderAll();
+</script>
+</body>
+</html>

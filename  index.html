@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>1048 — ライブ制作実績</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600;800&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0a0f;--surface:#13131a;--surface2:#1c1c26;--border:#2a2a38;--accent:#7c6aff;--accent2:#ff6a8a;--gold:#c9a84c;--text:#e8e6f0;--muted:#6b6880;}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+body{background:var(--bg);color:var(--text);font-family:'Noto Sans JP',sans-serif;font-weight:300;min-height:100vh;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 70% 40% at 10% 0%,rgba(124,106,255,.08) 0%,transparent 60%),radial-gradient(ellipse 60% 50% at 90% 100%,rgba(255,106,138,.06) 0%,transparent 60%);pointer-events:none;z-index:0;}
+header{position:relative;z-index:1;padding:40px 18px 24px;text-align:center;border-bottom:1px solid var(--border);}
+.avatar-wrap{width:80px;height:80px;margin:0 auto 14px;border-radius:50%;border:2px solid var(--accent);overflow:hidden;box-shadow:0 0 28px rgba(124,106,255,.35);}
+.avatar-wrap img{width:100%;height:100%;object-fit:cover;display:block;}
+.header-name{font-family:'Shippori Mincho',serif;font-size:40px;font-weight:800;letter-spacing:.1em;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:4px;}
+.header-sub{font-size:10px;letter-spacing:.35em;color:var(--muted);margin-bottom:12px;text-transform:uppercase;}
+.header-desc{font-size:12.5px;color:var(--muted);line-height:1.85;margin-bottom:16px;white-space:pre-wrap;word-break:break-all;}
+.role-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:18px;}
+.role-item{background:var(--surface);border:1px solid var(--border);padding:9px 11px;font-size:11px;line-height:1.55;text-align:left;}
+.role-name{color:var(--accent);font-weight:700;display:block;margin-bottom:1px;}
+.role-desc{color:var(--muted);font-size:10px;}
+.header-btns{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;}
+.hbtn{display:flex;align-items:center;justify-content:center;gap:5px;padding:12px 6px;font-size:12px;letter-spacing:.06em;text-decoration:none;border:1px solid var(--border);color:var(--text);background:var(--surface);border-radius:2px;white-space:nowrap;}
+.hbtn.contact{border-color:var(--accent);color:var(--accent);}
+.hbtn.booth{border-color:var(--accent2);color:var(--accent2);}
+.hbtn:active{opacity:.6;}
+.stats-row{position:relative;z-index:1;display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+.stat-box{background:var(--surface);padding:14px 8px;text-align:center;}
+.stat-n{font-family:'Shippori Mincho',serif;font-size:26px;color:var(--accent);line-height:1;display:block;}
+.stat-l{font-size:9px;color:var(--muted);letter-spacing:.2em;margin-top:3px;display:block;}
+main{position:relative;z-index:1;padding:0 14px 60px;}
+.year-section{margin-top:30px;}
+.year-header{display:flex;align-items:center;gap:10px;margin-bottom:10px;cursor:pointer;user-select:none;padding:6px 0;}
+.year-num{font-family:'Shippori Mincho',serif;font-size:30px;font-weight:800;color:var(--accent);line-height:1;}
+.year-count{font-size:10px;color:var(--muted);letter-spacing:.15em;}
+.year-line{flex:1;height:1px;background:linear-gradient(to right,var(--border),transparent);}
+.year-toggle{color:var(--muted);font-size:12px;transition:transform .3s;}
+.year-section.collapsed .year-toggle{transform:rotate(-90deg);}
+.year-section.collapsed .year-body{display:none;}
+.live-card{display:grid;grid-template-columns:64px 1fr;background:var(--surface);border:1px solid var(--border);margin-bottom:8px;overflow:hidden;position:relative;opacity:0;transform:translateY(10px);transition:opacity .35s,transform .35s;border-radius:2px;}
+.live-card.visible{opacity:1;transform:none;}
+.live-card.upcoming{border-color:rgba(96,165,250,.3);}
+.live-card.has-link{cursor:pointer;}
+.live-card.has-link:active{opacity:.7;}
+.card-thumb-wrap{width:64px;overflow:hidden;background:var(--surface2);display:flex;align-items:center;justify-content:center;min-height:68px;}
+.card-thumb{width:64px;height:100%;min-height:68px;object-fit:cover;display:block;filter:saturate(.7);}
+.card-thumb-ph{font-family:'Shippori Mincho',serif;font-size:18px;color:rgba(124,106,255,.3);}
+.card-body{padding:10px 12px;display:flex;flex-direction:column;justify-content:center;gap:4px;min-width:0;}
+.card-top{display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+.card-date{font-size:11px;color:var(--gold);letter-spacing:.06em;white-space:nowrap;}
+.role-badge{font-size:9px;padding:2px 6px;border-radius:2px;letter-spacing:.06em;font-weight:700;white-space:nowrap;}
+.role-主催{background:rgba(124,106,255,.2);color:#a89fff;border:1px solid rgba(124,106,255,.3);}
+.role-運営{background:rgba(74,222,128,.15);color:#86efac;border:1px solid rgba(74,222,128,.3);}
+.role-運営補佐{background:rgba(251,146,60,.15);color:#fdba74;border:1px solid rgba(251,146,60,.3);}
+.role-運営スタッフ{background:rgba(96,165,250,.15);color:#93c5fd;border:1px solid rgba(96,165,250,.3);}
+.upcoming-badge{font-size:9px;padding:2px 6px;background:rgba(96,165,250,.15);color:#93c5fd;border:1px solid rgba(96,165,250,.4);letter-spacing:.1em;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.card-title{font-size:13px;font-weight:500;color:var(--text);letter-spacing:.04em;line-height:1.35;word-break:break-all;}
+.card-meta{font-size:10px;color:var(--muted);}
+.card-format{font-size:10px;color:rgba(124,106,255,.65);}
+.section-label{display:flex;align-items:center;gap:10px;margin:32px 0 12px;}
+.section-label::before,.section-label::after{content:'';flex:1;height:1px;background:linear-gradient(to right,var(--border),transparent);}
+.section-label::after{background:linear-gradient(to left,var(--border),transparent);}
+.section-label span{font-size:10px;letter-spacing:.3em;color:var(--muted);white-space:nowrap;}
+.booth-section{background:var(--surface);border:1px solid var(--border);padding:18px;border-radius:4px;position:relative;overflow:hidden;}
+.booth-section::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(to right,var(--accent2),var(--accent));}
+.booth-title{font-family:'Shippori Mincho',serif;font-size:16px;font-weight:800;color:var(--accent2);margin-bottom:5px;}
+.booth-desc{font-size:11px;color:var(--muted);line-height:1.7;margin-bottom:14px;}
+.booth-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.booth-item{background:var(--surface2);border:1px solid var(--border);padding:12px 10px;text-decoration:none;color:var(--text);display:block;border-radius:4px;}
+.booth-item:active{opacity:.65;}
+.booth-icon{font-size:22px;margin-bottom:5px;}
+.booth-name{font-size:12px;font-weight:500;margin-bottom:2px;}
+.booth-note{font-size:10px;color:var(--muted);}
+footer{position:relative;z-index:1;text-align:center;padding:24px 20px;border-top:1px solid var(--border);margin-top:28px;}
+footer p{font-size:10px;color:var(--muted);letter-spacing:.12em;}
+footer a{color:var(--accent);text-decoration:none;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="avatar-wrap"><img id="avatarImg" src="" alt="1048"></div>
+  <h1 class="header-name" id="dispName"></h1>
+  <p class="header-sub" id="dispSub"></p>
+  <p class="header-desc" id="dispDesc"></p>
+  <div class="role-grid" id="dispRoleGrid"></div>
+  <div class="header-btns">
+    <a id="dispContact" href="#" class="hbtn contact">✉ お問い合わせ</a>
+    <a id="dispBooth" href="#" class="hbtn booth" target="_blank">🛒 BOOTH</a>
+    <a id="dispTwitter" href="#" class="hbtn" target="_blank">𝕏 Twitter</a>
+  </div>
+</header>
+
+<div class="stats-row">
+  <div class="stat-box"><span class="stat-n" id="sTotal">0</span><span class="stat-l">総制作本数</span></div>
+  <div class="stat-box"><span class="stat-n" id="sOwn">0</span><span class="stat-l">主催</span></div>
+  <div class="stat-box"><span class="stat-n" id="sOps">0</span><span class="stat-l">運営</span></div>
+</div>
+
+<main id="mainContent"></main>
+
+<div style="position:relative;z-index:1;padding:0 14px;">
+  <div class="section-label"><span>TOOLS &amp; BOOTH</span></div>
+  <div class="booth-section">
+    <div class="booth-title">🛒 ツール販売</div>
+    <p class="booth-desc">ライブ制作をもっとかんたんに。歌い手・Vtuberライブ向けWebツールを販売中。</p>
+    <div class="booth-grid">
+      <a href="https://1048bp.booth.pm/" class="booth-item" target="_blank"><div class="booth-icon">💰</div><div class="booth-name">StallKit</div><div class="booth-note">物販・ガチャ・くじPOS</div></a>
+      <a href="https://1048bp.booth.pm/" class="booth-item" target="_blank"><div class="booth-icon">📋</div><div class="booth-name">運営ツール</div><div class="booth-note">精算・レポートPDF</div></a>
+      <a href="https://1048bp.booth.pm/" class="booth-item" target="_blank"><div class="booth-icon">🎵</div><div class="booth-name">LiveMemory</div><div class="booth-note">ファン向けライブ記録</div></a>
+      <a href="https://1048bp.booth.pm/" class="booth-item" target="_blank"><div class="booth-icon">📊</div><div class="booth-name">ガントチャート</div><div class="booth-note">制作進行タスク管理</div></a>
+    </div>
+  </div>
+</div>
+
+<footer><p>© 1048 — <a href="mailto:toshiya1227@live.jp">toshiya1227@live.jp</a></p></footer>
+
+<script>
+/* ===== 埋め込みデータ（管理画面でエクスポートしたものをここに貼る） ===== */
+const SITE_DATA = {"profile":{"avatar":"https://prd.resource-api.lit.link/images/creator/b1410259-7a64-4f70-a926-c804ecc40caa/fa63f601-cce9-49d0-a822-e24829268e85.jpg","name":"1048","sub":"Live Event Producer","desc":"ライブ主催・運営のお手伝いをしています。\n2015年から主催業務を開始。赤字にならないような予算管理もお気軽にご相談ください。","role1":"準備〜当日終了まで全て","role2":"ライブハウス予約/予算管理/当日進行","role3":"準備サポート・当日進行全般","role4":"当日スタッフリーダー","contact":"toshiya1227@live.jp","booth":"https://1048bp.booth.pm/","twitter":"https://x.com/info_inishie"},"lives":{"2026":[{"date":"1/31","role":"主催","title":"古-参-","organizer":"","format":"2部制インスト/バンド","link":"https://twitter.com/info_inishie","thumb":"https://prd.resource-api.lit.link/images/creators/76150ddb-9865-485a-9dcf-a7dc3b02b767/profile_links/buttons/2a9beb5c-3a71-4e1d-94b9-d0c3ed5a9d81.jpeg"},{"date":"2/22","role":"運営スタッフ","title":"DPMN","organizer":"主催：らりー様","format":"2部制インスト/バンド","link":"","thumb":"https://prd.resource-api.lit.link/images/creators/76150ddb-9865-485a-9dcf-a7dc3b02b767/profile_links/buttons/907fcc14-4049-47b9-ba4f-a7240b9cc39a.jpeg"},{"date":"4/11","role":"運営","title":"オトヲアビロ vol.1","organizer":"主催：ウトガワ様","format":"2部制インスト/バンド","link":"https://twitter.com/otoabi_live_","thumb":"https://prd.resource-api.lit.link/images/creators/76150ddb-9865-485a-9dcf-a7dc3b02b767/profile_links/buttons/3d5ddd75-7cc3-40cc-bd91-17db7a7e17af.jpeg"},{"date":"5/16","role":"主催","title":"Unison Final","organizer":"","format":"2部制インスト","link":"https://twitter.com/liveunison_info","thumb":"https://prd.resource-api.lit.link/images/creators/76150ddb-9865-485a-9dcf-a7dc3b02b767/profile_links/buttons/e981f470-f417-4050-8021-f13e9b87946c.jpeg"},{"date":"7/??","role":"運営","title":"（調整中）","organizer":"","format":"","link":"","thumb":"","upcoming":true},{"date":"7/19","role":"主催","title":"Osiri.Chorus.Project -Encore-","organizer":"","format":"1部制インスト","link":"https://twitter.com/OCP0318","thumb":"https://prd.resource-api.lit.link/images/creators/76150ddb-9865-485a-9dcf-a7dc3b02b767/profile_links/buttons/8529647c-aeb1-477c-ac2c-4659bd36df0b.png","upcoming":true},{"date":"9/20-21","role":"主催","title":"みにしえ-?-","organizer":"","format":"2days インスト","link":"https://twitter.com/info_inishie","thumb":"","upcoming":true},{"date":"10/17","role":"主催","title":"古-終-","organizer":"","format":"2部制バンド","link":"https://twitter.com/info_inishie","thumb":"","upcoming":true}],"2025":[{"date":"1/25","role":"運営","title":"みんなでパジャマパーティ 2","organizer":"主催：安眠まくら様","format":"2部制インスト/配信有","link":"https://twitter.com/maku_live","thumb":"https://prd.resource-api.lit.link/images/creators/76150ddb-9865-485a-9dcf-a7dc3b02b767/81341d32-7e8f-4f59-8a88-7a29de241666.jpeg"},{"date":"2/8","role":"主催","title":"古-弐-","organizer":"","format":"2部制インスト/バンド","link":"https://twitter.com/info_inishie","thumb":"https://prd.resource-api.lit.link/images/creators/76150ddb-9865-485a-9dcf-a7dc3b02b767/b0c7ca9b-290e-4ad0-995f-fb26d87b34e8.jpeg"},{"date":"4/26","role":"運営","title":"CLOVER PLAYHOUSE 2","organizer":"主催：LamL_Chop様","format":"2部制インスト","link":"https://twitter.com/clovers_info","thumb":"https://prd.resource-api.lit.link/images/creators/76150ddb-9865-485a-9dcf-a7dc3b02b767/b5d5b201-1224-4172-8522-e5f39a5dc55a.jpeg"},{"date":"5/11","role":"運営スタッフ","title":"＋α (ぷらすあるふぁ)","organizer":"主催：あさぎ様","format":"2部制インスト","link":"https://twitter.com/plus10arufa","thumb":"https://prd.resource-api.lit.link/images/creators/76150ddb-9865-485a-9dcf-a7dc3b02b767/aa9dce0e-1065-4357-a00f-f1806c307007.jpeg"},{"date":"5/17","role":"主催","title":"Unison 2","organizer":"","format":"2部制インスト","link":"https://twitter.com/liveunison_info","thumb":"https://prd.resource-api.lit.link/images/creators/76150ddb-9865-485a-9dcf-a7dc3b02b767/106ad0c0-69de-4a6b-a157-21bd85b4d027.jpeg"},{"date":"8/23","role":"運営スタッフ","title":"FLASH","organizer":"主催：あさぎ様","format":"2部制インスト","link":"https://twitter.com/FLASH823_","thumb":"https://prd.resource-api.lit.link/images/creators/76150ddb-9865-485a-9dcf-a7dc3b02b767/profile_links/buttons/0cec54c4-815b-4cf1-b439-1f0245fc34e7.jpeg"},{"date":"10/12","role":"主催","title":"みにしえ-壱-","organizer":"","format":"1部制インスト","link":"","thumb":"https://prd.resource-api.lit.link/images/creators/76150ddb-9865-485a-9dcf-a7dc3b02b767/profile_links/buttons/37285f86-cd13-452b-bd21-ceeb498fc89c.png"},{"date":"12/20","role":"運営","title":"Bar Ecrin","organizer":"主催：洒落様","format":"1部制インスト","link":"","thumb":"https://prd.resource-api.lit.link/images/creators/76150ddb-9865-485a-9dcf-a7dc3b02b767/profile_links/buttons/6bc7535d-480c-4b2c-8723-2c045552d6aa.jpeg"}],"2024":[{"date":"1/20","role":"運営","title":"みんなでパジャマパーティ","organizer":"主催：安眠まくら様","format":"1部制インスト/配信有","link":"https://twitter.com/maku_live","thumb":"https://prd.resource-api.lit.link/images/creators/76150ddb-9865-485a-9dcf-a7dc3b02b767/8cb1c7dc-3f79-4df5-af6d-f75f5d7e1566.jpeg"},{"date":"3/2","role":"運営","title":"謳歌〜ファンファーレ〜","organizer":"主催：のっつ様","format":"1部制インスト","link":"","thumb":"https://prd.resource-api.lit.link/images/creators/76150ddb-9865-485a-9dcf-a7dc3b02b767/16604dee-23b1-47b2-9d42-547c5d7e61c4.jpeg"},{"date":"4/29","role":"運営","title":"CLOVER PLAYHOUSE","organizer":"主催：あるま様","format":"1部制インスト","link":"https://twitter.com/clovers_info","thumb":"https://prd.resource-api.lit.link/images/creators/76150ddb-9865-485a-9dcf-a7dc3b02b767/294471e2-4e8c-424b-95f7-c3cfa90a0126.png"},{"date":"6/1","role":"運営","title":"GMGM -calm echoes day-","organizer":"主催：mira様","format":"1部制インスト/アコースティック","link":"https://twitter.com/gmgm_2023","thumb":"https://prd.resource-api.lit.link/images/creators/76150ddb-9865-485a-9dcf-a7dc3b02b767/14210640-10d5-4cec-b110-64dffdd6a52d.jpeg"},{"date":"8/17","role":"主催","title":"Unison","organizer":"","format":"1部制インスト","link":"https://twitter.com/liveunison_info","thumb":"https://prd.resource-api.lit.link/images/creators/76150ddb-9865-485a-9dcf-a7dc3b02b767/ac1d6e3d-c7c5-4a05-92fc-88830c02860e.png"},{"date":"9/28","role":"主催","title":"古-壱-","organizer":"","format":"2部制インスト","link":"https://twitter.com/info_inishie","thumb":"https://prd.resource-api.lit.link/images/creators/76150ddb-9865-485a-9dcf-a7dc3b02b767/9ab3089d-6bcf-4cc7-8ac7-f861f94fc57a.jpeg"},{"date":"10/15","role":"運営補佐","title":"SIGNAL","organizer":"主催：Ampel様","format":"1部制インスト/配信有","link":"https://twitter.com/Ampelfcy_SIGNAL","thumb":"https://prd.resource-api.lit.link/images/creators/76150ddb-9865-485a-9dcf-a7dc3b02b767/948543a9-5781-4347-8e23-896c56e83761.png"},{"date":"11/25","role":"運営","title":"Good Meat Good Meet 2","organizer":"主催：mira様","format":"2部制インスト/配信有","link":"https://twitter.com/gmgm_2023","thumb":"https://prd.resource-api.lit.link/images/creators/76150ddb-9865-485a-9dcf-a7dc3b02b767/b0c7ca9b-290e-4ad0-995f-fb26d87b34e8.jpeg"},{"date":"12/15","role":"運営","title":"Floralia -Camelia-","organizer":"主催：紡様","format":"1部制インスト","link":"https://twitter.com/Floralia_sg","thumb":"https://prd.resource-api.lit.link/images/creators/76150ddb-9865-485a-9dcf-a7dc3b02b767/5f95b4e5-d731-4f18-8eeb-96770ec967fa.jpeg"}],"2024":[{"date":"11/23","role":"運営","title":"Good Meat Good Meet","organizer":"主催：mira様","format":"2部制インスト","link":"https://twitter.com/gmgm_2023","thumb":"https://prd.resource-api.lit.link/images/creators/76150ddb-9865-485a-9dcf-a7dc3b02b767/c4b261f0-6561-40a0-9a8d-5e0e0e29c9d6.jpeg"}],"2023":[{"date":"11/23","role":"運営","title":"Good Meat Good Meet","organizer":"主催：mira様","format":"2部制インスト","link":"https://twitter.com/gmgm_2023","thumb":"https://prd.resource-api.lit.link/images/creators/76150ddb-9865-485a-9dcf-a7dc3b02b767/c4b261f0-6561-40a0-9a8d-5e0e0e29c9d6.jpeg"}]}};
+
+const p=SITE_DATA.profile, liveData=SITE_DATA.lives;
+
+function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+/* プロフィール */
+document.getElementById('avatarImg').src=p.avatar;
+document.getElementById('dispName').textContent=p.name;
+document.getElementById('dispSub').textContent=p.sub;
+document.getElementById('dispDesc').textContent=p.desc;
+document.getElementById('dispRoleGrid').innerHTML=`<div class="role-item"><span class="role-name">【主催】</span><span class="role-desc">${esc(p.role1)}</span></div><div class="role-item"><span class="role-name">【運営】</span><span class="role-desc">${esc(p.role2)}</span></div><div class="role-item"><span class="role-name">【運営補佐】</span><span class="role-desc">${esc(p.role3)}</span></div><div class="role-item"><span class="role-name">【運営スタッフ】</span><span class="role-desc">${esc(p.role4)}</span></div>`;
+document.getElementById('dispContact').href='mailto:'+p.contact;
+document.getElementById('dispBooth').href=p.booth;
+document.getElementById('dispTwitter').href=p.twitter;
+
+/* ライブ一覧 */
+function renderAll(){
+  const main=document.getElementById('mainContent');
+  main.innerHTML='';
+  const years=Object.keys(liveData).sort((a,b)=>b-a);
+  let total=0,own=0,ops=0;
+  years.forEach(year=>{
+    const lives=liveData[year]||[];
+    total+=lives.length;lives.forEach(l=>{if(l.role==='主催')own++;else ops++;});
+    const upCount=lives.filter(l=>l.upcoming).length;
+    const sec=document.createElement('div');sec.className='year-section';sec.dataset.year=year;
+    sec.innerHTML=`<div class="year-header" onclick="this.parentNode.classList.toggle('collapsed')"><span class="year-num">${year}</span><span class="year-count">${lives.length-upCount}本${upCount>0?' + '+upCount+'予定':''}</span><div class="year-line"></div><span class="year-toggle">▾</span></div><div class="year-body"></div>`;
+    main.appendChild(sec);
+    const body=sec.querySelector('.year-body');
+    lives.forEach(live=>{
+      const div=document.createElement('div');
+      div.className='live-card'+(live.upcoming?' upcoming':'')+(live.link?' has-link':'');
+      div.innerHTML=`<div class="card-thumb-wrap">${live.thumb?`<img class="card-thumb" src="${esc(live.thumb)}" alt="${esc(live.title)}" onerror="this.parentNode.innerHTML='<div class=card-thumb-ph>${live.role==='主催'?'主':'運'}</div>'">`:`<div class="card-thumb-ph">${live.role==='主催'?'主':'運'}</div>`}</div><div class="card-body"><div class="card-top"><span class="card-date">${esc(live.date)}</span><span class="role-badge role-${live.role}">${live.role}</span>${live.upcoming?'<span class="upcoming-badge">UPCOMING</span>':''}</div><div class="card-title">${esc(live.title)}</div>${live.organizer?`<div class="card-meta">${esc(live.organizer)}</div>`:''}${live.format?`<div class="card-format">${esc(live.format)}</div>`:''}</div>`;
+      if(live.link) div.addEventListener('click',()=>window.open(live.link,'_blank'));
+      body.appendChild(div);
+    });
+  });
+  countUp('sTotal',total);countUp('sOwn',own);countUp('sOps',ops);
+  setTimeout(()=>document.querySelectorAll('.live-card').forEach((c,i)=>setTimeout(()=>c.classList.add('visible'),i*22)),50);
+}
+
+function countUp(id,target){
+  const el=document.getElementById(id);if(!el)return;
+  let n=0;const step=Math.max(1,Math.ceil(target/30));
+  const t=setInterval(()=>{n=Math.min(n+step,target);el.textContent=n;if(n>=target)clearInterval(t);},20);
+}
+
+renderAll();
+</script>
+</body>
+</html>

@@ -7,7 +7,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600;800&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0a0a0f;--surface:#13131a;--surface2:#1c1c26;--border:#2a2a38;--accent:#7c6aff;--accent2:#ff6a8a;--gold:#c9a84c;--text:#e8e6f0;--muted:#6b6880;}
+/* --- 共通・閲覧用スタイル --- */
+:root{--bg:#0a0a0f;--surface:#13131a;--surface2:#1c1c26;--border:#2a2a38;--accent:#7c6aff;--accent2:#ff6a8a;--gold:#c9a84c;--text:#e8e6f0;--muted:#6b6880;--modal-bg:rgba(10,10,15,0.95);}
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 body{background:var(--bg);color:var(--text);font-family:'Noto Sans JP',sans-serif;font-weight:300;min-height:100vh;overflow-x:hidden;}
 body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 70% 40% at 10% 0%,rgba(124,106,255,.08) 0%,transparent 60%),radial-gradient(ellipse 60% 50% at 90% 100%,rgba(255,106,138,.06) 0%,transparent 60%);pointer-events:none;z-index:0;}
@@ -22,7 +23,7 @@ header{position:relative;z-index:1;padding:40px 18px 24px;text-align:center;bord
 .role-name{color:var(--accent);font-weight:700;display:block;margin-bottom:1px;}
 .role-desc{color:var(--muted);font-size:10px;}
 .header-btns{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;}
-.hbtn{display:flex;align-items:center;justify-content:center;gap:5px;padding:12px 6px;font-size:12px;letter-spacing:.06em;text-decoration:none;border:1px solid var(--border);color:var(--text);background:var(--surface);border-radius:2px;white-space:nowrap;}
+.hbtn{display:flex;align-items:center;justify-content:center;gap:5px;padding:12px 6px;font-size:12px;letter-spacing:.06em;text-decoration:none;border:1px solid var(--border);color:var(--text);background:var(--surface);border-radius:2px;}
 .hbtn.contact{border-color:var(--accent);color:var(--accent);}
 .hbtn.booth{border-color:var(--accent2);color:var(--accent2);}
 .hbtn:active{opacity:.6;}
@@ -32,9 +33,9 @@ header{position:relative;z-index:1;padding:40px 18px 24px;text-align:center;bord
 .stat-l{font-size:9px;color:var(--muted);letter-spacing:.2em;margin-top:3px;display:block;}
 main{position:relative;z-index:1;padding:0 14px 60px;}
 .year-section{margin-top:30px;}
-.year-header{display:flex;align-items:center;gap:10px;margin-bottom:10px;cursor:pointer;user-select:none;padding:6px 0;}
+.year-header{display:flex;align-items:center;gap:10px;margin-bottom:10px;cursor:pointer;padding:6px 0;}
 .year-num{font-family:'Shippori Mincho',serif;font-size:30px;font-weight:800;color:var(--accent);line-height:1;}
-.year-count{font-size:10px;color:var(--muted);letter-spacing:.15em;}
+.year-count{font-size:10px;color:var(--muted);}
 .year-line{flex:1;height:1px;background:linear-gradient(to right,var(--border),transparent);}
 .year-toggle{color:var(--muted);font-size:12px;transition:transform .3s;}
 .year-section.collapsed .year-toggle{transform:rotate(-90deg);}
@@ -49,77 +50,111 @@ main{position:relative;z-index:1;padding:0 14px 60px;}
 .card-thumb-ph{font-family:'Shippori Mincho',serif;font-size:18px;color:rgba(124,106,255,.3);}
 .card-body{padding:10px 12px;display:flex;flex-direction:column;justify-content:center;gap:4px;min-width:0;}
 .card-top{display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
-.card-date{font-size:11px;color:var(--gold);letter-spacing:.06em;white-space:nowrap;}
-.role-badge{font-size:9px;padding:2px 6px;border-radius:2px;letter-spacing:.06em;font-weight:700;white-space:nowrap;}
+.card-date{font-size:11px;color:var(--gold);white-space:nowrap;}
+.role-badge{font-size:9px;padding:2px 6px;border-radius:2px;font-weight:700;}
 .role-主催{background:rgba(124,106,255,.2);color:#a89fff;border:1px solid rgba(124,106,255,.3);}
 .role-運営{background:rgba(74,222,128,.15);color:#86efac;border:1px solid rgba(74,222,128,.3);}
 .role-運営補佐{background:rgba(251,146,60,.15);color:#fdba74;border:1px solid rgba(251,146,60,.3);}
 .role-運営スタッフ{background:rgba(96,165,250,.15);color:#93c5fd;border:1px solid rgba(96,165,250,.3);}
-.upcoming-badge{font-size:9px;padding:2px 6px;background:rgba(96,165,250,.15);color:#93c5fd;border:1px solid rgba(96,165,250,.4);letter-spacing:.1em;animation:pulse 2s infinite;}
+.upcoming-badge{font-size:9px;padding:2px 6px;background:rgba(96,165,250,.15);color:#93c5fd;border:1px solid rgba(96,165,250,.4);animation:pulse 2s infinite;}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
-.card-title{font-size:13px;font-weight:500;color:var(--text);letter-spacing:.04em;line-height:1.35;word-break:break-all;}
+.card-title{font-size:13px;font-weight:500;color:var(--text);line-height:1.35;}
 .card-meta{font-size:10px;color:var(--muted);}
 .card-format{font-size:10px;color:rgba(124,106,255,.65);}
-.section-label{display:flex;align-items:center;gap:10px;margin:32px 0 12px;}
-.section-label::before,.section-label::after{content:'';flex:1;height:1px;background:linear-gradient(to right,var(--border),transparent);}
-.section-label::after{background:linear-gradient(to left,var(--border),transparent);}
-.section-label span{font-size:10px;letter-spacing:.3em;color:var(--muted);white-space:nowrap;}
-.booth-section{background:var(--surface);border:1px solid var(--border);padding:18px;border-radius:4px;position:relative;overflow:hidden;}
-.booth-section::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(to right,var(--accent2),var(--accent));}
-.booth-title{font-family:'Shippori Mincho',serif;font-size:16px;font-weight:800;color:var(--accent2);margin-bottom:5px;}
-.booth-desc{font-size:11px;color:var(--muted);line-height:1.7;margin-bottom:14px;}
-.booth-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
-.booth-item{background:var(--surface2);border:1px solid var(--border);padding:12px 10px;text-decoration:none;color:var(--text);display:block;border-radius:4px;}
-.booth-item:active{opacity:.65;}
-.booth-icon{font-size:22px;margin-bottom:5px;}
-.booth-name{font-size:12px;font-weight:500;margin-bottom:2px;}
-.booth-note{font-size:10px;color:var(--muted);}
 footer{position:relative;z-index:1;text-align:center;padding:24px 20px;border-top:1px solid var(--border);margin-top:28px;}
 footer p{font-size:10px;color:var(--muted);letter-spacing:.12em;}
-footer a{color:var(--accent);text-decoration:none;}
+
+/* --- 管理モード用スタイル (初期状態は非表示) --- */
+#adminPanel{display:none;position:fixed;inset:0;background:var(--bg);z-index:1000;overflow-y:auto;padding:20px;}
+.admin-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;padding-bottom:10px;border-bottom:2px solid var(--accent);}
+.btn{padding:10px 16px;border-radius:4px;border:none;font-weight:bold;cursor:pointer;font-size:14px;}
+.btn-close{background:var(--surface2);color:var(--text);}
+.btn-save{background:var(--accent);color:white;}
+.btn-export{background:var(--gold);color:white;margin-top:20px;width:100%;}
+.admin-sec{background:var(--surface);padding:15px;border-radius:8px;margin-bottom:20px;border:1px solid var(--border);}
+.admin-sec h3{margin-bottom:15px;color:var(--accent);font-size:16px;}
+.form-group{margin-bottom:12px;}
+.form-group label{display:block;font-size:11px;color:var(--muted);margin-bottom:4px;}
+.form-group input,.form-group textarea,.form-group select{width:100%;background:var(--bg);border:1px solid var(--border);padding:10px;color:var(--text);border-radius:4px;font-size:14px;}
+.live-list-item{background:var(--surface2);padding:10px;margin-bottom:8px;border-radius:4px;display:flex;justify-content:space-between;align-items:center;}
+.btn-edit-item{background:none;color:var(--accent);border:none;cursor:pointer;}
+.btn-delete-item{background:none;color:var(--accent2);border:none;cursor:pointer;margin-left:10px;}
+.console-link{color:var(--bg);font-size:9px;text-decoration:none;cursor:default;user-select:none;} /* ほぼ透明なボタン */
 </style>
 </head>
 <body>
 
-<header>
-  <div class="avatar-wrap"><img id="avatarImg" src="" alt="1048"></div>
-  <h1 class="header-name" id="dispName"></h1>
-  <p class="header-sub" id="dispSub"></p>
-  <p class="header-desc" id="dispDesc"></p>
-  <div class="role-grid" id="dispRoleGrid"></div>
-  <div class="header-btns">
-    <a id="dispContact" href="#" class="hbtn contact">✉ お問い合わせ</a>
-    <a id="dispBooth" href="#" class="hbtn booth" target="_blank">🛒 BOOTH</a>
-    <a id="dispTwitter" href="#" class="hbtn" target="_blank">𝕏 Twitter</a>
-  </div>
-</header>
+<div id="viewMode">
+    <header>
+      <div class="avatar-wrap"><img id="avatarImg" src="" alt="1048"></div>
+      <h1 class="header-name" id="dispName"></h1>
+      <p class="header-sub" id="dispSub"></p>
+      <p class="header-desc" id="dispDesc"></p>
+      <div class="role-grid" id="dispRoleGrid"></div>
+      <div class="header-btns">
+        <a id="dispContact" href="#" class="hbtn contact">✉ お問い合わせ</a>
+        <a id="dispBooth" href="#" class="hbtn booth" target="_blank">🛒 BOOTH</a>
+        <a id="dispTwitter" href="#" class="hbtn" target="_blank">𝕏 Twitter</a>
+      </div>
+    </header>
 
-<div class="stats-row">
-  <div class="stat-box"><span class="stat-n" id="sTotal">0</span><span class="stat-l">総制作本数</span></div>
-  <div class="stat-box"><span class="stat-n" id="sOwn">0</span><span class="stat-l">主催</span></div>
-  <div class="stat-box"><span class="stat-n" id="sOps">0</span><span class="stat-l">運営</span></div>
-</div>
-
-<main id="mainContent"></main>
-
-<div style="position:relative;z-index:1;padding:0 14px;">
-  <div class="section-label"><span>TOOLS &amp; BOOTH</span></div>
-  <div class="booth-section">
-    <div class="booth-title">🛒 ツール販売</div>
-    <p class="booth-desc">ライブ制作をもっとかんたんに。歌い手・Vtuberライブ向けWebツールを販売中。</p>
-    <div class="booth-grid">
-      <a href="https://1048bp.booth.pm/" class="booth-item" target="_blank"><div class="booth-icon">💰</div><div class="booth-name">StallKit</div><div class="booth-note">物販・ガチャ・くじPOS</div></a>
-      <a href="https://1048bp.booth.pm/" class="booth-item" target="_blank"><div class="booth-icon">📋</div><div class="booth-name">運営ツール</div><div class="booth-note">精算・レポートPDF</div></a>
-      <a href="https://1048bp.booth.pm/" class="booth-item" target="_blank"><div class="booth-icon">🎵</div><div class="booth-name">LiveMemory</div><div class="booth-note">ファン向けライブ記録</div></a>
-      <a href="https://1048bp.booth.pm/" class="booth-item" target="_blank"><div class="booth-icon">📊</div><div class="booth-name">ガントチャート</div><div class="booth-note">制作進行タスク管理</div></a>
+    <div class="stats-row">
+      <div class="stat-box"><span class="stat-n" id="sTotal">0</span><span class="stat-l">総制作本数</span></div>
+      <div class="stat-box"><span class="stat-n" id="sOwn">0</span><span class="stat-l">主催</span></div>
+      <div class="stat-box"><span class="stat-n" id="sOps">0</span><span class="stat-l">運営</span></div>
     </div>
-  </div>
+
+    <main id="mainContent"></main>
+
+    <footer>
+        <p>© 1048 — Live Event Producer</p>
+        <a href="#" class="console-link" id="btnAdminTrigger">Console</a>
+    </footer>
 </div>
 
-<footer><p>© 1048 — <a href="mailto:toshiya1227@live.jp">toshiya1227@live.jp</a></p></footer>
+<div id="adminPanel">
+    <div class="admin-header">
+        <h2>System Console</h2>
+        <button class="btn btn-close" onclick="location.reload()">閉じる</button>
+    </div>
+
+    <div class="admin-sec">
+        <h3>基本プロフィール編集</h3>
+        <div class="form-group"><label>名前</label><input type="text" id="editName"></div>
+        <div class="form-group"><label>肩書き</label><input type="text" id="editSub"></div>
+        <div class="form-group"><label>自己紹介</label><textarea id="editDesc" rows="4"></textarea></div>
+        <div class="form-group"><label>主催Role詳細</label><input type="text" id="editRole1"></div>
+        <div class="form-group"><label>運営Role詳細</label><input type="text" id="editRole2"></div>
+    </div>
+
+    <div class="admin-sec">
+        <h3>実績の追加</h3>
+        <div class="form-group"><label>年</label><input type="text" id="newYear" placeholder="2026"></div>
+        <div class="form-group"><label>日付</label><input type="text" id="newDate" placeholder="10/17"></div>
+        <div class="form-group"><label>タイトル</label><input type="text" id="newTitle"></div>
+        <div class="form-group">
+            <label>役割</label>
+            <select id="newRole">
+                <option>主催</option><option>運営</option><option>運営補佐</option><option>運営スタッフ</option>
+            </select>
+        </div>
+        <button class="btn btn-save" onclick="addLive()">実績を追加する</button>
+    </div>
+
+    <div class="admin-sec" id="adminLiveList">
+        <h3>登録済み実績の管理</h3>
+        </div>
+
+    <div class="admin-sec" style="background:#2a2a38;">
+        <h3>HTMLの保存 (重要)</h3>
+        <p style="font-size:12px;color:var(--muted);margin-bottom:10px;">編集が終わったら下のボタンを押して、表示されたコードをすべてコピーし、GitHubのindex.htmlに貼り付けて保存してください。</p>
+        <button class="btn btn-export" onclick="exportHTML()">最新のHTMLコードを生成する</button>
+        <textarea id="exportArea" style="width:100%;height:200px;margin-top:10px;display:none;background:#000;color:#0f0;font-family:monospace;font-size:10px;"></textarea>
+    </div>
+</div>
 
 <script>
-/* ===== 1048 SITE DATA ===== */
+/* ===== 1048 SITE DATA (ここを書き換えて保存) ===== */
 const SITE_DATA = {
   "profile": {
     "avatar": "https://prd.resource-api.lit.link/images/creator/b1410259-7a64-4f70-a926-c804ecc40caa/fa63f601-cce9-49d0-a822-e24829268e85.jpg",
@@ -172,56 +207,124 @@ const SITE_DATA = {
   }
 };
 
+/* --- プログラム本体 --- */
 const p=SITE_DATA.profile, liveData=SITE_DATA.lives;
 function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 
-/* プロフィール反映 */
-document.getElementById('avatarImg').src=p.avatar;
-document.getElementById('dispName').textContent=p.name;
-document.getElementById('dispSub').textContent=p.sub;
-document.getElementById('dispDesc').textContent=p.desc;
-document.getElementById('dispRoleGrid').innerHTML=`<div class="role-item"><span class="role-name">【主催】</span><span class="role-desc">${esc(p.role1)}</span></div><div class="role-item"><span class="role-name">【運営】</span><span class="role-desc">${esc(p.role2)}</span></div><div class="role-item"><span class="role-name">【運営補佐】</span><span class="role-desc">${esc(p.role3)}</span></div><div class="role-item"><span class="role-name">【運営スタッフ】</span><span class="role-desc">${esc(p.role4)}</span></div>`;
-document.getElementById('dispContact').href='mailto:'+p.contact;
-document.getElementById('dispBooth').href=p.booth;
-document.getElementById('dispTwitter').href=p.twitter;
-
-/* ライブ一覧表示 */
+/* 描画処理 */
 function renderAll(){
-  const main=document.getElementById('mainContent');
-  main.innerHTML='';
-  const years=Object.keys(liveData).sort((a,b)=>b-a);
-  let total=0,own=0,ops=0;
-  
-  years.forEach(year=>{
-    const lives=liveData[year]||[];
-    total+=lives.length;
-    lives.forEach(l=>{if(l.role==='主催')own++;else ops++;});
-    const upCount=lives.filter(l=>l.upcoming).length;
+    // プロフィール反映
+    document.getElementById('dispName').textContent=p.name;
+    document.getElementById('dispSub').textContent=p.sub;
+    document.getElementById('dispDesc').textContent=p.desc;
+    document.getElementById('avatarImg').src=p.avatar;
+    document.getElementById('dispRoleGrid').innerHTML=`
+        <div class="role-item"><span class="role-name">【主催】</span><span class="role-desc">${esc(p.role1)}</span></div>
+        <div class="role-item"><span class="role-name">【運営】</span><span class="role-desc">${esc(p.role2)}</span></div>
+    `;
     
-    const sec=document.createElement('div');
-    sec.className='year-section';
-    sec.innerHTML=`<div class="year-header" onclick="this.parentNode.classList.toggle('collapsed')"><span class="year-num">${year}</span><span class="year-count">${lives.length-upCount}本${upCount>0?' + '+upCount+'予定':''}</span><div class="year-line"></div><span class="year-toggle">▾</span></div><div class="year-body"></div>`;
-    main.appendChild(sec);
+    // ライブ一覧反映
+    const main=document.getElementById('mainContent');
+    main.innerHTML='';
+    const years=Object.keys(liveData).sort((a,b)=>b-a);
+    let total=0,own=0,ops=0;
     
-    const body=sec.querySelector('.year-body');
-    lives.forEach(live=>{
-      const div=document.createElement('div');
-      div.className='live-card'+(live.upcoming?' upcoming':'')+(live.link?' has-link':'');
-      div.innerHTML=`<div class="card-thumb-wrap">${live.thumb?`<img class="card-thumb" src="${esc(live.thumb)}" alt="${esc(live.title)}" onerror="this.parentNode.innerHTML='<div class=card-thumb-ph>${live.role==='主催'?'主':'運'}</div>'">`:`<div class="card-thumb-ph">${live.role==='主催'?'主':'運'}</div>`}</div><div class="card-body"><div class="card-top"><span class="card-date">${esc(live.date)}</span><span class="role-badge role-${live.role}">${live.role}</span>${live.upcoming?'<span class="upcoming-badge">UPCOMING</span>':''}</div><div class="card-title">${esc(live.title)}</div>${live.organizer?`<div class="card-meta">${esc(live.organizer)}</div>`:''}${live.format?`<div class="card-format">${esc(live.format)}</div>`:''}</div>`;
-      if(live.link) div.addEventListener('click',()=>window.open(live.link,'_blank'));
-      body.appendChild(div);
+    years.forEach(year=>{
+        const lives=liveData[year]||[];
+        total+=lives.length;
+        lives.forEach(l=>{if(l.role==='主催')own++;else ops++;});
+        
+        const sec=document.createElement('div');
+        sec.className='year-section';
+        sec.innerHTML=`<div class="year-header" onclick="this.parentNode.classList.toggle('collapsed')"><span class="year-num">${year}</span><span class="year-count">${lives.length}本</span><div class="year-line"></div><span class="year-toggle">▾</span></div><div class="year-body"></div>`;
+        main.appendChild(sec);
+        const body=sec.querySelector('.year-body');
+        
+        lives.forEach(live=>{
+            const div=document.createElement('div');
+            div.className='live-card visible'+(live.upcoming?' upcoming':'')+(live.link?' has-link':'');
+            div.innerHTML=`<div class="card-thumb-wrap">${live.thumb?`<img class="card-thumb" src="${esc(live.thumb)}">`:`<div class="card-thumb-ph">${live.role[0]}</div>`}</div><div class="card-body"><div class="card-top"><span class="card-date">${esc(live.date)}</span><span class="role-badge role-${live.role}">${live.role}</span></div><div class="card-title">${esc(live.title)}</div></div>`;
+            if(live.link) div.onclick=()=>window.open(live.link,'_blank');
+            body.appendChild(div);
+        });
     });
-  });
-  
-  countUp('sTotal',total);countUp('sOwn',own);countUp('sOps',ops);
-  setTimeout(()=>document.querySelectorAll('.live-card').forEach((c,i)=>setTimeout(()=>c.classList.add('visible'),i*22)),50);
+    document.getElementById('sTotal').textContent=total;
+    document.getElementById('sOwn').textContent=own;
+    document.getElementById('sOps').textContent=ops;
 }
 
-function countUp(id,target){
-  const el=document.getElementById(id);if(!el)return;
-  let n=0;const step=Math.max(1,Math.ceil(target/30));
-  const t=setInterval(()=>{n=Math.min(n+step,target);el.textContent=n;if(n>=target)clearInterval(t);},20);
+/* 管理モード起動 */
+document.getElementById('btnAdminTrigger').onclick=(e)=>{
+    e.preventDefault();
+    const pw = prompt("パスワードを入力してください");
+    if(pw === "1048"){
+        document.getElementById('viewMode').style.display='none';
+        document.getElementById('adminPanel').style.display='block';
+        initAdmin();
+    }
+};
+
+function initAdmin(){
+    document.getElementById('editName').value=p.name;
+    document.getElementById('editSub').value=p.sub;
+    document.getElementById('editDesc').value=p.desc;
+    document.getElementById('editRole1').value=p.role1;
+    document.getElementById('editRole2').value=p.role2;
+    refreshAdminLiveList();
 }
+
+function addLive(){
+    const y = document.getElementById('newYear').value;
+    const d = document.getElementById('newDate').value;
+    const t = document.getElementById('newTitle').value;
+    const r = document.getElementById('newRole').value;
+    if(!y || !t) return alert("年とタイトルは必須です");
+    if(!liveData[y]) liveData[y] = [];
+    liveData[y].unshift({date:d, role:r, title:t, organizer:"", format:"", link:"", thumb:""});
+    refreshAdminLiveList();
+    alert("追加しました（保存ボタンでコードを生成してください）");
+}
+
+function refreshAdminLiveList(){
+    const area = document.getElementById('adminLiveList');
+    area.innerHTML = '<h3>登録済み実績の管理</h3>';
+    Object.keys(liveData).sort((a,b)=>b-a).forEach(y=>{
+        liveData[y].forEach((l, idx)=>{
+            const item = document.createElement('div');
+            item.className='live-list-item';
+            item.innerHTML=`<span>[${y}] ${l.date} - ${l.title}</span><button class="btn-delete-item" onclick="deleteLive('${y}', ${idx})">削除</button>`;
+            area.appendChild(item);
+        });
+    });
+}
+
+function deleteLive(year, idx){
+    if(confirm("削除しますか？")) {
+        liveData[year].splice(idx, 1);
+        refreshAdminLiveList();
+    }
+}
+
+function exportHTML(){
+    // 最新のデータをSITE_DATAに反映
+    p.name = document.getElementById('editName').value;
+    p.sub = document.getElementById('editSub').value;
+    p.desc = document.getElementById('editDesc').value;
+    p.role1 = document.getElementById('editRole1').value;
+    p.role2 = document.getElementById('editRole2').value;
+
+    const fullHTML = document.documentElement.outerHTML;
+    // SITE_DATA変数の部分だけ最新のJSONに置き換える処理
+    const dataString = `const SITE_DATA = ${JSON.stringify(SITE_DATA, null, 2)};`;
+    const finalHTML = fullHTML.replace(/const SITE_DATA = \{[\s\S]*?\};/, dataString);
+    
+    const area = document.getElementById('exportArea');
+    area.value = "<!DOCTYPE html>\n" + finalHTML;
+    area.style.display = 'block';
+    area.select();
+    alert("コードを生成しました。全選択してコピーし、GitHubを書き換えてください。");
+}
+
 renderAll();
 </script>
 </body>

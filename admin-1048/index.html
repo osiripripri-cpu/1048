@@ -7,14 +7,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --ink: #1a1410;
-  --paper: #faf8f4;
-  --paper2: #f2ede4;
-  --accent: #8b2e2e;
-  --accent2: #c4784a;
-  --gold: #c9a84c;
-  --line: #d4c9b8;
-  --muted: #8a7d6e;
+  --ink: #1a1410; --paper: #faf8f4; --paper2: #f2ede4;
+  --accent: #8b2e2e; --accent2: #c4784a; --gold: #c9a84c;
+  --line: #d4c9b8; --muted: #8a7d6e;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: 'Noto Sans JP', sans-serif; background: var(--paper2); color: var(--ink); min-height: 100vh; }
@@ -31,7 +26,7 @@ body { font-family: 'Noto Sans JP', sans-serif; background: var(--paper2); color
 .btn-print:hover { background: #a33a3a; }
 
 /* ===== FORM ===== */
-.form-wrap { max-width: 680px; margin: 2rem auto; padding: 0 1.5rem 4rem; }
+.form-wrap { max-width: 720px; margin: 2rem auto; padding: 0 1.5rem 4rem; }
 .sec { margin-top: 2rem; }
 .sec:first-child { margin-top: 0; }
 .sec-title { font-family: 'Shippori Mincho', serif; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.25em; color: var(--accent); border-bottom: 1px solid var(--accent); padding-bottom: 0.3rem; margin-bottom: 1rem; }
@@ -45,102 +40,152 @@ body { font-family: 'Noto Sans JP', sans-serif; background: var(--paper2); color
 .field textarea { resize: vertical; line-height: 1.7; }
 .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
 
-.dates-list { display: flex; flex-direction: column; gap: 0.5rem; }
-.date-row { display: flex; align-items: center; gap: 0.6rem; background: white; border: 1px solid var(--line); border-radius: 6px; padding: 0.5rem 0.8rem; }
-.date-row input[type=date] { border: none; background: transparent; padding: 0; font-size: 0.87rem; flex: 1; outline: none; font-family: 'Noto Sans JP', sans-serif; color: var(--ink); }
-.date-dow { font-size: 0.82rem; font-weight: 700; color: var(--accent2); min-width: 3rem; text-align: right; }
 .btn-rm { background: none; border: none; color: #ccc; cursor: pointer; font-size: 1.1rem; padding: 0 0.1rem; }
 .btn-rm:hover { color: var(--accent); }
-.btn-add { background: none; border: 1px dashed var(--line); border-radius: 6px; color: var(--muted); font-size: 0.8rem; padding: 0.45rem; width: 100%; cursor: pointer; font-family: 'Noto Sans JP', sans-serif; margin-top: 0.4rem; }
+.btn-add { background: none; border: 1px dashed var(--line); border-radius: 6px; color: var(--muted); font-size: 0.8rem; padding: 0.5rem; width: 100%; cursor: pointer; font-family: 'Noto Sans JP', sans-serif; margin-top: 0.5rem; }
 .btn-add:hover { border-color: var(--accent2); color: var(--accent2); }
 
-.parts-toggle { display: flex; gap: 0.5rem; margin-bottom: 0.9rem; }
-.part-btn { flex: 1; padding: 0.48rem; border: 1.5px solid var(--line); border-radius: 6px; background: white; font-family: 'Noto Sans JP', sans-serif; font-size: 0.82rem; color: var(--muted); cursor: pointer; font-weight: 500; }
-.part-btn.active { background: var(--ink); color: white; border-color: var(--ink); }
-.part-box { background: white; border: 1px solid var(--line); border-radius: 8px; padding: 0.9rem; margin-bottom: 0.7rem; }
-.part-box-title { font-size: 0.72rem; font-weight: 700; color: var(--accent); letter-spacing: 0.1em; margin-bottom: 0.7rem; }
-.part-box .row2 label { font-size: 0.72rem; color: var(--muted); display: block; margin-bottom: 0.25rem; }
-.part-box .row2 input { width: 100%; border: 1px solid var(--line); border-radius: 5px; padding: 0.45rem 0.7rem; font-family: 'Noto Sans JP', sans-serif; font-size: 0.85rem; color: var(--ink); outline: none; }
+/* ===== 日程カード ===== */
+.day-card {
+  background: white; border: 1px solid var(--line); border-radius: 10px;
+  padding: 1.1rem; margin-bottom: 1rem; position: relative;
+}
+.day-card-header {
+  display: flex; align-items: center; gap: 0.7rem; margin-bottom: 1rem;
+  padding-bottom: 0.7rem; border-bottom: 1.5px solid var(--accent);
+}
+.day-card-num {
+  background: var(--accent); color: white; font-family: 'Shippori Mincho', serif;
+  font-size: 0.8rem; font-weight: 700; padding: 0.2rem 0.7rem; border-radius: 3px;
+  letter-spacing: 0.1em;
+}
+.day-card-date {
+  flex: 1; display: flex; align-items: center; gap: 0.5rem;
+}
+.day-card-date input[type=date] {
+  border: 1px solid var(--line); border-radius: 5px; padding: 0.4rem 0.6rem;
+  font-family: 'Noto Sans JP', sans-serif; font-size: 0.85rem; outline: none;
+}
+.day-card-date input[type=date]:focus { border-color: var(--accent2); }
+.day-card-dow { font-size: 0.85rem; font-weight: 700; color: var(--accent2); min-width: 3rem; }
+.day-card-rm { background: none; border: none; color: #ccc; cursor: pointer; font-size: 1.3rem; padding: 0; line-height: 1; }
+.day-card-rm:hover { color: var(--accent); }
 
-.performers-list { display: flex; flex-direction: column; gap: 0.45rem; }
-.performer-row { display: flex; align-items: center; gap: 0.5rem; background: white; border: 1px solid var(--line); border-radius: 6px; padding: 0.48rem 0.8rem; }
+.day-sub-title { font-size: 0.7rem; font-weight: 700; color: var(--muted); letter-spacing: 0.1em; margin: 0.8rem 0 0.5rem; }
+
+/* parts */
+.parts-toggle { display: flex; gap: 0.4rem; margin-bottom: 0.7rem; }
+.part-btn { flex: 1; padding: 0.42rem; border: 1.5px solid var(--line); border-radius: 5px; background: white; font-family: 'Noto Sans JP', sans-serif; font-size: 0.78rem; color: var(--muted); cursor: pointer; font-weight: 500; }
+.part-btn.active { background: var(--ink); color: white; border-color: var(--ink); }
+.part-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+.part-grid > div { background: var(--paper); border: 1px solid var(--line); border-radius: 6px; padding: 0.6rem 0.8rem; }
+.part-grid label { font-size: 0.7rem; color: var(--muted); display: block; margin-bottom: 0.2rem; }
+.part-grid input { width: 100%; border: 1px solid var(--line); background: white; border-radius: 4px; padding: 0.35rem 0.55rem; font-family: 'Noto Sans JP', sans-serif; font-size: 0.83rem; outline: none; }
+.part-grid .part-name { font-size: 0.75rem; font-weight: 700; color: var(--accent); margin-bottom: 0.4rem; }
+
+/* performers */
+.performers-list { display: flex; flex-direction: column; gap: 0.4rem; }
+.performer-row { display: flex; align-items: center; gap: 0.5rem; background: var(--paper); border: 1px solid var(--line); border-radius: 5px; padding: 0.42rem 0.7rem; }
 .performer-row .num { font-size: 0.7rem; color: var(--muted); width: 1.4rem; flex-shrink: 0; text-align: center; }
-.performer-row input { border: none; background: transparent; font-size: 0.85rem; color: var(--ink); flex: 1; outline: none; font-family: 'Noto Sans JP', sans-serif; }
+.performer-row input { border: none; background: transparent; font-size: 0.83rem; color: var(--ink); flex: 1; outline: none; font-family: 'Noto Sans JP', sans-serif; }
 .performer-row input::placeholder { color: #ccc; }
 
-.color-row { display: flex; gap: 0.45rem; flex-wrap: wrap; }
-.color-chip { width: 28px; height: 28px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; flex-shrink: 0; }
+/* color chips */
+.color-row { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+.color-chip { width: 26px; height: 26px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; flex-shrink: 0; }
 .color-chip:hover { transform: scale(1.12); }
 .color-chip.selected { outline: 2.5px solid var(--ink); outline-offset: 1px; }
 
+/* image upload */
 .img-upload-area { border: 2px dashed var(--line); border-radius: 8px; padding: 1.1rem; text-align: center; cursor: pointer; position: relative; background: white; }
 .img-upload-area:hover { border-color: var(--accent2); }
 .img-upload-area input[type=file] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
 .img-upload-area .upload-text { font-size: 0.78rem; color: var(--muted); }
 .img-upload-area img { max-width: 100%; max-height: 140px; border-radius: 4px; display: block; margin: 0 auto; }
 
-/* ===== 印刷用ドキュメント（画面では非表示） ===== */
+/* ===== 印刷用ドキュメント ===== */
 .print-doc { display: none; }
 
 @media print {
-  @page { size: A4; margin: 14mm 13mm; }
+  @page { size: A4; margin: 12mm 11mm; }
   body { background: white; }
   .app-header, .form-wrap { display: none !important; }
   .print-doc { display: block; font-family: 'Noto Sans JP', sans-serif; font-size: 9pt; color: #1a1410; }
 
-  .pd-header { border-bottom: 2.5pt solid #1a1410; padding-bottom: 5mm; margin-bottom: 5.5mm; display: flex; justify-content: space-between; align-items: flex-end; }
+  /* ヘッダー */
+  .pd-header { border-bottom: 2.5pt solid #1a1410; padding-bottom: 4mm; margin-bottom: 5mm; display: flex; justify-content: space-between; align-items: flex-end; }
   .pd-title { font-family: 'Shippori Mincho', serif; font-size: 19pt; font-weight: 700; letter-spacing: 0.12em; line-height: 1; }
   .pd-subtitle { font-size: 7pt; color: #8a7d6e; letter-spacing: 0.15em; margin-top: 1.5mm; }
-  .pd-meta { text-align: right; font-size: 7.5pt; color: #8a7d6e; line-height: 2; }
+  .pd-meta { text-align: right; font-size: 7.5pt; color: #8a7d6e; line-height: 1.9; }
   .pd-meta strong { color: #1a1410; }
 
-  .pd-sec { margin-bottom: 5mm; break-inside: avoid; }
-  .pd-sec-title { font-family: 'Shippori Mincho', serif; font-size: 7.5pt; font-weight: 700; letter-spacing: 0.2em; color: white; background: #1a1410; padding: 1mm 3.5mm; margin-bottom: 2.5mm; display: inline-block; }
+  /* 2カラムメインレイアウト */
+  .pd-main { display: grid; grid-template-columns: 1fr 1fr; gap: 6mm; }
+  .pd-left { min-width: 0; }
+  .pd-right { min-width: 0; }
 
-  .pd-grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0 5mm; }
+  /* セクション */
+  .pd-sec { margin-bottom: 4.5mm; break-inside: avoid; }
+  .pd-sec-title { font-family: 'Shippori Mincho', serif; font-size: 7.5pt; font-weight: 700; letter-spacing: 0.2em; color: white; background: #1a1410; padding: 1mm 3mm; margin-bottom: 2.5mm; display: inline-block; }
+
+  /* 基本情報 */
   .pd-row { display: flex; gap: 2mm; padding: 1.2mm 0; border-bottom: 0.5pt solid #d4c9b8; align-items: baseline; }
-  .pd-key { font-size: 7pt; color: #8a7d6e; white-space: nowrap; width: 18mm; flex-shrink: 0; }
+  .pd-key { font-size: 7pt; color: #8a7d6e; white-space: nowrap; width: 16mm; flex-shrink: 0; }
   .pd-val { font-size: 8.5pt; color: #1a1410; font-weight: 500; flex: 1; }
 
-  .pd-dates { display: flex; flex-wrap: wrap; gap: 2mm; }
-  .pd-date-chip { background: #f2ede4; border: 0.5pt solid #d4c9b8; border-radius: 2mm; padding: 1mm 3mm; font-size: 8.5pt; font-weight: 500; }
-  .pd-date-dow { color: #c4784a; font-size: 7.5pt; margin-left: 1.5mm; }
+  /* 日程カード（印刷用） */
+  .pd-day-card { border: 0.5pt solid #d4c9b8; border-radius: 2mm; padding: 2.5mm 3mm; margin-bottom: 3mm; break-inside: avoid; }
+  .pd-day-head { display: flex; align-items: center; gap: 2mm; padding-bottom: 1.5mm; border-bottom: 0.5pt solid #d4c9b8; margin-bottom: 2mm; }
+  .pd-day-num { background: #8b2e2e; color: white; font-family: 'Shippori Mincho', serif; font-size: 7pt; font-weight: 700; padding: 0.5mm 2mm; border-radius: 1mm; letter-spacing: 0.1em; }
+  .pd-day-date { font-size: 9pt; font-weight: 700; }
+  .pd-day-dow { font-size: 7.5pt; color: #c4784a; font-weight: 700; margin-left: 1mm; }
+  .pd-day-times { font-size: 8pt; color: #8a7d6e; margin-left: auto; }
+  .pd-day-times strong { color: #1a1410; font-weight: 500; }
 
-  .pd-parts { display: flex; gap: 4mm; }
-  .pd-part { flex: 1; border: 0.5pt solid #d4c9b8; border-radius: 2mm; padding: 2mm 3mm; }
-  .pd-part-title { font-size: 7pt; font-weight: 700; color: #8b2e2e; margin-bottom: 1.5mm; }
-  .pd-part-row { display: flex; gap: 3mm; font-size: 8pt; margin-bottom: 0.8mm; }
-  .pd-part-key { color: #8a7d6e; width: 10mm; flex-shrink: 0; }
+  .pd-day-sublabel { font-size: 6.5pt; color: #8b2e2e; font-weight: 700; letter-spacing: 0.08em; margin-top: 1.5mm; margin-bottom: 1mm; }
 
-  .pd-performers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5mm 4mm; }
-  .pd-performer { display: flex; gap: 1.5mm; align-items: baseline; padding: 0.9mm 0; border-bottom: 0.5pt solid #f0ebe0; }
+  /* 出演者リスト */
+  .pd-performers { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0 2mm; }
+  .pd-performer { display: flex; gap: 1mm; align-items: baseline; padding: 0.5mm 0; }
   .pd-pnum { font-size: 6.5pt; color: #aaa; width: 4mm; flex-shrink: 0; }
-  .pd-pname { font-size: 8.5pt; color: #1a1410; font-weight: 500; }
+  .pd-pname { font-size: 8pt; color: #1a1410; font-weight: 500; }
   .pd-punit { font-size: 6.5pt; color: #8a7d6e; margin-left: 1mm; }
 
-  .pd-spec-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2mm; }
-  .pd-spec-box { border: 0.5pt solid #d4c9b8; border-radius: 2mm; padding: 2mm 2.5mm; }
+  /* テーマ・カラー（日程内） */
+  .pd-theme-text { font-size: 8pt; color: #1a1410; line-height: 1.5; white-space: pre-wrap; margin-bottom: 1.5mm; }
+  .pd-colors { display: flex; gap: 1.2mm; flex-wrap: wrap; align-items: center; }
+  .pd-color-chip { width: 4.5mm; height: 4.5mm; border-radius: 50%; border: 0.5pt solid rgba(0,0,0,0.15); }
+
+  /* 参考画像（右カラム大表示） */
+  .pd-refbox { border: 1pt solid #d4c9b8; border-radius: 2mm; padding: 3mm; text-align: center; margin-bottom: 4mm; }
+  .pd-reflabel { font-size: 7pt; color: #8b2e2e; font-weight: 700; letter-spacing: 0.15em; margin-bottom: 2mm; text-align: left; }
+  .pd-refimg { width: 100%; max-height: 130mm; object-fit: contain; }
+  .pd-refnote { font-size: 6.5pt; color: #8a7d6e; margin-top: 2mm; font-style: italic; }
+
+  /* 共通スペック */
+  .pd-spec-box { border: 0.5pt solid #d4c9b8; border-radius: 2mm; padding: 2mm 2.5mm; margin-bottom: 2mm; }
   .pd-spec-label { font-size: 6.5pt; color: #8b2e2e; font-weight: 700; letter-spacing: 0.08em; margin-bottom: 1mm; }
   .pd-spec-val { font-size: 8.5pt; color: #1a1410; line-height: 1.6; white-space: pre-wrap; }
-  .pd-full { grid-column: 1 / -1; }
-  .pd-colors { display: flex; gap: 1.5mm; flex-wrap: wrap; align-items: center; }
-  .pd-color-chip { width: 5.5mm; height: 5.5mm; border-radius: 50%; border: 0.5pt solid rgba(0,0,0,0.15); }
-  .pd-refimg { text-align: center; }
-  .pd-refimg img { max-height: 42mm; max-width: 100%; object-fit: contain; }
 
+  /* 納期・契約 */
   .pd-contract { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5mm; }
   .pd-contract-item { border-left: 2pt solid #8b2e2e; padding-left: 2.5mm; }
   .pd-contract-label { font-size: 6.5pt; color: #8a7d6e; margin-bottom: 0.5mm; }
   .pd-contract-val { font-size: 9pt; color: #1a1410; font-weight: 500; }
 
+  /* 注意事項 */
   .pd-notes { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5mm; }
   .pd-note-box { border: 0.5pt solid #d4c9b8; border-radius: 2mm; padding: 2mm 2.5mm; min-height: 12mm; }
   .pd-note-label { font-size: 6.5pt; color: #8b2e2e; font-weight: 700; margin-bottom: 1.5mm; }
   .pd-note-val { font-size: 8pt; color: #1a1410; line-height: 1.7; white-space: pre-wrap; }
 
-  .pd-sig { display: grid; grid-template-columns: 1fr 1fr; gap: 6mm; margin-top: 7mm; padding-top: 4mm; border-top: 0.5pt solid #d4c9b8; }
+  /* 署名 */
+  .pd-sig { display: grid; grid-template-columns: 1fr 1fr; gap: 6mm; margin-top: 6mm; padding-top: 4mm; border-top: 0.5pt solid #d4c9b8; }
   .pd-sig-label { font-size: 7pt; color: #8a7d6e; margin-bottom: 6mm; }
   .pd-sig-line { border-bottom: 0.5pt solid #1a1410; height: 8mm; }
+
+  /* フルワイドセクション（参考画像の下に来る共通項目） */
+  .pd-full-sec { grid-column: 1 / -1; }
 }
 </style>
 </head>
@@ -154,6 +199,7 @@ body { font-family: 'Noto Sans JP', sans-serif; background: var(--paper2); color
 
 <div class="form-wrap">
 
+  <!-- 依頼者情報 -->
   <div class="sec">
     <div class="sec-title">📋 依頼者情報</div>
     <div class="row2">
@@ -166,57 +212,27 @@ body { font-family: 'Noto Sans JP', sans-serif; background: var(--paper2); color
     </div>
   </div>
 
+  <!-- ライブ基本情報（共通） -->
   <div class="sec">
-    <div class="sec-title">🎤 ライブ基本情報</div>
+    <div class="sec-title">🎤 ライブ基本情報（共通）</div>
     <div class="field"><label>ライブ名</label><input type="text" id="livename" placeholder="例：UNISON FINAL"></div>
     <div class="field"><label>会場</label><input type="text" id="venue" placeholder="例：高円寺HIGH"></div>
     <div class="field"><label>チケット料金</label><input type="text" id="ticket" placeholder="例：¥3,500 + 1d"></div>
   </div>
 
+  <!-- 日程ごとのカード -->
   <div class="sec">
-    <div class="sec-title">📅 開催日</div>
-    <div class="dates-list" id="datesList"></div>
-    <button class="btn-add" onclick="addDate()">＋ 開催日を追加</button>
+    <div class="sec-title">📅 開催日程</div>
+    <div id="daysList"></div>
+    <button class="btn-add" onclick="addDay()">＋ 日程を追加</button>
   </div>
 
+  <!-- デザイン共通指示 -->
   <div class="sec">
-    <div class="sec-title">🕐 開場・開演時間</div>
-    <div class="parts-toggle">
-      <button class="part-btn active" id="btn1part" onclick="setParts(1)">一部のみ</button>
-      <button class="part-btn" id="btn2part" onclick="setParts(2)">一部・二部</button>
-    </div>
-    <div class="part-box" id="part1section">
-      <div class="part-box-title">一部</div>
-      <div class="row2">
-        <div><label>開場</label><input type="text" id="open1" placeholder="例：12:00"></div>
-        <div><label>開演</label><input type="text" id="start1" placeholder="例：12:30"></div>
-      </div>
-    </div>
-    <div class="part-box" id="part2section" style="display:none;">
-      <div class="part-box-title">二部</div>
-      <div class="row2">
-        <div><label>開場</label><input type="text" id="open2" placeholder="例：18:00"></div>
-        <div><label>開演</label><input type="text" id="start2" placeholder="例：18:30"></div>
-      </div>
-    </div>
-  </div>
-
-  <div class="sec">
-    <div class="sec-title">👤 出演者リスト</div>
-    <div class="performers-list" id="performersList"></div>
-    <button class="btn-add" onclick="addPerformer()">＋ 出演者を追加</button>
-  </div>
-
-  <div class="sec">
-    <div class="sec-title">🎨 デザインイメージ</div>
-    <div class="field"><label>テーマ・雰囲気</label><textarea id="theme" rows="2" placeholder="例：ゴージャス・舞台カーテン・赤黒ゴールド"></textarea></div>
-    <div class="field">
-      <label>使用カラー（クリックで選択）</label>
-      <div class="color-row" id="colorPalette"></div>
-    </div>
+    <div class="sec-title">🎨 デザイン共通指示</div>
     <div class="field"><label>フォントイメージ</label><input type="text" id="fontimg" placeholder="例：和風・明朝体・英字タイトル"></div>
     <div class="field">
-      <label>参考フライヤー画像</label>
+      <label>参考フライヤー画像（A4右側に大きく表示されます）</label>
       <div class="img-upload-area">
         <input type="file" accept="image/*" onchange="loadRefImg(this)">
         <div class="upload-text" id="refImgText">クリックまたはドロップで参考画像をアップロード</div>
@@ -226,6 +242,7 @@ body { font-family: 'Noto Sans JP', sans-serif; background: var(--paper2); color
     <div class="field"><label>その他デザイン指示</label><textarea id="designnotes" rows="3" placeholder="例：SNS告知用に正方形版も欲しい、アイコン枠は丸形で..."></textarea></div>
   </div>
 
+  <!-- 納期・報酬 -->
   <div class="sec">
     <div class="sec-title">💴 納期・報酬</div>
     <div class="row2">
@@ -238,6 +255,7 @@ body { font-family: 'Noto Sans JP', sans-serif; background: var(--paper2); color
     </div>
   </div>
 
+  <!-- 禁止事項・注意事項 -->
   <div class="sec">
     <div class="sec-title">⚠️ 禁止事項・注意事項</div>
     <div class="row2">
@@ -248,7 +266,7 @@ body { font-family: 'Noto Sans JP', sans-serif; background: var(--paper2); color
 
 </div>
 
-<!-- 印刷用ドキュメント（画面では非表示・印刷時のみ表示） -->
+<!-- 印刷用ドキュメント -->
 <div class="print-doc" id="printDoc"></div>
 
 <script>
@@ -264,86 +282,175 @@ function fmtDate(val) {
   return `${y}/${m}/${d}`;
 }
 function v(id) { return (document.getElementById(id)?.value || '').trim(); }
-function esc(str) { return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function esc(str) { return String(str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
-// ===== 開催日 =====
-let dateCounter = 0, dates = [];
-function addDate(val='') {
-  dateCounter++;
-  dates.push({id: dateCounter, val});
-  renderDates();
-}
-function removeDate(id) { dates = dates.filter(d => d.id !== id); renderDates(); }
-function renderDates() {
-  const el = document.getElementById('datesList');
-  el.innerHTML = '';
-  dates.forEach((d, i) => {
-    const row = document.createElement('div');
-    row.className = 'date-row';
-    row.innerHTML = `
-      <input type="date" value="${d.val}" oninput="dates[${i}].val=this.value;document.getElementById('dow-${d.id}').textContent=getDow(this.value)">
-      <span class="date-dow" id="dow-${d.id}">${getDow(d.val)}</span>
-      <button class="btn-rm" onclick="removeDate(${d.id})">×</button>`;
-    el.appendChild(row);
-  });
-}
-
-// ===== 一部・二部 =====
-let partsMode = 1;
-function setParts(n) {
-  partsMode = n;
-  document.getElementById('btn1part').classList.toggle('active', n===1);
-  document.getElementById('btn2part').classList.toggle('active', n===2);
-  document.getElementById('part2section').style.display = n===2 ? 'block' : 'none';
-}
-
-// ===== 出演者 =====
-let performers = [], perfCounter = 0;
-function addPerformer(name='', unit='') {
-  perfCounter++;
-  performers.push({id: perfCounter, name, unit});
-  renderPerformers();
-}
-function removePerformer(id) { performers = performers.filter(p => p.id !== id); renderPerformers(); }
-function renderPerformers() {
-  const el = document.getElementById('performersList');
-  el.innerHTML = '';
-  performers.forEach((p, i) => {
-    const row = document.createElement('div');
-    row.className = 'performer-row';
-    row.innerHTML = `
-      <span class="num">${i+1}</span>
-      <input type="text" value="${esc(p.name)}" placeholder="名前・ユニット名" oninput="performers[${i}].name=this.value">
-      <input type="text" value="${esc(p.unit)}" placeholder="メンバー構成（任意）" style="color:#999" oninput="performers[${i}].unit=this.value">
-      <button class="btn-rm" onclick="removePerformer(${p.id})">×</button>`;
-    el.appendChild(row);
-  });
-}
-
-// ===== カラーパレット =====
+// ===== カラーパレット定義 =====
 const PALETTE = [
   {hex:'#1a1410',label:'黒'},{hex:'#8b2e2e',label:'深紅'},{hex:'#c4784a',label:'テラコッタ'},
   {hex:'#c9a84c',label:'ゴールド'},{hex:'#f5e6c8',label:'クリーム'},{hex:'#2c4a7c',label:'ネイビー'},
   {hex:'#3a7c5c',label:'深緑'},{hex:'#7c3a7c',label:'紫'},{hex:'#e8c5d4',label:'ピンク'},
   {hex:'#4a4a4a',label:'グレー'},{hex:'#ffffff',label:'白'},{hex:'#d4c9b8',label:'ベージュ'},
 ];
-let selectedColors = [];
-function buildPalette() {
-  const el = document.getElementById('colorPalette');
+
+// ===== 日程データ =====
+let dayCounter = 0;
+let days = [];
+// 各日程: {id, date, partsMode, open1, start1, open2, start2, performers:[{id,name,unit}], theme, colors:[]}
+
+function newDay() {
+  dayCounter++;
+  return {
+    id: dayCounter,
+    date: '',
+    partsMode: 1,
+    open1: '', start1: '',
+    open2: '', start2: '',
+    performers: [{id: 1, name: '', unit: ''}],
+    perfCounter: 1,
+    theme: '',
+    colors: []
+  };
+}
+
+function addDay() {
+  days.push(newDay());
+  renderDays();
+}
+
+function removeDay(id) {
+  if (days.length <= 1) {
+    alert('最低1日程は必要です');
+    return;
+  }
+  days = days.filter(d => d.id !== id);
+  renderDays();
+}
+
+function renderDays() {
+  const el = document.getElementById('daysList');
   el.innerHTML = '';
-  PALETTE.forEach(c => {
-    const chip = document.createElement('div');
-    chip.className = 'color-chip' + (selectedColors.includes(c.hex) ? ' selected' : '');
-    chip.style.background = c.hex;
-    chip.title = c.label;
-    if (c.hex === '#ffffff') chip.style.border = '2px solid #ccc';
-    chip.onclick = () => {
-      selectedColors = selectedColors.includes(c.hex)
-        ? selectedColors.filter(x => x !== c.hex) : [...selectedColors, c.hex];
-      buildPalette();
-    };
-    el.appendChild(chip);
+  days.forEach((d, i) => {
+    const card = document.createElement('div');
+    card.className = 'day-card';
+
+    // 出演者HTML
+    const perfHtml = d.performers.map((p, j) => `
+      <div class="performer-row">
+        <span class="num">${j+1}</span>
+        <input type="text" value="${esc(p.name)}" placeholder="名前・ユニット名"
+          oninput="updatePerf(${d.id},${p.id},'name',this.value)">
+        <input type="text" value="${esc(p.unit)}" placeholder="メンバー構成（任意）" style="color:#999"
+          oninput="updatePerf(${d.id},${p.id},'unit',this.value)">
+        <button class="btn-rm" onclick="removePerf(${d.id},${p.id})">×</button>
+      </div>
+    `).join('');
+
+    // カラーパレットHTML
+    const colorHtml = PALETTE.map(c => {
+      const sel = d.colors.includes(c.hex);
+      const wstyle = c.hex === '#ffffff' ? 'border:2px solid #ccc;' : '';
+      const selstyle = sel ? 'outline:2.5px solid #1a1410;outline-offset:1px;' : '';
+      return `<div class="color-chip" style="background:${c.hex};${wstyle}${selstyle}" title="${c.label}" onclick="toggleColor(${d.id},'${c.hex}')"></div>`;
+    }).join('');
+
+    // 一部・二部
+    const part1Active = d.partsMode === 1;
+    const part2Active = d.partsMode === 2;
+    const part2Display = d.partsMode === 2 ? '' : 'display:none;';
+    const part1Title = d.partsMode === 2 ? '<div class="part-name">一部</div>' : '';
+
+    card.innerHTML = `
+      <div class="day-card-header">
+        <span class="day-card-num">DAY ${i+1}</span>
+        <div class="day-card-date">
+          <input type="date" value="${d.date}" onchange="updateDay(${d.id},'date',this.value);renderDays()">
+          <span class="day-card-dow">${getDow(d.date)}</span>
+        </div>
+        <button class="day-card-rm" onclick="removeDay(${d.id})" title="この日程を削除">×</button>
+      </div>
+
+      <div class="day-sub-title">🕐 開場・開演</div>
+      <div class="parts-toggle">
+        <button class="part-btn ${part1Active?'active':''}" onclick="setPartsMode(${d.id},1)">単独公演</button>
+        <button class="part-btn ${part2Active?'active':''}" onclick="setPartsMode(${d.id},2)">一部・二部</button>
+      </div>
+      <div class="part-grid">
+        <div>
+          ${part1Title}
+          <label>開場</label>
+          <input type="text" value="${esc(d.open1)}" placeholder="例：12:00" oninput="updateDay(${d.id},'open1',this.value)">
+          <label style="margin-top:0.4rem;">開演</label>
+          <input type="text" value="${esc(d.start1)}" placeholder="例：12:30" oninput="updateDay(${d.id},'start1',this.value)">
+        </div>
+        <div style="${part2Display}">
+          <div class="part-name">二部</div>
+          <label>開場</label>
+          <input type="text" value="${esc(d.open2)}" placeholder="例：18:00" oninput="updateDay(${d.id},'open2',this.value)">
+          <label style="margin-top:0.4rem;">開演</label>
+          <input type="text" value="${esc(d.start2)}" placeholder="例：18:30" oninput="updateDay(${d.id},'start2',this.value)">
+        </div>
+      </div>
+
+      <div class="day-sub-title">👤 出演者</div>
+      <div class="performers-list">${perfHtml}</div>
+      <button class="btn-add" onclick="addPerf(${d.id})">＋ 出演者を追加</button>
+
+      <div class="day-sub-title">🎨 テーマ・雰囲気</div>
+      <textarea rows="2" placeholder="例：ゴージャス・舞台カーテン・赤黒ゴールド" style="width:100%;border:1px solid var(--line);background:white;border-radius:6px;padding:0.5rem 0.7rem;font-family:'Noto Sans JP',sans-serif;font-size:0.85rem;outline:none;resize:vertical;line-height:1.6;" oninput="updateDay(${d.id},'theme',this.value)">${esc(d.theme)}</textarea>
+
+      <div class="day-sub-title">🎨 使用カラー</div>
+      <div class="color-row">${colorHtml}</div>
+    `;
+    el.appendChild(card);
   });
+}
+
+function updateDay(dayId, field, val) {
+  const day = days.find(d => d.id === dayId);
+  if (day) day[field] = val;
+}
+
+function setPartsMode(dayId, mode) {
+  const day = days.find(d => d.id === dayId);
+  if (day) {
+    day.partsMode = mode;
+    renderDays();
+  }
+}
+
+function addPerf(dayId) {
+  const day = days.find(d => d.id === dayId);
+  if (day) {
+    day.perfCounter++;
+    day.performers.push({id: day.perfCounter, name: '', unit: ''});
+    renderDays();
+  }
+}
+
+function removePerf(dayId, perfId) {
+  const day = days.find(d => d.id === dayId);
+  if (day) {
+    day.performers = day.performers.filter(p => p.id !== perfId);
+    renderDays();
+  }
+}
+
+function updatePerf(dayId, perfId, field, val) {
+  const day = days.find(d => d.id === dayId);
+  if (day) {
+    const p = day.performers.find(x => x.id === perfId);
+    if (p) p[field] = val;
+  }
+}
+
+function toggleColor(dayId, hex) {
+  const day = days.find(d => d.id === dayId);
+  if (day) {
+    day.colors = day.colors.includes(hex)
+      ? day.colors.filter(c => c !== hex)
+      : [...day.colors, hex];
+    renderDays();
+  }
 }
 
 // ===== 参考画像 =====
@@ -362,30 +469,66 @@ function loadRefImg(input) {
 
 // ===== 印刷用ドキュメント生成 =====
 function generateAndPrint() {
-  const perfHTML = performers.filter(p => p.name).map((p, i) =>
-    `<div class="pd-performer"><span class="pd-pnum">${i+1}</span><span class="pd-pname">${esc(p.name)}</span>${p.unit ? `<span class="pd-punit">${esc(p.unit)}</span>` : ''}</div>`
-  ).join('');
 
-  const datesHTML = dates.filter(d => d.val).map(d =>
-    `<div class="pd-date-chip">${fmtDate(d.val)}<span class="pd-date-dow">${getDow(d.val)}</span></div>`
-  ).join('');
+  // 各日程カードHTML
+  const daysHTML = days.map((d, i) => {
+    const perfList = d.performers.filter(p => p.name);
+    const perfHtml = perfList.length
+      ? perfList.map((p, j) =>
+          `<div class="pd-performer"><span class="pd-pnum">${j+1}</span><span class="pd-pname">${esc(p.name)}</span>${p.unit ? `<span class="pd-punit">${esc(p.unit)}</span>` : ''}</div>`
+        ).join('')
+      : '<span style="font-size:7.5pt;color:#ccc;">（未入力）</span>';
 
-  const colorsHTML = selectedColors.map(hex =>
-    `<div class="pd-color-chip" style="background:${hex};${hex==='#ffffff'?'border:0.5pt solid #ccc;':''}"></div>`
-  ).join('');
+    const colorsHtml = d.colors.length
+      ? d.colors.map(hex =>
+          `<div class="pd-color-chip" style="background:${hex};${hex==='#ffffff'?'border:0.5pt solid #ccc;':''}"></div>`
+        ).join('')
+      : '<span style="font-size:7pt;color:#ccc;">（未選択）</span>';
 
-  const part2HTML = partsMode === 2 ? `
-    <div class="pd-part">
-      <div class="pd-part-title">二部</div>
-      <div class="pd-part-row"><span class="pd-part-key">開場</span><span>${esc(v('open2')) || '—'}</span></div>
-      <div class="pd-part-row"><span class="pd-part-key">開演</span><span>${esc(v('start2')) || '—'}</span></div>
-    </div>` : '';
+    // 時間表示（一部のみ vs 一部・二部）
+    let timesHtml;
+    if (d.partsMode === 1) {
+      const times = [d.open1, d.start1].filter(x => x).join('〜');
+      timesHtml = times
+        ? `<span class="pd-day-times">開場 <strong>${esc(d.open1) || '—'}</strong> ／ 開演 <strong>${esc(d.start1) || '—'}</strong></span>`
+        : '<span class="pd-day-times">時間未定</span>';
+    } else {
+      timesHtml = `<span class="pd-day-times">
+        一部：開場 <strong>${esc(d.open1) || '—'}</strong> ／ 開演 <strong>${esc(d.start1) || '—'}</strong>　
+        二部：開場 <strong>${esc(d.open2) || '—'}</strong> ／ 開演 <strong>${esc(d.start2) || '—'}</strong>
+      </span>`;
+    }
 
+    const dayLabel = days.length > 1 ? `DAY ${i+1}` : '開催情報';
+
+    return `
+      <div class="pd-day-card">
+        <div class="pd-day-head">
+          <span class="pd-day-num">${dayLabel}</span>
+          <span class="pd-day-date">${fmtDate(d.date) || '日付未定'}</span>
+          <span class="pd-day-dow">${getDow(d.date)}</span>
+          ${timesHtml}
+        </div>
+
+        <div class="pd-day-sublabel">出演者</div>
+        <div class="pd-performers">${perfHtml}</div>
+
+        ${d.theme || d.colors.length ? `
+          <div class="pd-day-sublabel">テーマ・カラー</div>
+          ${d.theme ? `<div class="pd-theme-text">${esc(d.theme)}</div>` : ''}
+          <div class="pd-colors">${colorsHtml}</div>
+        ` : ''}
+      </div>
+    `;
+  }).join('');
+
+  // 参考画像
   const refHTML = refImgSrc
-    ? `<div class="pd-refimg"><img src="${refImgSrc}"></div>`
-    : `<div style="font-size:7.5pt;color:#ccc;text-align:center;padding:4mm 0;">（参考画像なし）</div>`;
+    ? `<img class="pd-refimg" src="${refImgSrc}">`
+    : `<div style="font-size:8pt;color:#ccc;padding:30mm 0;">（参考画像なし）</div>`;
 
   document.getElementById('printDoc').innerHTML = `
+    <!-- ヘッダー -->
     <div class="pd-header">
       <div>
         <div class="pd-title">フライヤー制作依頼書</div>
@@ -399,65 +542,56 @@ function generateAndPrint() {
       </div>
     </div>
 
-    <div class="pd-sec">
-      <div class="pd-sec-title">01　ライブ基本情報</div>
-      <div class="pd-grid2">
-        <div class="pd-row"><span class="pd-key">ライブ名</span><span class="pd-val">${esc(v('livename')) || '—'}</span></div>
-        <div class="pd-row"><span class="pd-key">会場</span><span class="pd-val">${esc(v('venue')) || '—'}</span></div>
-        <div class="pd-row"><span class="pd-key">チケット</span><span class="pd-val">${esc(v('ticket')) || '—'}</span></div>
+    <!-- 2カラムメイン -->
+    <div class="pd-main">
+
+      <!-- 左カラム：ライブ情報＋日程 -->
+      <div class="pd-left">
+
+        <div class="pd-sec">
+          <div class="pd-sec-title">01　ライブ基本情報</div>
+          <div class="pd-row"><span class="pd-key">ライブ名</span><span class="pd-val">${esc(v('livename')) || '—'}</span></div>
+          <div class="pd-row"><span class="pd-key">会場</span><span class="pd-val">${esc(v('venue')) || '—'}</span></div>
+          <div class="pd-row"><span class="pd-key">チケット</span><span class="pd-val">${esc(v('ticket')) || '—'}</span></div>
+        </div>
+
+        <div class="pd-sec">
+          <div class="pd-sec-title">02　開催日程・出演者</div>
+          ${daysHTML}
+        </div>
+
       </div>
-    </div>
 
-    <div class="pd-sec">
-      <div class="pd-sec-title">02　開催日</div>
-      <div class="pd-dates">${datesHTML || '<span style="font-size:8pt;color:#ccc;">（未入力）</span>'}</div>
-    </div>
+      <!-- 右カラム：参考画像＋デザイン指示 -->
+      <div class="pd-right">
 
-    <div class="pd-sec">
-      <div class="pd-sec-title">03　開場・開演時間</div>
-      <div class="pd-parts">
-        <div class="pd-part">
-          <div class="pd-part-title">一部</div>
-          <div class="pd-part-row"><span class="pd-part-key">開場</span><span>${esc(v('open1')) || '—'}</span></div>
-          <div class="pd-part-row"><span class="pd-part-key">開演</span><span>${esc(v('start1')) || '—'}</span></div>
+        <div class="pd-sec">
+          <div class="pd-reflabel">参考フライヤー</div>
+          <div class="pd-refbox">
+            ${refHTML}
+            <div class="pd-refnote">※ このイメージに近い雰囲気でお願いします</div>
+          </div>
         </div>
-        ${part2HTML}
+
+        <div class="pd-sec">
+          <div class="pd-sec-title">03　デザイン共通指示</div>
+          <div class="pd-spec-box">
+            <div class="pd-spec-label">フォントイメージ</div>
+            <div class="pd-spec-val">${esc(v('fontimg')) || '—'}</div>
+          </div>
+          <div class="pd-spec-box">
+            <div class="pd-spec-label">その他デザイン指示</div>
+            <div class="pd-spec-val">${esc(v('designnotes')) || '—'}</div>
+          </div>
+        </div>
+
       </div>
+
     </div>
 
-    <div class="pd-sec">
-      <div class="pd-sec-title">04　出演者リスト</div>
-      <div class="pd-performers">${perfHTML || '<span style="font-size:8pt;color:#ccc;">（未入力）</span>'}</div>
-    </div>
-
-    <div class="pd-sec">
-      <div class="pd-sec-title">05　デザインイメージ</div>
-      <div class="pd-spec-grid">
-        <div class="pd-spec-box">
-          <div class="pd-spec-label">テーマ・雰囲気</div>
-          <div class="pd-spec-val">${esc(v('theme')) || '—'}</div>
-        </div>
-        <div class="pd-spec-box">
-          <div class="pd-spec-label">フォントイメージ</div>
-          <div class="pd-spec-val">${esc(v('fontimg')) || '—'}</div>
-        </div>
-        <div class="pd-spec-box">
-          <div class="pd-spec-label">使用カラー</div>
-          <div class="pd-colors">${colorsHTML || '<span style="font-size:7.5pt;color:#ccc;">（未選択）</span>'}</div>
-        </div>
-        <div class="pd-spec-box">
-          <div class="pd-spec-label">参考フライヤー</div>
-          ${refHTML}
-        </div>
-        <div class="pd-spec-box pd-full">
-          <div class="pd-spec-label">その他デザイン指示</div>
-          <div class="pd-spec-val">${esc(v('designnotes')) || '—'}</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="pd-sec">
-      <div class="pd-sec-title">06　納期・報酬</div>
+    <!-- フルワイドセクション -->
+    <div class="pd-sec" style="margin-top:5mm;">
+      <div class="pd-sec-title">04　納期・報酬</div>
       <div class="pd-contract">
         <div class="pd-contract-item"><div class="pd-contract-label">初稿納期</div><div class="pd-contract-val">${fmtDate(v('deadline1')) || '—'}</div></div>
         <div class="pd-contract-item"><div class="pd-contract-label">最終納期</div><div class="pd-contract-val">${fmtDate(v('deadline2')) || '—'}</div></div>
@@ -467,7 +601,7 @@ function generateAndPrint() {
     </div>
 
     <div class="pd-sec">
-      <div class="pd-sec-title">07　禁止事項・注意事項</div>
+      <div class="pd-sec-title">05　禁止事項・注意事項</div>
       <div class="pd-notes">
         <div class="pd-note-box"><div class="pd-note-label">禁止事項</div><div class="pd-note-val">${esc(v('prohibit')) || '（特記事項なし）'}</div></div>
         <div class="pd-note-box"><div class="pd-note-label">その他注意事項</div><div class="pd-note-val">${esc(v('caution')) || '（特記事項なし）'}</div></div>
@@ -486,9 +620,7 @@ function generateAndPrint() {
 // ===== INIT =====
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('docdate').value = new Date().toISOString().split('T')[0];
-  buildPalette();
-  addDate();
-  addPerformer();
+  addDay(); // 最初の1日程
 });
 </script>
 </body>

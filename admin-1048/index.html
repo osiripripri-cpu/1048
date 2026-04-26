@@ -16,310 +16,131 @@
   --line: #d4c9b8;
   --muted: #8a7d6e;
 }
-
 * { box-sizing: border-box; margin: 0; padding: 0; }
-
-body {
-  font-family: 'Noto Sans JP', sans-serif;
-  background: var(--paper2);
-  color: var(--ink);
-  min-height: 100vh;
-}
+body { font-family: 'Noto Sans JP', sans-serif; background: var(--paper2); color: var(--ink); min-height: 100vh; }
 
 /* ===== HEADER ===== */
 .app-header {
-  background: var(--ink);
-  color: var(--paper);
-  padding: 1.2rem 2rem;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+  background: var(--ink); color: var(--paper);
+  padding: 1.1rem 2rem; display: flex; align-items: center; gap: 1rem;
+  position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 12px rgba(0,0,0,0.3);
 }
-.app-header .logo {
-  font-family: 'Shippori Mincho', serif;
-  font-size: 1.1rem;
-  font-weight: 700;
-  letter-spacing: 0.15em;
-  color: var(--gold);
-}
-.app-header .subtitle {
-  font-size: 0.75rem;
-  color: #aaa;
-  margin-left: auto;
-}
-.btn-print {
-  background: var(--accent);
-  color: white;
-  border: none;
-  padding: 0.55rem 1.6rem;
-  border-radius: 4px;
-  font-family: 'Noto Sans JP', sans-serif;
-  font-size: 0.85rem;
-  font-weight: 500;
-  cursor: pointer;
-  letter-spacing: 0.05em;
-  transition: background 0.2s;
-}
+.app-header .logo { font-family: 'Shippori Mincho', serif; font-size: 1.05rem; font-weight: 700; letter-spacing: 0.15em; color: var(--gold); }
+.app-header .subtitle { font-size: 0.72rem; color: #aaa; margin-left: auto; }
+.btn-print { background: var(--accent); color: white; border: none; padding: 0.5rem 1.4rem; border-radius: 4px; font-family: 'Noto Sans JP', sans-serif; font-size: 0.83rem; font-weight: 500; cursor: pointer; letter-spacing: 0.05em; }
 .btn-print:hover { background: #a33a3a; }
 
-/* ===== MAIN FORM ===== */
-.form-wrap {
-  max-width: 700px;
-  margin: 2rem auto;
-  padding: 0 1.5rem 4rem;
+/* ===== FORM ===== */
+.form-wrap { max-width: 680px; margin: 2rem auto; padding: 0 1.5rem 4rem; }
+.sec { margin-top: 2rem; }
+.sec:first-child { margin-top: 0; }
+.sec-title { font-family: 'Shippori Mincho', serif; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.25em; color: var(--accent); border-bottom: 1px solid var(--accent); padding-bottom: 0.3rem; margin-bottom: 1rem; }
+.field { margin-bottom: 0.9rem; }
+.field label { display: block; font-size: 0.73rem; font-weight: 500; color: var(--muted); margin-bottom: 0.3rem; }
+.field input[type=text], .field input[type=date], .field textarea {
+  width: 100%; border: 1px solid var(--line); background: white; border-radius: 6px;
+  padding: 0.52rem 0.8rem; font-family: 'Noto Sans JP', sans-serif; font-size: 0.87rem; color: var(--ink); outline: none;
 }
-
-.section-label {
-  font-family: 'Shippori Mincho', serif;
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.25em;
-  color: var(--accent);
-  border-bottom: 1px solid var(--accent);
-  padding-bottom: 0.3rem;
-  margin-bottom: 1.1rem;
-  margin-top: 2rem;
-}
-.section-label:first-child { margin-top: 0; }
-
-.field { margin-bottom: 1rem; }
-.field label {
-  display: block;
-  font-size: 0.75rem;
-  font-weight: 500;
-  color: var(--muted);
-  margin-bottom: 0.35rem;
-  letter-spacing: 0.05em;
-}
-.field input[type=text],
-.field input[type=date],
-.field textarea,
-.field select {
-  width: 100%;
-  border: 1px solid var(--line);
-  background: white;
-  border-radius: 6px;
-  padding: 0.55rem 0.8rem;
-  font-family: 'Noto Sans JP', sans-serif;
-  font-size: 0.88rem;
-  color: var(--ink);
-  outline: none;
-  transition: border-color 0.2s;
-}
-.field input:focus, .field textarea:focus, .field select:focus {
-  border-color: var(--accent2);
-}
+.field input:focus, .field textarea:focus { border-color: var(--accent2); }
 .field textarea { resize: vertical; line-height: 1.7; }
-
 .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
-.row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.8rem; }
 
-/* ===== DATES ===== */
-.dates-list { display: flex; flex-direction: column; gap: 0.6rem; }
-.date-row {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  background: white;
-  border: 1px solid var(--line);
-  border-radius: 6px;
-  padding: 0.5rem 0.8rem;
-}
-.date-row input[type=date] {
-  border: none;
-  background: transparent;
-  padding: 0;
-  font-size: 0.88rem;
-  flex: 1;
-  outline: none;
-  font-family: 'Noto Sans JP', sans-serif;
-  color: var(--ink);
-}
-.date-dow {
-  font-size: 0.82rem;
-  font-weight: 700;
-  color: var(--accent2);
-  min-width: 2.5rem;
-  text-align: center;
-}
-.btn-rm {
-  background: none;
-  border: none;
-  color: #ccc;
-  cursor: pointer;
-  font-size: 1.1rem;
-  line-height: 1;
-  padding: 0 0.1rem;
-}
+.dates-list { display: flex; flex-direction: column; gap: 0.5rem; }
+.date-row { display: flex; align-items: center; gap: 0.6rem; background: white; border: 1px solid var(--line); border-radius: 6px; padding: 0.5rem 0.8rem; }
+.date-row input[type=date] { border: none; background: transparent; padding: 0; font-size: 0.87rem; flex: 1; outline: none; font-family: 'Noto Sans JP', sans-serif; color: var(--ink); }
+.date-dow { font-size: 0.82rem; font-weight: 700; color: var(--accent2); min-width: 3rem; text-align: right; }
+.btn-rm { background: none; border: none; color: #ccc; cursor: pointer; font-size: 1.1rem; padding: 0 0.1rem; }
 .btn-rm:hover { color: var(--accent); }
-
-.btn-add {
-  background: none;
-  border: 1px dashed var(--line);
-  border-radius: 6px;
-  color: var(--muted);
-  font-size: 0.82rem;
-  padding: 0.5rem;
-  width: 100%;
-  cursor: pointer;
-  font-family: 'Noto Sans JP', sans-serif;
-  transition: all 0.2s;
-  margin-top: 0.4rem;
-}
+.btn-add { background: none; border: 1px dashed var(--line); border-radius: 6px; color: var(--muted); font-size: 0.8rem; padding: 0.45rem; width: 100%; cursor: pointer; font-family: 'Noto Sans JP', sans-serif; margin-top: 0.4rem; }
 .btn-add:hover { border-color: var(--accent2); color: var(--accent2); }
 
-/* ===== PARTS TOGGLE ===== */
-.parts-toggle {
-  display: flex;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
-}
-.part-btn {
-  flex: 1;
-  padding: 0.5rem;
-  border: 1.5px solid var(--line);
-  border-radius: 6px;
-  background: white;
-  font-family: 'Noto Sans JP', sans-serif;
-  font-size: 0.82rem;
-  color: var(--muted);
-  cursor: pointer;
-  transition: all 0.2s;
-  font-weight: 500;
-}
-.part-btn.active {
-  background: var(--ink);
-  color: white;
-  border-color: var(--ink);
-}
+.parts-toggle { display: flex; gap: 0.5rem; margin-bottom: 0.9rem; }
+.part-btn { flex: 1; padding: 0.48rem; border: 1.5px solid var(--line); border-radius: 6px; background: white; font-family: 'Noto Sans JP', sans-serif; font-size: 0.82rem; color: var(--muted); cursor: pointer; font-weight: 500; }
+.part-btn.active { background: var(--ink); color: white; border-color: var(--ink); }
+.part-box { background: white; border: 1px solid var(--line); border-radius: 8px; padding: 0.9rem; margin-bottom: 0.7rem; }
+.part-box-title { font-size: 0.72rem; font-weight: 700; color: var(--accent); letter-spacing: 0.1em; margin-bottom: 0.7rem; }
+.part-box .row2 label { font-size: 0.72rem; color: var(--muted); display: block; margin-bottom: 0.25rem; }
+.part-box .row2 input { width: 100%; border: 1px solid var(--line); border-radius: 5px; padding: 0.45rem 0.7rem; font-family: 'Noto Sans JP', sans-serif; font-size: 0.85rem; color: var(--ink); outline: none; }
 
-.part-section {
-  background: white;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  padding: 1rem;
-  margin-bottom: 0.8rem;
-}
-.part-section-title {
-  font-size: 0.72rem;
-  font-weight: 700;
-  color: var(--accent);
-  letter-spacing: 0.1em;
-  margin-bottom: 0.8rem;
-}
-.part-inner { display: flex; flex-direction: column; gap: 0.6rem; }
-.part-inner label {
-  font-size: 0.72rem;
-  color: var(--muted);
-  margin-bottom: 0.2rem;
-  display: block;
-}
-.part-inner input {
-  width: 100%;
-  border: 1px solid var(--line);
-  border-radius: 5px;
-  padding: 0.45rem 0.7rem;
-  font-family: 'Noto Sans JP', sans-serif;
-  font-size: 0.85rem;
-  color: var(--ink);
-  outline: none;
-}
-.part-inner input:focus { border-color: var(--accent2); }
-
-/* ===== PERFORMERS ===== */
-.performers-list { display: flex; flex-direction: column; gap: 0.5rem; }
-.performer-row {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  background: white;
-  border: 1px solid var(--line);
-  border-radius: 6px;
-  padding: 0.5rem 0.8rem;
-}
-.performer-row .num {
-  font-size: 0.7rem;
-  color: var(--muted);
-  width: 1.4rem;
-  flex-shrink: 0;
-  text-align: center;
-}
-.performer-row input {
-  border: none;
-  background: transparent;
-  font-size: 0.85rem;
-  color: var(--ink);
-  flex: 1;
-  outline: none;
-  font-family: 'Noto Sans JP', sans-serif;
-}
+.performers-list { display: flex; flex-direction: column; gap: 0.45rem; }
+.performer-row { display: flex; align-items: center; gap: 0.5rem; background: white; border: 1px solid var(--line); border-radius: 6px; padding: 0.48rem 0.8rem; }
+.performer-row .num { font-size: 0.7rem; color: var(--muted); width: 1.4rem; flex-shrink: 0; text-align: center; }
+.performer-row input { border: none; background: transparent; font-size: 0.85rem; color: var(--ink); flex: 1; outline: none; font-family: 'Noto Sans JP', sans-serif; }
 .performer-row input::placeholder { color: #ccc; }
 
-/* ===== COLOR CHIPS ===== */
-.color-row { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.4rem; }
-.color-chip {
-  width: 30px; height: 30px;
-  border-radius: 50%;
-  border: 2px solid transparent;
-  cursor: pointer;
-  transition: transform 0.15s;
-  flex-shrink: 0;
-}
-.color-chip:hover { transform: scale(1.15); }
+.color-row { display: flex; gap: 0.45rem; flex-wrap: wrap; }
+.color-chip { width: 28px; height: 28px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; flex-shrink: 0; }
+.color-chip:hover { transform: scale(1.12); }
 .color-chip.selected { outline: 2.5px solid var(--ink); outline-offset: 1px; }
 
-/* ===== IMAGE UPLOAD ===== */
-.img-upload-area {
-  border: 2px dashed var(--line);
-  border-radius: 8px;
-  padding: 1.2rem;
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.2s;
-  position: relative;
-  background: white;
-}
-.img-upload-area:hover { border-color: var(--accent2); background: #fff8f4; }
-.img-upload-area input[type=file] {
-  position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;
-}
-.img-upload-area .upload-text { font-size: 0.8rem; color: var(--muted); }
+.img-upload-area { border: 2px dashed var(--line); border-radius: 8px; padding: 1.1rem; text-align: center; cursor: pointer; position: relative; background: white; }
+.img-upload-area:hover { border-color: var(--accent2); }
+.img-upload-area input[type=file] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
+.img-upload-area .upload-text { font-size: 0.78rem; color: var(--muted); }
 .img-upload-area img { max-width: 100%; max-height: 140px; border-radius: 4px; display: block; margin: 0 auto; }
 
-/* ===== PRINT ===== */
-@media print {
-  body { background: white; font-size: 10pt; }
-  .app-header, .no-print { display: none !important; }
-  .form-wrap { max-width: 100%; margin: 0; padding: 10mm 12mm; }
+/* ===== 印刷用ドキュメント（画面では非表示） ===== */
+.print-doc { display: none; }
 
-  .section-label {
-    font-size: 8pt;
-    margin-top: 6mm;
-    margin-bottom: 3mm;
-  }
-  .field label { font-size: 7pt; margin-bottom: 1mm; }
-  .field input, .field textarea, .field select,
-  .part-inner input, .date-row input {
-    border: 1px solid #ccc !important;
-    border-radius: 3px;
-    padding: 1mm 2mm;
-    font-size: 9pt;
-    background: white !important;
-  }
-  .date-row, .performer-row, .part-section {
-    border: 1px solid #ccc !important;
-    border-radius: 3px;
-    break-inside: avoid;
-  }
-  .btn-rm, .btn-add, .btn-print, .parts-toggle { display: none !important; }
-  .part-section { display: block !important; }
-  .img-upload-area img { max-height: 40mm; }
-  .color-chip { width: 6mm; height: 6mm; border: 1px solid #ccc; }
-  .color-chip.selected { outline: 1.5px solid #333; }
+@media print {
+  @page { size: A4; margin: 14mm 13mm; }
+  body { background: white; }
+  .app-header, .form-wrap { display: none !important; }
+  .print-doc { display: block; font-family: 'Noto Sans JP', sans-serif; font-size: 9pt; color: #1a1410; }
+
+  .pd-header { border-bottom: 2.5pt solid #1a1410; padding-bottom: 5mm; margin-bottom: 5.5mm; display: flex; justify-content: space-between; align-items: flex-end; }
+  .pd-title { font-family: 'Shippori Mincho', serif; font-size: 19pt; font-weight: 700; letter-spacing: 0.12em; line-height: 1; }
+  .pd-subtitle { font-size: 7pt; color: #8a7d6e; letter-spacing: 0.15em; margin-top: 1.5mm; }
+  .pd-meta { text-align: right; font-size: 7.5pt; color: #8a7d6e; line-height: 2; }
+  .pd-meta strong { color: #1a1410; }
+
+  .pd-sec { margin-bottom: 5mm; break-inside: avoid; }
+  .pd-sec-title { font-family: 'Shippori Mincho', serif; font-size: 7.5pt; font-weight: 700; letter-spacing: 0.2em; color: white; background: #1a1410; padding: 1mm 3.5mm; margin-bottom: 2.5mm; display: inline-block; }
+
+  .pd-grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0 5mm; }
+  .pd-row { display: flex; gap: 2mm; padding: 1.2mm 0; border-bottom: 0.5pt solid #d4c9b8; align-items: baseline; }
+  .pd-key { font-size: 7pt; color: #8a7d6e; white-space: nowrap; width: 18mm; flex-shrink: 0; }
+  .pd-val { font-size: 8.5pt; color: #1a1410; font-weight: 500; flex: 1; }
+
+  .pd-dates { display: flex; flex-wrap: wrap; gap: 2mm; }
+  .pd-date-chip { background: #f2ede4; border: 0.5pt solid #d4c9b8; border-radius: 2mm; padding: 1mm 3mm; font-size: 8.5pt; font-weight: 500; }
+  .pd-date-dow { color: #c4784a; font-size: 7.5pt; margin-left: 1.5mm; }
+
+  .pd-parts { display: flex; gap: 4mm; }
+  .pd-part { flex: 1; border: 0.5pt solid #d4c9b8; border-radius: 2mm; padding: 2mm 3mm; }
+  .pd-part-title { font-size: 7pt; font-weight: 700; color: #8b2e2e; margin-bottom: 1.5mm; }
+  .pd-part-row { display: flex; gap: 3mm; font-size: 8pt; margin-bottom: 0.8mm; }
+  .pd-part-key { color: #8a7d6e; width: 10mm; flex-shrink: 0; }
+
+  .pd-performers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5mm 4mm; }
+  .pd-performer { display: flex; gap: 1.5mm; align-items: baseline; padding: 0.9mm 0; border-bottom: 0.5pt solid #f0ebe0; }
+  .pd-pnum { font-size: 6.5pt; color: #aaa; width: 4mm; flex-shrink: 0; }
+  .pd-pname { font-size: 8.5pt; color: #1a1410; font-weight: 500; }
+  .pd-punit { font-size: 6.5pt; color: #8a7d6e; margin-left: 1mm; }
+
+  .pd-spec-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2mm; }
+  .pd-spec-box { border: 0.5pt solid #d4c9b8; border-radius: 2mm; padding: 2mm 2.5mm; }
+  .pd-spec-label { font-size: 6.5pt; color: #8b2e2e; font-weight: 700; letter-spacing: 0.08em; margin-bottom: 1mm; }
+  .pd-spec-val { font-size: 8.5pt; color: #1a1410; line-height: 1.6; white-space: pre-wrap; }
+  .pd-full { grid-column: 1 / -1; }
+  .pd-colors { display: flex; gap: 1.5mm; flex-wrap: wrap; align-items: center; }
+  .pd-color-chip { width: 5.5mm; height: 5.5mm; border-radius: 50%; border: 0.5pt solid rgba(0,0,0,0.15); }
+  .pd-refimg { text-align: center; }
+  .pd-refimg img { max-height: 42mm; max-width: 100%; object-fit: contain; }
+
+  .pd-contract { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5mm; }
+  .pd-contract-item { border-left: 2pt solid #8b2e2e; padding-left: 2.5mm; }
+  .pd-contract-label { font-size: 6.5pt; color: #8a7d6e; margin-bottom: 0.5mm; }
+  .pd-contract-val { font-size: 9pt; color: #1a1410; font-weight: 500; }
+
+  .pd-notes { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5mm; }
+  .pd-note-box { border: 0.5pt solid #d4c9b8; border-radius: 2mm; padding: 2mm 2.5mm; min-height: 12mm; }
+  .pd-note-label { font-size: 6.5pt; color: #8b2e2e; font-weight: 700; margin-bottom: 1.5mm; }
+  .pd-note-val { font-size: 8pt; color: #1a1410; line-height: 1.7; white-space: pre-wrap; }
+
+  .pd-sig { display: grid; grid-template-columns: 1fr 1fr; gap: 6mm; margin-top: 7mm; padding-top: 4mm; border-top: 0.5pt solid #d4c9b8; }
+  .pd-sig-label { font-size: 7pt; color: #8a7d6e; margin-bottom: 6mm; }
+  .pd-sig-line { border-bottom: 0.5pt solid #1a1410; height: 8mm; }
 }
 </style>
 </head>
@@ -327,202 +148,132 @@ body {
 
 <header class="app-header">
   <div class="logo">🎭 フライヤー制作依頼書</div>
-  <div class="subtitle">入力してPDFで印刷・保存</div>
-  <button class="btn-print" onclick="window.print()">🖨 PDFで保存</button>
+  <div class="subtitle">入力してPDFで保存</div>
+  <button class="btn-print" onclick="generateAndPrint()">🖨 PDFで保存</button>
 </header>
 
 <div class="form-wrap">
 
-  <!-- 依頼者情報 -->
-  <div class="section-label">📋 依頼者情報</div>
-  <div class="row2">
-    <div class="field">
-      <label>依頼者名 / 主催名</label>
-      <input type="text" id="organizer" placeholder="例：1048プロダクション">
+  <div class="sec">
+    <div class="sec-title">📋 依頼者情報</div>
+    <div class="row2">
+      <div class="field"><label>依頼者名 / 主催名</label><input type="text" id="organizer" placeholder="例：1048プロダクション"></div>
+      <div class="field"><label>連絡先（SNS / メール）</label><input type="text" id="contact" placeholder="例：@1048_live"></div>
     </div>
-    <div class="field">
-      <label>連絡先（SNS / メール）</label>
-      <input type="text" id="contact" placeholder="例：@1048_live">
-    </div>
-  </div>
-  <div class="row2">
-    <div class="field">
-      <label>作成日</label>
-      <input type="date" id="docdate">
-    </div>
-    <div class="field">
-      <label>依頼No.</label>
-      <input type="text" id="docno" placeholder="例：FLY-001">
+    <div class="row2">
+      <div class="field"><label>作成日</label><input type="date" id="docdate"></div>
+      <div class="field"><label>依頼No.</label><input type="text" id="docno" placeholder="例：FLY-001"></div>
     </div>
   </div>
 
-  <!-- ライブ基本情報 -->
-  <div class="section-label">🎤 ライブ基本情報</div>
-  <div class="field">
-    <label>ライブ名</label>
-    <input type="text" id="livename" placeholder="例：UNISON FINAL">
-  </div>
-  <div class="field">
-    <label>会場</label>
-    <input type="text" id="venue" placeholder="例：高円寺HIGH">
-  </div>
-  <div class="field">
-    <label>チケット料金</label>
-    <input type="text" id="ticket" placeholder="例：¥3,500 + 1d">
+  <div class="sec">
+    <div class="sec-title">🎤 ライブ基本情報</div>
+    <div class="field"><label>ライブ名</label><input type="text" id="livename" placeholder="例：UNISON FINAL"></div>
+    <div class="field"><label>会場</label><input type="text" id="venue" placeholder="例：高円寺HIGH"></div>
+    <div class="field"><label>チケット料金</label><input type="text" id="ticket" placeholder="例：¥3,500 + 1d"></div>
   </div>
 
-  <!-- 開催日 -->
-  <div class="section-label">📅 開催日</div>
-  <div class="dates-list" id="datesList"></div>
-  <button class="btn-add no-print" onclick="addDate()">＋ 開催日を追加</button>
-
-  <!-- 一部・二部 -->
-  <div class="section-label">🕐 開場・開演時間</div>
-  <div class="parts-toggle no-print">
-    <button class="part-btn active" id="btn1part" onclick="setParts(1)">一部のみ</button>
-    <button class="part-btn" id="btn2part" onclick="setParts(2)">一部・二部</button>
+  <div class="sec">
+    <div class="sec-title">📅 開催日</div>
+    <div class="dates-list" id="datesList"></div>
+    <button class="btn-add" onclick="addDate()">＋ 開催日を追加</button>
   </div>
 
-  <div class="part-section" id="part1section">
-    <div class="part-section-title">一部</div>
-    <div class="row2 part-inner">
-      <div>
-        <label>開場</label>
-        <input type="text" id="open1" placeholder="例：12:00">
+  <div class="sec">
+    <div class="sec-title">🕐 開場・開演時間</div>
+    <div class="parts-toggle">
+      <button class="part-btn active" id="btn1part" onclick="setParts(1)">一部のみ</button>
+      <button class="part-btn" id="btn2part" onclick="setParts(2)">一部・二部</button>
+    </div>
+    <div class="part-box" id="part1section">
+      <div class="part-box-title">一部</div>
+      <div class="row2">
+        <div><label>開場</label><input type="text" id="open1" placeholder="例：12:00"></div>
+        <div><label>開演</label><input type="text" id="start1" placeholder="例：12:30"></div>
       </div>
-      <div>
-        <label>開演</label>
-        <input type="text" id="start1" placeholder="例：12:30">
+    </div>
+    <div class="part-box" id="part2section" style="display:none;">
+      <div class="part-box-title">二部</div>
+      <div class="row2">
+        <div><label>開場</label><input type="text" id="open2" placeholder="例：18:00"></div>
+        <div><label>開演</label><input type="text" id="start2" placeholder="例：18:30"></div>
       </div>
     </div>
   </div>
 
-  <div class="part-section" id="part2section" style="display:none;">
-    <div class="part-section-title">二部</div>
-    <div class="row2 part-inner">
-      <div>
-        <label>開場</label>
-        <input type="text" id="open2" placeholder="例：18:00">
+  <div class="sec">
+    <div class="sec-title">👤 出演者リスト</div>
+    <div class="performers-list" id="performersList"></div>
+    <button class="btn-add" onclick="addPerformer()">＋ 出演者を追加</button>
+  </div>
+
+  <div class="sec">
+    <div class="sec-title">🎨 デザインイメージ</div>
+    <div class="field"><label>テーマ・雰囲気</label><textarea id="theme" rows="2" placeholder="例：ゴージャス・舞台カーテン・赤黒ゴールド"></textarea></div>
+    <div class="field">
+      <label>使用カラー（クリックで選択）</label>
+      <div class="color-row" id="colorPalette"></div>
+    </div>
+    <div class="field"><label>フォントイメージ</label><input type="text" id="fontimg" placeholder="例：和風・明朝体・英字タイトル"></div>
+    <div class="field">
+      <label>参考フライヤー画像</label>
+      <div class="img-upload-area">
+        <input type="file" accept="image/*" onchange="loadRefImg(this)">
+        <div class="upload-text" id="refImgText">クリックまたはドロップで参考画像をアップロード</div>
+        <img id="refImgPreview" style="display:none">
       </div>
-      <div>
-        <label>開演</label>
-        <input type="text" id="start2" placeholder="例：18:30">
-      </div>
+    </div>
+    <div class="field"><label>その他デザイン指示</label><textarea id="designnotes" rows="3" placeholder="例：SNS告知用に正方形版も欲しい、アイコン枠は丸形で..."></textarea></div>
+  </div>
+
+  <div class="sec">
+    <div class="sec-title">💴 納期・報酬</div>
+    <div class="row2">
+      <div class="field"><label>初稿納期</label><input type="date" id="deadline1"></div>
+      <div class="field"><label>最終納期</label><input type="date" id="deadline2"></div>
+    </div>
+    <div class="row2">
+      <div class="field"><label>報酬</label><input type="text" id="fee" placeholder="例：¥15,000（修正2回まで含む）"></div>
+      <div class="field"><label>支払い方法</label><input type="text" id="payment" placeholder="例：銀行振込・完了後1週間以内"></div>
     </div>
   </div>
 
-  <!-- 出演者 -->
-  <div class="section-label">👤 出演者リスト</div>
-  <div class="performers-list" id="performersList"></div>
-  <button class="btn-add no-print" onclick="addPerformer()">＋ 出演者を追加</button>
-
-  <!-- デザインイメージ -->
-  <div class="section-label">🎨 デザインイメージ</div>
-  <div class="field">
-    <label>テーマ・雰囲気</label>
-    <textarea id="theme" rows="2" placeholder="例：ゴージャス・舞台カーテン・赤黒ゴールド"></textarea>
-  </div>
-  <div class="field">
-    <label>使用カラー（クリックで選択）</label>
-    <div class="color-row" id="colorPalette"></div>
-  </div>
-  <div class="field">
-    <label>フォントイメージ</label>
-    <input type="text" id="fontimg" placeholder="例：和風・明朝体・英字タイトル">
-  </div>
-  <div class="field">
-    <label>参考フライヤー画像</label>
-    <div class="img-upload-area">
-      <input type="file" accept="image/*" onchange="loadRefImg(this)">
-      <div class="upload-text" id="refImgText">クリックまたはドロップで参考画像をアップロード</div>
-      <img id="refImgPreview" style="display:none">
-    </div>
-  </div>
-  <div class="field">
-    <label>その他デザイン指示</label>
-    <textarea id="designnotes" rows="3" placeholder="例：SNS告知用に正方形版も欲しい、アイコン枠は丸形で..."></textarea>
-  </div>
-
-  <!-- 納期・報酬 -->
-  <div class="section-label">💴 納期・報酬</div>
-  <div class="row2">
-    <div class="field">
-      <label>初稿納期</label>
-      <input type="date" id="deadline1">
-    </div>
-    <div class="field">
-      <label>最終納期</label>
-      <input type="date" id="deadline2">
-    </div>
-  </div>
-  <div class="row2">
-    <div class="field">
-      <label>報酬</label>
-      <input type="text" id="fee" placeholder="例：¥15,000（修正2回まで含む）">
-    </div>
-    <div class="field">
-      <label>支払い方法</label>
-      <input type="text" id="payment" placeholder="例：銀行振込・完了後1週間以内">
+  <div class="sec">
+    <div class="sec-title">⚠️ 禁止事項・注意事項</div>
+    <div class="row2">
+      <div class="field"><label>禁止事項</label><textarea id="prohibit" rows="4" placeholder="例：&#10;・二次使用禁止&#10;・SNSへのWIP投稿禁止&#10;・AI生成素材の使用禁止"></textarea></div>
+      <div class="field"><label>その他注意事項</label><textarea id="caution" rows="4" placeholder="例：納品はPSD＋PNG形式でお願いします"></textarea></div>
     </div>
   </div>
 
-  <!-- 禁止事項・注意事項 -->
-  <div class="section-label">⚠️ 禁止事項・注意事項</div>
-  <div class="row2">
-    <div class="field">
-      <label>禁止事項</label>
-      <textarea id="prohibit" rows="4" placeholder="例：
-・二次使用禁止
-・SNSへのWIP投稿禁止
-・AI生成素材の使用禁止"></textarea>
-    </div>
-    <div class="field">
-      <label>その他注意事項</label>
-      <textarea id="caution" rows="4" placeholder="例：納品はPSD＋PNG形式でお願いします"></textarea>
-    </div>
-  </div>
+</div>
 
-  <!-- 署名欄 -->
-  <div class="section-label">✍️ 署名欄</div>
-  <div class="row2">
-    <div class="field">
-      <label>依頼者（主催）</label>
-      <input type="text" placeholder="署名・捺印">
-    </div>
-    <div class="field">
-      <label>受注者（デザイナー）</label>
-      <input type="text" placeholder="署名・捺印">
-    </div>
-  </div>
-
-</div><!-- /form-wrap -->
+<!-- 印刷用ドキュメント（画面では非表示・印刷時のみ表示） -->
+<div class="print-doc" id="printDoc"></div>
 
 <script>
-// ===== 曜日 =====
 const DOW = ['日','月','火','水','木','金','土'];
 function getDow(dateStr) {
   if (!dateStr) return '';
   const [y,m,d] = dateStr.split('-').map(Number);
-  const day = new Date(y, m-1, d).getDay();
-  return DOW[day] + '曜日';
+  return DOW[new Date(y, m-1, d).getDay()] + '曜日';
 }
+function fmtDate(val) {
+  if (!val) return '';
+  const [y,m,d] = val.split('-');
+  return `${y}/${m}/${d}`;
+}
+function v(id) { return (document.getElementById(id)?.value || '').trim(); }
+function esc(str) { return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
 // ===== 開催日 =====
-let dateCounter = 0;
-let dates = [];
-
+let dateCounter = 0, dates = [];
 function addDate(val='') {
   dateCounter++;
-  const id = dateCounter;
-  dates.push({id, val});
+  dates.push({id: dateCounter, val});
   renderDates();
 }
-
-function removeDate(id) {
-  dates = dates.filter(d => d.id !== id);
-  renderDates();
-}
-
+function removeDate(id) { dates = dates.filter(d => d.id !== id); renderDates(); }
 function renderDates() {
   const el = document.getElementById('datesList');
   el.innerHTML = '';
@@ -530,45 +281,30 @@ function renderDates() {
     const row = document.createElement('div');
     row.className = 'date-row';
     row.innerHTML = `
-      <input type="date" value="${d.val}" oninput="dates[${i}].val=this.value;updateDow(this,${i})">
-      <span class="date-dow" id="dow-${d.id}">${d.val ? getDow(d.val) : ''}</span>
-      <button class="btn-rm no-print" onclick="removeDate(${d.id})">×</button>
-    `;
+      <input type="date" value="${d.val}" oninput="dates[${i}].val=this.value;document.getElementById('dow-${d.id}').textContent=getDow(this.value)">
+      <span class="date-dow" id="dow-${d.id}">${getDow(d.val)}</span>
+      <button class="btn-rm" onclick="removeDate(${d.id})">×</button>`;
     el.appendChild(row);
   });
 }
 
-function updateDow(input, idx) {
-  dates[idx].val = input.value;
-  const span = document.getElementById(`dow-${dates[idx].id}`);
-  if (span) span.textContent = getDow(input.value);
-}
-
 // ===== 一部・二部 =====
 let partsMode = 1;
-
 function setParts(n) {
   partsMode = n;
-  document.getElementById('btn1part').classList.toggle('active', n === 1);
-  document.getElementById('btn2part').classList.toggle('active', n === 2);
-  document.getElementById('part2section').style.display = n === 2 ? 'block' : 'none';
+  document.getElementById('btn1part').classList.toggle('active', n===1);
+  document.getElementById('btn2part').classList.toggle('active', n===2);
+  document.getElementById('part2section').style.display = n===2 ? 'block' : 'none';
 }
 
 // ===== 出演者 =====
-let performers = [];
-let perfCounter = 0;
-
+let performers = [], perfCounter = 0;
 function addPerformer(name='', unit='') {
   perfCounter++;
   performers.push({id: perfCounter, name, unit});
   renderPerformers();
 }
-
-function removePerformer(id) {
-  performers = performers.filter(p => p.id !== id);
-  renderPerformers();
-}
-
+function removePerformer(id) { performers = performers.filter(p => p.id !== id); renderPerformers(); }
 function renderPerformers() {
   const el = document.getElementById('performersList');
   el.innerHTML = '';
@@ -577,33 +313,21 @@ function renderPerformers() {
     row.className = 'performer-row';
     row.innerHTML = `
       <span class="num">${i+1}</span>
-      <input type="text" value="${p.name}" placeholder="名前・ユニット名"
-        oninput="performers[${i}].name=this.value">
-      <input type="text" value="${p.unit}" placeholder="メンバー構成（任意）" style="color:#888"
-        oninput="performers[${i}].unit=this.value">
-      <button class="btn-rm no-print" onclick="removePerformer(${p.id})">×</button>
-    `;
+      <input type="text" value="${esc(p.name)}" placeholder="名前・ユニット名" oninput="performers[${i}].name=this.value">
+      <input type="text" value="${esc(p.unit)}" placeholder="メンバー構成（任意）" style="color:#999" oninput="performers[${i}].unit=this.value">
+      <button class="btn-rm" onclick="removePerformer(${p.id})">×</button>`;
     el.appendChild(row);
   });
 }
 
 // ===== カラーパレット =====
 const PALETTE = [
-  {hex:'#1a1410',label:'黒'},
-  {hex:'#8b2e2e',label:'深紅'},
-  {hex:'#c4784a',label:'テラコッタ'},
-  {hex:'#c9a84c',label:'ゴールド'},
-  {hex:'#f5e6c8',label:'クリーム'},
-  {hex:'#2c4a7c',label:'ネイビー'},
-  {hex:'#3a7c5c',label:'深緑'},
-  {hex:'#7c3a7c',label:'紫'},
-  {hex:'#e8c5d4',label:'ピンク'},
-  {hex:'#4a4a4a',label:'グレー'},
-  {hex:'#ffffff',label:'白'},
-  {hex:'#d4c9b8',label:'ベージュ'},
+  {hex:'#1a1410',label:'黒'},{hex:'#8b2e2e',label:'深紅'},{hex:'#c4784a',label:'テラコッタ'},
+  {hex:'#c9a84c',label:'ゴールド'},{hex:'#f5e6c8',label:'クリーム'},{hex:'#2c4a7c',label:'ネイビー'},
+  {hex:'#3a7c5c',label:'深緑'},{hex:'#7c3a7c',label:'紫'},{hex:'#e8c5d4',label:'ピンク'},
+  {hex:'#4a4a4a',label:'グレー'},{hex:'#ffffff',label:'白'},{hex:'#d4c9b8',label:'ベージュ'},
 ];
 let selectedColors = [];
-
 function buildPalette() {
   const el = document.getElementById('colorPalette');
   el.innerHTML = '';
@@ -615,8 +339,7 @@ function buildPalette() {
     if (c.hex === '#ffffff') chip.style.border = '2px solid #ccc';
     chip.onclick = () => {
       selectedColors = selectedColors.includes(c.hex)
-        ? selectedColors.filter(x => x !== c.hex)
-        : [...selectedColors, c.hex];
+        ? selectedColors.filter(x => x !== c.hex) : [...selectedColors, c.hex];
       buildPalette();
     };
     el.appendChild(chip);
@@ -624,24 +347,148 @@ function buildPalette() {
 }
 
 // ===== 参考画像 =====
+let refImgSrc = '';
 function loadRefImg(input) {
-  const file = input.files[0];
-  if (!file) return;
+  const file = input.files[0]; if (!file) return;
   const reader = new FileReader();
   reader.onload = e => {
-    document.getElementById('refImgPreview').src = e.target.result;
+    refImgSrc = e.target.result;
+    document.getElementById('refImgPreview').src = refImgSrc;
     document.getElementById('refImgPreview').style.display = 'block';
     document.getElementById('refImgText').style.display = 'none';
   };
   reader.readAsDataURL(file);
 }
 
+// ===== 印刷用ドキュメント生成 =====
+function generateAndPrint() {
+  const perfHTML = performers.filter(p => p.name).map((p, i) =>
+    `<div class="pd-performer"><span class="pd-pnum">${i+1}</span><span class="pd-pname">${esc(p.name)}</span>${p.unit ? `<span class="pd-punit">${esc(p.unit)}</span>` : ''}</div>`
+  ).join('');
+
+  const datesHTML = dates.filter(d => d.val).map(d =>
+    `<div class="pd-date-chip">${fmtDate(d.val)}<span class="pd-date-dow">${getDow(d.val)}</span></div>`
+  ).join('');
+
+  const colorsHTML = selectedColors.map(hex =>
+    `<div class="pd-color-chip" style="background:${hex};${hex==='#ffffff'?'border:0.5pt solid #ccc;':''}"></div>`
+  ).join('');
+
+  const part2HTML = partsMode === 2 ? `
+    <div class="pd-part">
+      <div class="pd-part-title">二部</div>
+      <div class="pd-part-row"><span class="pd-part-key">開場</span><span>${esc(v('open2')) || '—'}</span></div>
+      <div class="pd-part-row"><span class="pd-part-key">開演</span><span>${esc(v('start2')) || '—'}</span></div>
+    </div>` : '';
+
+  const refHTML = refImgSrc
+    ? `<div class="pd-refimg"><img src="${refImgSrc}"></div>`
+    : `<div style="font-size:7.5pt;color:#ccc;text-align:center;padding:4mm 0;">（参考画像なし）</div>`;
+
+  document.getElementById('printDoc').innerHTML = `
+    <div class="pd-header">
+      <div>
+        <div class="pd-title">フライヤー制作依頼書</div>
+        <div class="pd-subtitle">FLYER DESIGN REQUEST</div>
+      </div>
+      <div class="pd-meta">
+        作成日：<strong>${fmtDate(v('docdate')) || '—'}</strong><br>
+        依頼No.：<strong>${esc(v('docno')) || '—'}</strong><br>
+        依頼者：<strong>${esc(v('organizer')) || '—'}</strong><br>
+        連絡先：<strong>${esc(v('contact')) || '—'}</strong>
+      </div>
+    </div>
+
+    <div class="pd-sec">
+      <div class="pd-sec-title">01　ライブ基本情報</div>
+      <div class="pd-grid2">
+        <div class="pd-row"><span class="pd-key">ライブ名</span><span class="pd-val">${esc(v('livename')) || '—'}</span></div>
+        <div class="pd-row"><span class="pd-key">会場</span><span class="pd-val">${esc(v('venue')) || '—'}</span></div>
+        <div class="pd-row"><span class="pd-key">チケット</span><span class="pd-val">${esc(v('ticket')) || '—'}</span></div>
+      </div>
+    </div>
+
+    <div class="pd-sec">
+      <div class="pd-sec-title">02　開催日</div>
+      <div class="pd-dates">${datesHTML || '<span style="font-size:8pt;color:#ccc;">（未入力）</span>'}</div>
+    </div>
+
+    <div class="pd-sec">
+      <div class="pd-sec-title">03　開場・開演時間</div>
+      <div class="pd-parts">
+        <div class="pd-part">
+          <div class="pd-part-title">一部</div>
+          <div class="pd-part-row"><span class="pd-part-key">開場</span><span>${esc(v('open1')) || '—'}</span></div>
+          <div class="pd-part-row"><span class="pd-part-key">開演</span><span>${esc(v('start1')) || '—'}</span></div>
+        </div>
+        ${part2HTML}
+      </div>
+    </div>
+
+    <div class="pd-sec">
+      <div class="pd-sec-title">04　出演者リスト</div>
+      <div class="pd-performers">${perfHTML || '<span style="font-size:8pt;color:#ccc;">（未入力）</span>'}</div>
+    </div>
+
+    <div class="pd-sec">
+      <div class="pd-sec-title">05　デザインイメージ</div>
+      <div class="pd-spec-grid">
+        <div class="pd-spec-box">
+          <div class="pd-spec-label">テーマ・雰囲気</div>
+          <div class="pd-spec-val">${esc(v('theme')) || '—'}</div>
+        </div>
+        <div class="pd-spec-box">
+          <div class="pd-spec-label">フォントイメージ</div>
+          <div class="pd-spec-val">${esc(v('fontimg')) || '—'}</div>
+        </div>
+        <div class="pd-spec-box">
+          <div class="pd-spec-label">使用カラー</div>
+          <div class="pd-colors">${colorsHTML || '<span style="font-size:7.5pt;color:#ccc;">（未選択）</span>'}</div>
+        </div>
+        <div class="pd-spec-box">
+          <div class="pd-spec-label">参考フライヤー</div>
+          ${refHTML}
+        </div>
+        <div class="pd-spec-box pd-full">
+          <div class="pd-spec-label">その他デザイン指示</div>
+          <div class="pd-spec-val">${esc(v('designnotes')) || '—'}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pd-sec">
+      <div class="pd-sec-title">06　納期・報酬</div>
+      <div class="pd-contract">
+        <div class="pd-contract-item"><div class="pd-contract-label">初稿納期</div><div class="pd-contract-val">${fmtDate(v('deadline1')) || '—'}</div></div>
+        <div class="pd-contract-item"><div class="pd-contract-label">最終納期</div><div class="pd-contract-val">${fmtDate(v('deadline2')) || '—'}</div></div>
+        <div class="pd-contract-item"><div class="pd-contract-label">報酬</div><div class="pd-contract-val">${esc(v('fee')) || '—'}</div></div>
+        <div class="pd-contract-item"><div class="pd-contract-label">支払い方法</div><div class="pd-contract-val">${esc(v('payment')) || '—'}</div></div>
+      </div>
+    </div>
+
+    <div class="pd-sec">
+      <div class="pd-sec-title">07　禁止事項・注意事項</div>
+      <div class="pd-notes">
+        <div class="pd-note-box"><div class="pd-note-label">禁止事項</div><div class="pd-note-val">${esc(v('prohibit')) || '（特記事項なし）'}</div></div>
+        <div class="pd-note-box"><div class="pd-note-label">その他注意事項</div><div class="pd-note-val">${esc(v('caution')) || '（特記事項なし）'}</div></div>
+      </div>
+    </div>
+
+    <div class="pd-sig">
+      <div><div class="pd-sig-label">依頼者（主催）：${esc(v('organizer'))}</div><div class="pd-sig-line"></div></div>
+      <div><div class="pd-sig-label">受注者（デザイナー）</div><div class="pd-sig-line"></div></div>
+    </div>
+  `;
+
+  window.print();
+}
+
 // ===== INIT =====
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('docdate').value = new Date().toISOString().split('T')[0];
   buildPalette();
-  addDate(); // 最初から1行
-  addPerformer(); // 最初から1行
+  addDate();
+  addPerformer();
 });
 </script>
 </body>

@@ -55,7 +55,7 @@ body {
   background: var(--accent);
   color: white;
   border: none;
-  padding: 0.55rem 1.4rem;
+  padding: 0.55rem 1.6rem;
   border-radius: 4px;
   font-family: 'Noto Sans JP', sans-serif;
   font-size: 0.85rem;
@@ -66,425 +66,260 @@ body {
 }
 .btn-print:hover { background: #a33a3a; }
 
-/* ===== LAYOUT ===== */
-.layout {
-  display: grid;
-  grid-template-columns: 340px 1fr;
-  min-height: calc(100vh - 56px);
-}
-
-/* ===== SIDEBAR (入力) ===== */
-.sidebar {
-  background: var(--paper);
-  border-right: 1px solid var(--line);
-  overflow-y: auto;
-  padding: 1.5rem 1.2rem 2rem;
+/* ===== MAIN FORM ===== */
+.form-wrap {
+  max-width: 700px;
+  margin: 2rem auto;
+  padding: 0 1.5rem 4rem;
 }
 
 .section-label {
   font-family: 'Shippori Mincho', serif;
-  font-size: 0.65rem;
+  font-size: 0.68rem;
   font-weight: 700;
   letter-spacing: 0.25em;
   color: var(--accent);
-  text-transform: uppercase;
   border-bottom: 1px solid var(--accent);
-  padding-bottom: 0.25rem;
-  margin-bottom: 1rem;
-  margin-top: 1.6rem;
+  padding-bottom: 0.3rem;
+  margin-bottom: 1.1rem;
+  margin-top: 2rem;
 }
 .section-label:first-child { margin-top: 0; }
 
-.field { margin-bottom: 0.9rem; }
+.field { margin-bottom: 1rem; }
 .field label {
   display: block;
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   font-weight: 500;
   color: var(--muted);
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.35rem;
   letter-spacing: 0.05em;
 }
-.field input, .field textarea, .field select {
+.field input[type=text],
+.field input[type=date],
+.field textarea,
+.field select {
   width: 100%;
   border: 1px solid var(--line);
-  background: var(--paper2);
-  border-radius: 4px;
-  padding: 0.45rem 0.65rem;
+  background: white;
+  border-radius: 6px;
+  padding: 0.55rem 0.8rem;
   font-family: 'Noto Sans JP', sans-serif;
-  font-size: 0.82rem;
+  font-size: 0.88rem;
   color: var(--ink);
   outline: none;
   transition: border-color 0.2s;
 }
 .field input:focus, .field textarea:focus, .field select:focus {
   border-color: var(--accent2);
-  background: white;
 }
-.field textarea { resize: vertical; line-height: 1.6; }
+.field textarea { resize: vertical; line-height: 1.7; }
 
-.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+.row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.8rem; }
 
-/* performers */
-.performers-list { display: flex; flex-direction: column; gap: 0.5rem; }
-.performer-row {
+/* ===== DATES ===== */
+.dates-list { display: flex; flex-direction: column; gap: 0.6rem; }
+.date-row {
   display: flex;
   align-items: center;
-  gap: 0.4rem;
-  background: var(--paper2);
+  gap: 0.6rem;
+  background: white;
   border: 1px solid var(--line);
-  border-radius: 4px;
-  padding: 0.35rem 0.5rem;
+  border-radius: 6px;
+  padding: 0.5rem 0.8rem;
 }
-.performer-row .num {
-  font-size: 0.68rem;
-  color: var(--muted);
-  width: 1.2rem;
-  flex-shrink: 0;
-  text-align: center;
-}
-.performer-row input {
+.date-row input[type=date] {
   border: none;
   background: transparent;
-  font-size: 0.8rem;
-  color: var(--ink);
+  padding: 0;
+  font-size: 0.88rem;
   flex: 1;
   outline: none;
   font-family: 'Noto Sans JP', sans-serif;
+  color: var(--ink);
 }
-.performer-row .icon-size-select {
-  border: 1px solid var(--line);
-  border-radius: 3px;
-  font-size: 0.7rem;
-  padding: 0.15rem 0.3rem;
-  background: white;
-  color: var(--muted);
-  font-family: 'Noto Sans JP', sans-serif;
-  cursor: pointer;
+.date-dow {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--accent2);
+  min-width: 2.5rem;
+  text-align: center;
 }
 .btn-rm {
   background: none;
   border: none;
   color: #ccc;
   cursor: pointer;
-  font-size: 1rem;
-  padding: 0 0.1rem;
+  font-size: 1.1rem;
   line-height: 1;
+  padding: 0 0.1rem;
 }
 .btn-rm:hover { color: var(--accent); }
-.btn-add-performer {
+
+.btn-add {
   background: none;
   border: 1px dashed var(--line);
-  border-radius: 4px;
+  border-radius: 6px;
   color: var(--muted);
-  font-size: 0.78rem;
-  padding: 0.4rem;
+  font-size: 0.82rem;
+  padding: 0.5rem;
   width: 100%;
   cursor: pointer;
   font-family: 'Noto Sans JP', sans-serif;
   transition: all 0.2s;
+  margin-top: 0.4rem;
 }
-.btn-add-performer:hover { border-color: var(--accent2); color: var(--accent2); }
+.btn-add:hover { border-color: var(--accent2); color: var(--accent2); }
 
-/* color chips */
-.color-row { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.5rem; }
+/* ===== PARTS TOGGLE ===== */
+.parts-toggle {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+.part-btn {
+  flex: 1;
+  padding: 0.5rem;
+  border: 1.5px solid var(--line);
+  border-radius: 6px;
+  background: white;
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 0.82rem;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.2s;
+  font-weight: 500;
+}
+.part-btn.active {
+  background: var(--ink);
+  color: white;
+  border-color: var(--ink);
+}
+
+.part-section {
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 0.8rem;
+}
+.part-section-title {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 0.1em;
+  margin-bottom: 0.8rem;
+}
+.part-inner { display: flex; flex-direction: column; gap: 0.6rem; }
+.part-inner label {
+  font-size: 0.72rem;
+  color: var(--muted);
+  margin-bottom: 0.2rem;
+  display: block;
+}
+.part-inner input {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  padding: 0.45rem 0.7rem;
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 0.85rem;
+  color: var(--ink);
+  outline: none;
+}
+.part-inner input:focus { border-color: var(--accent2); }
+
+/* ===== PERFORMERS ===== */
+.performers-list { display: flex; flex-direction: column; gap: 0.5rem; }
+.performer-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 0.5rem 0.8rem;
+}
+.performer-row .num {
+  font-size: 0.7rem;
+  color: var(--muted);
+  width: 1.4rem;
+  flex-shrink: 0;
+  text-align: center;
+}
+.performer-row input {
+  border: none;
+  background: transparent;
+  font-size: 0.85rem;
+  color: var(--ink);
+  flex: 1;
+  outline: none;
+  font-family: 'Noto Sans JP', sans-serif;
+}
+.performer-row input::placeholder { color: #ccc; }
+
+/* ===== COLOR CHIPS ===== */
+.color-row { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.4rem; }
 .color-chip {
-  width: 28px; height: 28px;
+  width: 30px; height: 30px;
   border-radius: 50%;
   border: 2px solid transparent;
   cursor: pointer;
   transition: transform 0.15s;
+  flex-shrink: 0;
 }
 .color-chip:hover { transform: scale(1.15); }
-.color-chip.selected { border-color: var(--ink); }
+.color-chip.selected { outline: 2.5px solid var(--ink); outline-offset: 1px; }
 
-/* image upload */
+/* ===== IMAGE UPLOAD ===== */
 .img-upload-area {
   border: 2px dashed var(--line);
-  border-radius: 6px;
-  padding: 1rem;
+  border-radius: 8px;
+  padding: 1.2rem;
   text-align: center;
   cursor: pointer;
   transition: all 0.2s;
   position: relative;
+  background: white;
 }
 .img-upload-area:hover { border-color: var(--accent2); background: #fff8f4; }
 .img-upload-area input[type=file] {
   position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;
 }
-.img-upload-area .upload-text { font-size: 0.78rem; color: var(--muted); }
-.img-upload-area img { max-width: 100%; max-height: 120px; border-radius: 4px; display: block; margin: 0 auto; }
-
-/* ===== PREVIEW ===== */
-.preview-area {
-  padding: 2rem;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.preview-label {
-  font-size: 0.7rem;
-  color: var(--muted);
-  letter-spacing: 0.2em;
-  margin-bottom: 1rem;
-  text-align: center;
-}
-
-/* ===== DOCUMENT ===== */
-#doc {
-  width: 210mm;
-  min-height: 297mm;
-  background: white;
-  box-shadow: 0 4px 32px rgba(0,0,0,0.15);
-  padding: 18mm 16mm 16mm;
-  position: relative;
-  font-family: 'Noto Sans JP', sans-serif;
-}
-
-/* doc header */
-.doc-header {
-  border-bottom: 3px solid var(--ink);
-  padding-bottom: 6mm;
-  margin-bottom: 7mm;
-}
-.doc-header-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-}
-.doc-title {
-  font-family: 'Shippori Mincho', serif;
-  font-size: 22pt;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  color: var(--ink);
-  line-height: 1.1;
-}
-.doc-subtitle {
-  font-size: 8pt;
-  color: var(--muted);
-  letter-spacing: 0.15em;
-  margin-top: 1mm;
-}
-.doc-meta {
-  text-align: right;
-  font-size: 8pt;
-  color: var(--muted);
-  line-height: 1.8;
-}
-.doc-meta strong { color: var(--ink); }
-
-/* doc sections */
-.doc-section { margin-bottom: 7mm; }
-.doc-section-title {
-  font-family: 'Shippori Mincho', serif;
-  font-size: 9pt;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-  color: white;
-  background: var(--ink);
-  padding: 1.5mm 4mm;
-  margin-bottom: 3mm;
-  display: inline-block;
-}
-
-/* info grid */
-.info-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0 6mm;
-}
-.info-row {
-  display: flex;
-  gap: 2mm;
-  padding: 1.5mm 0;
-  border-bottom: 1px solid var(--line);
-  align-items: baseline;
-}
-.info-key {
-  font-size: 7.5pt;
-  color: var(--muted);
-  white-space: nowrap;
-  width: 22mm;
-  flex-shrink: 0;
-  font-weight: 500;
-}
-.info-val {
-  font-size: 9pt;
-  color: var(--ink);
-  font-weight: 500;
-  flex: 1;
-  word-break: break-all;
-}
-
-/* performers grid */
-.performers-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, 22mm);
-  gap: 3mm;
-}
-.performer-card {
-  text-align: center;
-}
-.icon-box {
-  background: var(--paper2);
-  border: 1.5px solid var(--line);
-  border-radius: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 1mm;
-  font-size: 7pt;
-  color: var(--muted);
-  position: relative;
-  overflow: hidden;
-}
-.icon-box.size-s  { width: 18mm; height: 18mm; }
-.icon-box.size-m  { width: 22mm; height: 22mm; }
-.icon-box.size-l  { width: 28mm; height: 28mm; }
-.icon-box img { width: 100%; height: 100%; object-fit: cover; }
-.icon-box .size-badge {
-  position: absolute;
-  bottom: 0; right: 0;
-  background: var(--gold);
-  color: white;
-  font-size: 5pt;
-  padding: 0.5mm 1mm;
-  font-weight: 700;
-}
-.performer-name {
-  font-size: 7pt;
-  color: var(--ink);
-  word-break: break-all;
-  line-height: 1.3;
-}
-.performer-unit {
-  font-size: 6pt;
-  color: var(--muted);
-}
-
-/* design spec */
-.design-spec-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 3mm;
-}
-.spec-box {
-  border: 1px solid var(--line);
-  border-radius: 3px;
-  padding: 2mm 3mm;
-}
-.spec-box-title {
-  font-size: 6.5pt;
-  color: var(--accent);
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  margin-bottom: 1.5mm;
-}
-.spec-box-val {
-  font-size: 8.5pt;
-  color: var(--ink);
-  line-height: 1.6;
-  white-space: pre-wrap;
-}
-.color-palette {
-  display: flex;
-  gap: 2mm;
-  flex-wrap: wrap;
-  margin-top: 1mm;
-}
-.palette-chip {
-  width: 7mm; height: 7mm;
-  border-radius: 50%;
-  border: 1px solid rgba(0,0,0,0.1);
-}
-
-/* ref image */
-.ref-image-area {
-  border: 1px solid var(--line);
-  border-radius: 3px;
-  padding: 2mm;
-  min-height: 30mm;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.ref-image-area img {
-  max-width: 100%;
-  max-height: 50mm;
-  object-fit: contain;
-}
-.ref-placeholder {
-  font-size: 7.5pt;
-  color: #ccc;
-  text-align: center;
-}
-
-/* contract */
-.contract-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 3mm;
-}
-.contract-item {
-  border-left: 3px solid var(--accent);
-  padding-left: 3mm;
-}
-.contract-item-label { font-size: 7pt; color: var(--muted); margin-bottom: 0.5mm; }
-.contract-item-val { font-size: 9pt; color: var(--ink); font-weight: 500; }
-
-/* notes */
-.notes-box {
-  border: 1px solid var(--line);
-  border-radius: 3px;
-  padding: 2mm 3mm;
-  min-height: 12mm;
-  font-size: 8pt;
-  color: var(--ink);
-  line-height: 1.7;
-  white-space: pre-wrap;
-}
-
-/* signature */
-.signature-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 6mm;
-  margin-top: 8mm;
-  padding-top: 4mm;
-  border-top: 1px solid var(--line);
-}
-.sig-block { }
-.sig-label { font-size: 7pt; color: var(--muted); margin-bottom: 5mm; }
-.sig-line { border-bottom: 1px solid var(--ink); height: 8mm; }
-.sig-name { font-size: 7pt; color: var(--muted); margin-top: 1mm; }
-
-/* footer */
-.doc-footer {
-  position: absolute;
-  bottom: 8mm;
-  left: 16mm; right: 16mm;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 6.5pt;
-  color: #bbb;
-  border-top: 1px solid var(--line);
-  padding-top: 2mm;
-}
+.img-upload-area .upload-text { font-size: 0.8rem; color: var(--muted); }
+.img-upload-area img { max-width: 100%; max-height: 140px; border-radius: 4px; display: block; margin: 0 auto; }
 
 /* ===== PRINT ===== */
 @media print {
-  body { background: white; }
-  .layout { display: block; }
-  .sidebar, .app-header, .preview-label { display: none !important; }
-  .preview-area { padding: 0; background: white; }
-  #doc {
-    box-shadow: none;
-    width: 100%;
-    min-height: auto;
-    padding: 15mm 15mm 20mm;
+  body { background: white; font-size: 10pt; }
+  .app-header, .no-print { display: none !important; }
+  .form-wrap { max-width: 100%; margin: 0; padding: 10mm 12mm; }
+
+  .section-label {
+    font-size: 8pt;
+    margin-top: 6mm;
+    margin-bottom: 3mm;
   }
+  .field label { font-size: 7pt; margin-bottom: 1mm; }
+  .field input, .field textarea, .field select,
+  .part-inner input, .date-row input {
+    border: 1px solid #ccc !important;
+    border-radius: 3px;
+    padding: 1mm 2mm;
+    font-size: 9pt;
+    background: white !important;
+  }
+  .date-row, .performer-row, .part-section {
+    border: 1px solid #ccc !important;
+    border-radius: 3px;
+    break-inside: avoid;
+  }
+  .btn-rm, .btn-add, .btn-print, .parts-toggle { display: none !important; }
+  .part-section { display: block !important; }
+  .img-upload-area img { max-height: 40mm; }
+  .color-chip { width: 6mm; height: 6mm; border: 1px solid #ccc; }
+  .color-chip.selected { outline: 1.5px solid #333; }
 }
 </style>
 </head>
@@ -492,275 +327,268 @@ body {
 
 <header class="app-header">
   <div class="logo">🎭 フライヤー制作依頼書</div>
-  <div class="subtitle">入力→右側でリアルタイムプレビュー</div>
-  <button class="btn-print" onclick="window.print()">🖨 PDFで印刷・保存</button>
+  <div class="subtitle">入力してPDFで印刷・保存</div>
+  <button class="btn-print" onclick="window.print()">🖨 PDFで保存</button>
 </header>
 
-<div class="layout">
+<div class="form-wrap">
 
-  <!-- ========== SIDEBAR ========== -->
-  <aside class="sidebar">
-
-    <!-- 依頼者情報 -->
-    <div class="section-label">📋 依頼者情報</div>
+  <!-- 依頼者情報 -->
+  <div class="section-label">📋 依頼者情報</div>
+  <div class="row2">
     <div class="field">
       <label>依頼者名 / 主催名</label>
-      <input type="text" id="organizer" placeholder="例：1048プロダクション" oninput="update()">
+      <input type="text" id="organizer" placeholder="例：1048プロダクション">
     </div>
     <div class="field">
       <label>連絡先（SNS / メール）</label>
-      <input type="text" id="contact" placeholder="例：@1048_live" oninput="update()">
+      <input type="text" id="contact" placeholder="例：@1048_live">
     </div>
-    <div class="row2">
-      <div class="field">
-        <label>作成日</label>
-        <input type="date" id="docdate" oninput="update()">
-      </div>
-      <div class="field">
-        <label>依頼No.</label>
-        <input type="text" id="docno" placeholder="例：FLY-001" oninput="update()">
-      </div>
+  </div>
+  <div class="row2">
+    <div class="field">
+      <label>作成日</label>
+      <input type="date" id="docdate">
     </div>
+    <div class="field">
+      <label>依頼No.</label>
+      <input type="text" id="docno" placeholder="例：FLY-001">
+    </div>
+  </div>
 
-    <!-- ライブ基本情報 -->
-    <div class="section-label">🎤 ライブ基本情報</div>
-    <div class="field">
-      <label>ライブ名</label>
-      <input type="text" id="livename" placeholder="例：UNISON FINAL" oninput="update()">
-    </div>
-    <div class="row2">
-      <div class="field">
-        <label>開催日</label>
-        <input type="date" id="livedate" oninput="update()">
-      </div>
-      <div class="field">
-        <label>曜日</label>
-        <input type="text" id="liveday" placeholder="例：sat" oninput="update()">
-      </div>
-    </div>
-    <div class="field">
-      <label>会場</label>
-      <input type="text" id="venue" placeholder="例：高円寺HIGH" oninput="update()">
-    </div>
-    <div class="field">
-      <label>開場・開演（一部）</label>
-      <input type="text" id="time1" placeholder="例：open 12:00 / start 12:30" oninput="update()">
-    </div>
-    <div class="field">
-      <label>開場・開演（二部）</label>
-      <input type="text" id="time2" placeholder="例：open 18:00 / start 18:30（任意）" oninput="update()">
-    </div>
-    <div class="field">
-      <label>チケット料金</label>
-      <input type="text" id="ticket" placeholder="例：各部 ¥3,500 + 1d" oninput="update()">
-    </div>
+  <!-- ライブ基本情報 -->
+  <div class="section-label">🎤 ライブ基本情報</div>
+  <div class="field">
+    <label>ライブ名</label>
+    <input type="text" id="livename" placeholder="例：UNISON FINAL">
+  </div>
+  <div class="field">
+    <label>会場</label>
+    <input type="text" id="venue" placeholder="例：高円寺HIGH">
+  </div>
+  <div class="field">
+    <label>チケット料金</label>
+    <input type="text" id="ticket" placeholder="例：¥3,500 + 1d">
+  </div>
 
-    <!-- 出演者 -->
-    <div class="section-label">👤 出演者リスト・アイコン枠</div>
-    <div class="performers-list" id="performersList"></div>
-    <button class="btn-add-performer" onclick="addPerformer()">＋ 出演者を追加</button>
+  <!-- 開催日 -->
+  <div class="section-label">📅 開催日</div>
+  <div class="dates-list" id="datesList"></div>
+  <button class="btn-add no-print" onclick="addDate()">＋ 開催日を追加</button>
 
-    <!-- デザインイメージ -->
-    <div class="section-label">🎨 デザインイメージ</div>
-    <div class="field">
-      <label>テーマ・雰囲気</label>
-      <textarea id="theme" rows="2" placeholder="例：ゴージャス・舞台カーテン・赤黒ゴールド" oninput="update()"></textarea>
-    </div>
-    <div class="field">
-      <label>使用カラー（選択）</label>
-      <div class="color-row" id="colorPalette"></div>
-      <div style="font-size:0.7rem;color:var(--muted);">クリックで選択・解除</div>
-    </div>
-    <div class="field">
-      <label>フォントイメージ</label>
-      <input type="text" id="fontimg" placeholder="例：和風・明朝体・英字タイトル" oninput="update()">
-    </div>
-    <div class="field">
-      <label>参考フライヤー画像</label>
-      <div class="img-upload-area" id="refImgArea">
-        <input type="file" accept="image/*" onchange="loadRefImg(this)">
-        <div class="upload-text" id="refImgText">クリックまたはドロップで参考画像をアップロード</div>
-        <img id="refImgPreview" style="display:none">
+  <!-- 一部・二部 -->
+  <div class="section-label">🕐 開場・開演時間</div>
+  <div class="parts-toggle no-print">
+    <button class="part-btn active" id="btn1part" onclick="setParts(1)">一部のみ</button>
+    <button class="part-btn" id="btn2part" onclick="setParts(2)">一部・二部</button>
+  </div>
+
+  <div class="part-section" id="part1section">
+    <div class="part-section-title">一部</div>
+    <div class="row2 part-inner">
+      <div>
+        <label>開場</label>
+        <input type="text" id="open1" placeholder="例：12:00">
+      </div>
+      <div>
+        <label>開演</label>
+        <input type="text" id="start1" placeholder="例：12:30">
       </div>
     </div>
-    <div class="field">
-      <label>その他デザイン指示</label>
-      <textarea id="designnotes" rows="3" placeholder="例：SNS告知用に正方形版も欲しい、アイコン枠は丸形で..." oninput="update()"></textarea>
-    </div>
+  </div>
 
-    <!-- 納期・報酬 -->
-    <div class="section-label">📅 納期・報酬</div>
+  <div class="part-section" id="part2section" style="display:none;">
+    <div class="part-section-title">二部</div>
+    <div class="row2 part-inner">
+      <div>
+        <label>開場</label>
+        <input type="text" id="open2" placeholder="例：18:00">
+      </div>
+      <div>
+        <label>開演</label>
+        <input type="text" id="start2" placeholder="例：18:30">
+      </div>
+    </div>
+  </div>
+
+  <!-- 出演者 -->
+  <div class="section-label">👤 出演者リスト</div>
+  <div class="performers-list" id="performersList"></div>
+  <button class="btn-add no-print" onclick="addPerformer()">＋ 出演者を追加</button>
+
+  <!-- デザインイメージ -->
+  <div class="section-label">🎨 デザインイメージ</div>
+  <div class="field">
+    <label>テーマ・雰囲気</label>
+    <textarea id="theme" rows="2" placeholder="例：ゴージャス・舞台カーテン・赤黒ゴールド"></textarea>
+  </div>
+  <div class="field">
+    <label>使用カラー（クリックで選択）</label>
+    <div class="color-row" id="colorPalette"></div>
+  </div>
+  <div class="field">
+    <label>フォントイメージ</label>
+    <input type="text" id="fontimg" placeholder="例：和風・明朝体・英字タイトル">
+  </div>
+  <div class="field">
+    <label>参考フライヤー画像</label>
+    <div class="img-upload-area">
+      <input type="file" accept="image/*" onchange="loadRefImg(this)">
+      <div class="upload-text" id="refImgText">クリックまたはドロップで参考画像をアップロード</div>
+      <img id="refImgPreview" style="display:none">
+    </div>
+  </div>
+  <div class="field">
+    <label>その他デザイン指示</label>
+    <textarea id="designnotes" rows="3" placeholder="例：SNS告知用に正方形版も欲しい、アイコン枠は丸形で..."></textarea>
+  </div>
+
+  <!-- 納期・報酬 -->
+  <div class="section-label">💴 納期・報酬</div>
+  <div class="row2">
     <div class="field">
       <label>初稿納期</label>
-      <input type="date" id="deadline1" oninput="update()">
+      <input type="date" id="deadline1">
     </div>
     <div class="field">
       <label>最終納期</label>
-      <input type="date" id="deadline2" oninput="update()">
+      <input type="date" id="deadline2">
     </div>
+  </div>
+  <div class="row2">
     <div class="field">
       <label>報酬</label>
-      <input type="text" id="fee" placeholder="例：¥15,000（修正2回まで含む）" oninput="update()">
+      <input type="text" id="fee" placeholder="例：¥15,000（修正2回まで含む）">
     </div>
     <div class="field">
       <label>支払い方法</label>
-      <input type="text" id="payment" placeholder="例：銀行振込・作業完了後1週間以内" oninput="update()">
+      <input type="text" id="payment" placeholder="例：銀行振込・完了後1週間以内">
     </div>
+  </div>
 
-    <!-- 禁止事項・注意事項 -->
-    <div class="section-label">⚠️ 禁止事項・注意事項</div>
+  <!-- 禁止事項・注意事項 -->
+  <div class="section-label">⚠️ 禁止事項・注意事項</div>
+  <div class="row2">
     <div class="field">
       <label>禁止事項</label>
-      <textarea id="prohibit" rows="3" placeholder="例：
+      <textarea id="prohibit" rows="4" placeholder="例：
 ・二次使用禁止
 ・SNSへのWIP投稿禁止
-・AI生成素材の使用禁止" oninput="update()"></textarea>
+・AI生成素材の使用禁止"></textarea>
     </div>
     <div class="field">
       <label>その他注意事項</label>
-      <textarea id="caution" rows="2" placeholder="例：納品はPSD＋PNG形式でお願いします" oninput="update()"></textarea>
+      <textarea id="caution" rows="4" placeholder="例：納品はPSD＋PNG形式でお願いします"></textarea>
     </div>
+  </div>
 
-  </aside>
-
-  <!-- ========== PREVIEW ========== -->
-  <main class="preview-area">
-    <div class="preview-label">▼ プレビュー（印刷ボタンでPDF保存できます）</div>
-
-    <div id="doc">
-
-      <!-- doc header -->
-      <div class="doc-header">
-        <div class="doc-header-top">
-          <div>
-            <div class="doc-title">フライヤー制作依頼書</div>
-            <div class="doc-subtitle">FLYER DESIGN REQUEST</div>
-          </div>
-          <div class="doc-meta">
-            作成日：<strong id="d-docdate">——</strong><br>
-            依頼No.：<strong id="d-docno">——</strong><br>
-            依頼者：<strong id="d-organizer">——</strong><br>
-            連絡先：<strong id="d-contact">——</strong>
-          </div>
-        </div>
-      </div>
-
-      <!-- 1. ライブ基本情報 -->
-      <div class="doc-section">
-        <div class="doc-section-title">01　ライブ基本情報</div>
-        <div class="info-grid">
-          <div class="info-row"><span class="info-key">ライブ名</span><span class="info-val" id="d-livename">——</span></div>
-          <div class="info-row"><span class="info-key">開催日</span><span class="info-val" id="d-livedate">——</span></div>
-          <div class="info-row"><span class="info-key">会場</span><span class="info-val" id="d-venue">——</span></div>
-          <div class="info-row"><span class="info-key">チケット</span><span class="info-val" id="d-ticket">——</span></div>
-          <div class="info-row"><span class="info-key">一部タイム</span><span class="info-val" id="d-time1">——</span></div>
-          <div class="info-row"><span class="info-key">二部タイム</span><span class="info-val" id="d-time2">——</span></div>
-        </div>
-      </div>
-
-      <!-- 2. 出演者・アイコン -->
-      <div class="doc-section">
-        <div class="doc-section-title">02　出演者リスト・アイコン枠</div>
-        <div class="performers-grid" id="d-performers"></div>
-        <p style="font-size:7pt;color:var(--muted);margin-top:3mm;">※ アイコン画像は後日提供。各枠のサイズを参考にしてください。<br>　S = 18mm　M = 22mm　L = 28mm（プレビュー上の枠サイズ）</p>
-      </div>
-
-      <!-- 3. デザインイメージ -->
-      <div class="doc-section">
-        <div class="doc-section-title">03　デザインイメージ・仕様</div>
-        <div class="design-spec-grid">
-          <div class="spec-box">
-            <div class="spec-box-title">テーマ・雰囲気</div>
-            <div class="spec-box-val" id="d-theme">——</div>
-          </div>
-          <div class="spec-box">
-            <div class="spec-box-title">フォントイメージ</div>
-            <div class="spec-box-val" id="d-fontimg">——</div>
-          </div>
-          <div class="spec-box" style="grid-column:1/-1">
-            <div class="spec-box-title">使用カラーイメージ</div>
-            <div class="color-palette" id="d-colors"></div>
-          </div>
-          <div class="spec-box" style="grid-column:1/-1">
-            <div class="spec-box-title">その他デザイン指示</div>
-            <div class="spec-box-val" id="d-designnotes">——</div>
-          </div>
-        </div>
-
-        <div style="margin-top:3mm;">
-          <div class="spec-box-title" style="font-size:7pt;color:var(--accent);font-weight:700;letter-spacing:0.1em;margin-bottom:2mm;">参考フライヤー</div>
-          <div class="ref-image-area">
-            <img id="d-refimg" style="display:none;max-height:50mm;max-width:100%;object-fit:contain;">
-            <div class="ref-placeholder" id="d-refimg-placeholder">（参考フライヤー画像をアップロードすると表示されます）</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 4. 納期・報酬 -->
-      <div class="doc-section">
-        <div class="doc-section-title">04　納期・報酬</div>
-        <div class="contract-grid">
-          <div class="contract-item">
-            <div class="contract-item-label">初稿納期</div>
-            <div class="contract-item-val" id="d-deadline1">——</div>
-          </div>
-          <div class="contract-item">
-            <div class="contract-item-label">最終納期</div>
-            <div class="contract-item-val" id="d-deadline2">——</div>
-          </div>
-          <div class="contract-item">
-            <div class="contract-item-label">報酬</div>
-            <div class="contract-item-val" id="d-fee">——</div>
-          </div>
-          <div class="contract-item">
-            <div class="contract-item-label">支払い方法</div>
-            <div class="contract-item-val" id="d-payment">——</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 5. 禁止事項 -->
-      <div class="doc-section">
-        <div class="doc-section-title">05　禁止事項・注意事項</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:3mm;">
-          <div>
-            <div class="spec-box-title" style="font-size:7pt;color:var(--accent);font-weight:700;margin-bottom:2mm;">禁止事項</div>
-            <div class="notes-box" id="d-prohibit"></div>
-          </div>
-          <div>
-            <div class="spec-box-title" style="font-size:7pt;color:var(--accent);font-weight:700;margin-bottom:2mm;">注意事項</div>
-            <div class="notes-box" id="d-caution"></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 署名欄 -->
-      <div class="signature-row">
-        <div class="sig-block">
-          <div class="sig-label">依頼者（主催）</div>
-          <div class="sig-line"></div>
-          <div class="sig-name" id="d-sig-organizer"></div>
-        </div>
-        <div class="sig-block">
-          <div class="sig-label">受注者（デザイナー）</div>
-          <div class="sig-line"></div>
-          <div class="sig-name">　</div>
-        </div>
-      </div>
-
-      <div class="doc-footer">
-        <span id="d-footer-org"></span>
-        <span>フライヤー制作依頼書</span>
-        <span>作成：フライヤー制作依頼書ツール</span>
-      </div>
-
+  <!-- 署名欄 -->
+  <div class="section-label">✍️ 署名欄</div>
+  <div class="row2">
+    <div class="field">
+      <label>依頼者（主催）</label>
+      <input type="text" placeholder="署名・捺印">
     </div>
-  </main>
-</div>
+    <div class="field">
+      <label>受注者（デザイナー）</label>
+      <input type="text" placeholder="署名・捺印">
+    </div>
+  </div>
+
+</div><!-- /form-wrap -->
 
 <script>
-// ===== PALETTE =====
-const PALETTE_COLORS = [
+// ===== 曜日 =====
+const DOW = ['日','月','火','水','木','金','土'];
+function getDow(dateStr) {
+  if (!dateStr) return '';
+  const [y,m,d] = dateStr.split('-').map(Number);
+  const day = new Date(y, m-1, d).getDay();
+  return DOW[day] + '曜日';
+}
+
+// ===== 開催日 =====
+let dateCounter = 0;
+let dates = [];
+
+function addDate(val='') {
+  dateCounter++;
+  const id = dateCounter;
+  dates.push({id, val});
+  renderDates();
+}
+
+function removeDate(id) {
+  dates = dates.filter(d => d.id !== id);
+  renderDates();
+}
+
+function renderDates() {
+  const el = document.getElementById('datesList');
+  el.innerHTML = '';
+  dates.forEach((d, i) => {
+    const row = document.createElement('div');
+    row.className = 'date-row';
+    row.innerHTML = `
+      <input type="date" value="${d.val}" oninput="dates[${i}].val=this.value;updateDow(this,${i})">
+      <span class="date-dow" id="dow-${d.id}">${d.val ? getDow(d.val) : ''}</span>
+      <button class="btn-rm no-print" onclick="removeDate(${d.id})">×</button>
+    `;
+    el.appendChild(row);
+  });
+}
+
+function updateDow(input, idx) {
+  dates[idx].val = input.value;
+  const span = document.getElementById(`dow-${dates[idx].id}`);
+  if (span) span.textContent = getDow(input.value);
+}
+
+// ===== 一部・二部 =====
+let partsMode = 1;
+
+function setParts(n) {
+  partsMode = n;
+  document.getElementById('btn1part').classList.toggle('active', n === 1);
+  document.getElementById('btn2part').classList.toggle('active', n === 2);
+  document.getElementById('part2section').style.display = n === 2 ? 'block' : 'none';
+}
+
+// ===== 出演者 =====
+let performers = [];
+let perfCounter = 0;
+
+function addPerformer(name='', unit='') {
+  perfCounter++;
+  performers.push({id: perfCounter, name, unit});
+  renderPerformers();
+}
+
+function removePerformer(id) {
+  performers = performers.filter(p => p.id !== id);
+  renderPerformers();
+}
+
+function renderPerformers() {
+  const el = document.getElementById('performersList');
+  el.innerHTML = '';
+  performers.forEach((p, i) => {
+    const row = document.createElement('div');
+    row.className = 'performer-row';
+    row.innerHTML = `
+      <span class="num">${i+1}</span>
+      <input type="text" value="${p.name}" placeholder="名前・ユニット名"
+        oninput="performers[${i}].name=this.value">
+      <input type="text" value="${p.unit}" placeholder="メンバー構成（任意）" style="color:#888"
+        oninput="performers[${i}].unit=this.value">
+      <button class="btn-rm no-print" onclick="removePerformer(${p.id})">×</button>
+    `;
+    el.appendChild(row);
+  });
+}
+
+// ===== カラーパレット =====
+const PALETTE = [
   {hex:'#1a1410',label:'黒'},
   {hex:'#8b2e2e',label:'深紅'},
   {hex:'#c4784a',label:'テラコッタ'},
@@ -779,188 +607,41 @@ let selectedColors = [];
 function buildPalette() {
   const el = document.getElementById('colorPalette');
   el.innerHTML = '';
-  PALETTE_COLORS.forEach(c => {
+  PALETTE.forEach(c => {
     const chip = document.createElement('div');
     chip.className = 'color-chip' + (selectedColors.includes(c.hex) ? ' selected' : '');
     chip.style.background = c.hex;
     chip.title = c.label;
-    chip.style.border = c.hex === '#ffffff' ? '2px solid #ccc' : '';
+    if (c.hex === '#ffffff') chip.style.border = '2px solid #ccc';
     chip.onclick = () => {
-      if (selectedColors.includes(c.hex)) {
-        selectedColors = selectedColors.filter(x => x !== c.hex);
-      } else {
-        selectedColors.push(c.hex);
-      }
+      selectedColors = selectedColors.includes(c.hex)
+        ? selectedColors.filter(x => x !== c.hex)
+        : [...selectedColors, c.hex];
       buildPalette();
-      update();
     };
-    if (selectedColors.includes(c.hex)) chip.style.outline = '2px solid #1a1410';
     el.appendChild(chip);
   });
 }
 
-// ===== PERFORMERS =====
-let performers = [];
-let perfCounter = 0;
-
-function addPerformer(name='', unit='', size='M') {
-  perfCounter++;
-  performers.push({id: perfCounter, name, unit, size});
-  renderPerformersList();
-  update();
-}
-
-function removePerformer(id) {
-  performers = performers.filter(p => p.id !== id);
-  renderPerformersList();
-  update();
-}
-
-function renderPerformersList() {
-  const el = document.getElementById('performersList');
-  el.innerHTML = '';
-  performers.forEach((p, i) => {
-    const row = document.createElement('div');
-    row.className = 'performer-row';
-    row.innerHTML = `
-      <span class="num">${i+1}</span>
-      <input type="text" value="${p.name}" placeholder="名前・ユニット名" 
-        oninput="performers[${i}].name=this.value;updatePerformersPreview()">
-      <input type="text" value="${p.unit}" placeholder="メンバー（任意）" style="width:90px"
-        oninput="performers[${i}].unit=this.value;updatePerformersPreview()">
-      <select class="icon-size-select" onchange="performers[${i}].size=this.value;updatePerformersPreview()">
-        <option value="S" ${p.size==='S'?'selected':''}>S</option>
-        <option value="M" ${p.size==='M'?'selected':''}>M</option>
-        <option value="L" ${p.size==='L'?'selected':''}>L</option>
-      </select>
-      <button class="btn-rm" onclick="removePerformer(${p.id})">×</button>
-    `;
-    el.appendChild(row);
-  });
-}
-
-function updatePerformersPreview() {
-  const grid = document.getElementById('d-performers');
-  grid.innerHTML = '';
-  if (performers.length === 0) {
-    grid.innerHTML = '<p style="font-size:8pt;color:#bbb;">（出演者を追加してください）</p>';
-    return;
-  }
-  performers.forEach(p => {
-    const card = document.createElement('div');
-    card.className = 'performer-card';
-    const sizeClass = {S:'size-s',M:'size-m',L:'size-l'}[p.size] || 'size-m';
-    card.innerHTML = `
-      <div class="icon-box ${sizeClass}">
-        <span>ICON</span>
-        <span class="size-badge">${p.size}</span>
-      </div>
-      <div class="performer-name">${p.name || '（名前未入力）'}</div>
-      ${p.unit ? `<div class="performer-unit">${p.unit}</div>` : ''}
-    `;
-    grid.appendChild(card);
-  });
-}
-
-// ===== REF IMAGE =====
+// ===== 参考画像 =====
 function loadRefImg(input) {
   const file = input.files[0];
   if (!file) return;
   const reader = new FileReader();
   reader.onload = e => {
-    const src = e.target.result;
-    document.getElementById('refImgPreview').src = src;
+    document.getElementById('refImgPreview').src = e.target.result;
     document.getElementById('refImgPreview').style.display = 'block';
     document.getElementById('refImgText').style.display = 'none';
-    document.getElementById('d-refimg').src = src;
-    document.getElementById('d-refimg').style.display = 'block';
-    document.getElementById('d-refimg-placeholder').style.display = 'none';
   };
   reader.readAsDataURL(file);
 }
 
-// ===== UPDATE =====
-function fmtDate(val) {
-  if (!val) return '——';
-  const [y,m,d] = val.split('-');
-  return `${y}年${m}月${d}日`;
-}
-
-function update() {
-  // meta
-  setText('d-docdate', fmtDate(v('docdate')));
-  setText('d-docno', v('docno') || '——');
-  setText('d-organizer', v('organizer') || '——');
-  setText('d-contact', v('contact') || '——');
-  // live
-  const dateStr = v('livedate') ? fmtDate(v('livedate')) + (v('liveday') ? ' '+ v('liveday') : '') : '——';
-  setText('d-livename', v('livename') || '——');
-  setText('d-livedate', dateStr);
-  setText('d-venue', v('venue') || '——');
-  setText('d-ticket', v('ticket') || '——');
-  setText('d-time1', v('time1') || '——');
-  setText('d-time2', v('time2') || '——');
-  // design
-  setText('d-theme', v('theme') || '——');
-  setText('d-fontimg', v('fontimg') || '——');
-  setText('d-designnotes', v('designnotes') || '——');
-  // colors
-  const colorsEl = document.getElementById('d-colors');
-  colorsEl.innerHTML = '';
-  if (selectedColors.length === 0) {
-    colorsEl.innerHTML = '<span style="font-size:7.5pt;color:#bbb;">（カラーを選択してください）</span>';
-  } else {
-    selectedColors.forEach(hex => {
-      const chip = document.createElement('div');
-      chip.className = 'palette-chip';
-      chip.style.background = hex;
-      chip.title = hex;
-      chip.style.border = hex === '#ffffff' ? '1px solid #ccc' : '';
-      colorsEl.appendChild(chip);
-    });
-    // add hex labels
-    const labels = document.createElement('div');
-    labels.style.cssText = 'font-size:6pt;color:#aaa;margin-top:1mm;letter-spacing:0.05em;';
-    labels.textContent = selectedColors.join('  ');
-    colorsEl.appendChild(labels);
-  }
-  // contract
-  setText('d-deadline1', fmtDate(v('deadline1')));
-  setText('d-deadline2', fmtDate(v('deadline2')));
-  setText('d-fee', v('fee') || '——');
-  setText('d-payment', v('payment') || '——');
-  // notes
-  setText('d-prohibit', v('prohibit') || '（特記事項なし）');
-  setText('d-caution', v('caution') || '（特記事項なし）');
-  // signature
-  setText('d-sig-organizer', v('organizer') || '');
-  setText('d-footer-org', v('organizer') || '');
-  // performers
-  updatePerformersPreview();
-}
-
-function v(id) { return document.getElementById(id)?.value || ''; }
-function setText(id, val) {
-  const el = document.getElementById(id);
-  if (el) el.textContent = val;
-}
-
 // ===== INIT =====
 document.addEventListener('DOMContentLoaded', () => {
-  // set today
-  const today = new Date().toISOString().split('T')[0];
-  document.getElementById('docdate').value = today;
-
+  document.getElementById('docdate').value = new Date().toISOString().split('T')[0];
   buildPalette();
-
-  // デモデータ（サンプル）
-  addPerformer('Blazing Trinity', 'つきみぐー×十八×じぇれすす', 'M');
-  addPerformer('lapis lazuli', 'くっつーー×瞥', 'M');
-  addPerformer('あゆさく', '歩×潮 saku', 'M');
-  addPerformer('ガチョウ倶楽部', '湊×原画×route', 'M');
-  addPerformer('きょんどさば', 'Kyn×sAba.', 'M');
-
-  update();
+  addDate(); // 最初から1行
+  addPerformer(); // 最初から1行
 });
 </script>
 </body>
